@@ -14,6 +14,7 @@
             }
 
             :root {
+                --lightest-brown: #a15016;
                 --light-brown: saddlebrown;
                 --medium-brown: #66330f;
                 --dark-medium-brown: #5c2e0e;
@@ -166,12 +167,53 @@
             }
 
             .tabletop {
-                border-bottom: 50px solid var(--light-brown);
+                border-bottom: 50px solid var(--lightest-brown);
                 border-left: 25px solid transparent;
                 border-right: 25px solid transparent;
                 height: 0;
                 grid-column: 1 / 5;
                 grid-row: 1 / 2;
+            }
+
+            .table-side {
+                background-color: var(--light-brown);
+                border-top: 1px solid var(--medium-brown);
+                border-bottom: 1px solid var(--medium-brown);
+                grid-row: 2 / 3;
+                grid-column: 1 / 6;
+            }
+
+            .front-legs {
+                grid-column: 1 / 5;
+                grid-row: 3 / 7;
+                display: flex;
+                border-left: 25px solid var(--light-brown);
+                border-right: 25px solid var(--light-brown);
+            }
+
+            .front-sides {
+                flex: 1;
+                border-left: 10px solid var(--medium-brown);
+                border-right: 10px solid var(--medium-brown);
+                border-bottom: 20px solid transparent;
+            }
+
+            .back-legs {
+                grid-column: 1 / 5;
+                grid-row: 3 / 6;
+                height: 80%;
+                width: 70%;
+                justify-self: center;
+                display: flex;
+                border-left: 20px solid var(--dark-medium-brown);
+                border-right: 20px solid var(--dark-medium-brown);
+            }
+
+            .back-sides {
+                flex: 1;
+                border-left: 8px solid var(--dark-brown);
+                border-right: 8px solid var(--dark-brown);
+                border-bottom: 16px solid transparent;
             }
 
             .catalog {
@@ -193,45 +235,6 @@
                 box-shadow: 0px 5px gold;
             }
 
-            .table-side {
-                background-color: var(--medium-brown);
-                border-top: 2px solid var(--dark-medium-brown);
-                border-bottom: 2px solid var(--dark-medium-brown);
-                grid-row:  2 / 3;
-                grid-column: 1 / 6;
-            }
-
-            .left-leg {
-                grid-row: 3 / 7;
-                grid-column: 1 / 2;
-                width: 25%;
-                background-color: var(--medium-brown);
-
-            }
-
-            .right-leg {
-                grid-row: 3 / 7;
-                grid-column: 4 / 5;
-                width: 25%;
-                justify-self: end;
-                background-color: var(--medium-brown);
-            }
-
-            .back-left-leg {
-                grid-row: 3 / 5;
-                grid-column: 1 / 2;
-                justify-self: end;
-                width: 25%;
-                background-color: var(--dark-brown);
-            }
-
-            .back-right-leg {
-                grid-row: 3 / 5;
-                grid-column: 4 / 5;
-                width: 25%;
-                background-color: var(--dark-brown);
-            }
-
             .sign {
                 grid-column: 4 / 6;
                 grid-row: 1 / 2;
@@ -240,9 +243,9 @@
                 border: 5px solid #b1861a;
                 color: #b1861a;
                 text-align: center;
-                align-self: center;
+                margin-top: 10px; 
                 border-radius: 10px;
-                height: 70%;
+                height: 50%;
                 display: grid;
                 align-items: center;
             }
@@ -267,13 +270,19 @@
                 border-bottom: 5px solid var(--light-brown);
             }
 
-            .bookcase-side {
-                grid-column: 3 / 7;
-                grid-row: 2 / 7;
-                display: grid;
+            .bookcase-container {
                 width: 90%;
+                grid-column: 3 / 7;
+                grid-row: 1 / 7;
+                display: grid;
+                grid-template-rows: 1fr 5fr;
                 justify-self: center;
-                /*border-left: 10px solid #52290c;*/ /* will fix the side later */
+            }
+
+            .bookcase-top {
+                border-left: 25px solid transparent;
+                border-right: 25px solid transparent;
+                border-bottom: 25px solid var(--lightest-brown);
             }
 
             .bookcase {
@@ -366,18 +375,20 @@
             <div class="floor"></div>
             <div class="sign">Welcome to the Library</div>
             <div class="table">
-                <div class="tabletop">
-                </div>
+                <div class="tabletop"></div>
                 <div class="table-side"></div>
-                <div class="left-leg"></div>
-                <div class="back-left-leg"></div>
-                <div class="back-right-leg"></div>
-                <div class="right-leg"></div>
+                <div class="front-legs">
+                    <div class="front-sides"></div>
+                </div>
+                <div class="back-legs">
+                    <div class="back-sides"></div>
+                </div>
                 <div class="catalog">
                     <p>Book Catalog</p>
                 </div>
             </div>
-            <div class="bookcase-side">
+            <div class="bookcase-container">
+                <div class="bookcase-top"></div>
                 <div class="bookcase">
                     <div class="first casing">
                         <div class="shelf-siding">
