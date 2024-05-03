@@ -40,7 +40,6 @@
             .modal-content {
                 background-color: antiquewhite;
                 width: 75%;
-                height: 85%;
                 padding: 1rem;
                 border-radius: 5px;
             }
@@ -99,12 +98,27 @@
                 border-color: var(--modal-color);
             }
 
+            input:focus {
+                border: 2px solid forestgreen;
+                outline: none;
+                color: forestgreen;
+            }
+
+            ::placeholder {
+                color: goldenrod;
+                opacity: 0.5;
+            }
+
+            input:invalid {
+                border: none;
+                border: 3px solid goldenrod;
+            }
+
             .submit-form {
                 border: 2px dashed transparent;
                 margin-top: 5vmin;
                 grid-template-rows: 1rem 50px;
                 gap: 0;
-
             }
 
             .submit-button {
@@ -243,6 +257,7 @@
                 border: 5px solid #b1861a;
                 color: #b1861a;
                 text-align: center;
+                font-size: 4vmin;
                 margin-top: 10px; 
                 border-radius: 10px;
                 height: 50%;
@@ -324,6 +339,10 @@
                 justify-content: center;
             }
 
+            .visible {
+                display: grid;
+            }
+
             .book:hover {
                 cursor: pointer;
             }
@@ -389,26 +408,26 @@
             </div>
             <div class="bookcase-container">
                 <div class="bookcase-top"></div>
-                <div class="bookcase">
-                    <div class="first casing">
+                <div id="storage" class="bookcase">
+                    <div class="casing">
                         <div class="shelf-siding">
-                            <div class="shelf">
+                            <div class="first shelf">
                             </div>
                         </div>
                     </div>
-                    <div class="second casing">
+                    <div class="casing">
                         <div class="shelf-siding">
-                            <div class="shelf"></div>
+                            <div class="second shelf"></div>
                         </div>
                     </div>
-                    <div class="third casing">
+                    <div class="casing">
                         <div class="shelf-siding">
-                            <div class="shelf"></div>
+                            <div class="third shelf"></div>
                         </div>
                     </div>
-                    <div class="fourth casing">
+                    <div class="casing">
                         <div class="shelf-siding">
-                            <div class="shelf"></div>
+                            <div class="fourth shelf"></div>
                         </div>
                     </div>
                     <div class="six casing">
