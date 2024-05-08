@@ -29,4 +29,8 @@ NOTE: You’re not required to add any type of storage right now to save the inf
 
 CREDITS
 
-Book SVG source: https://feathericons.com/?query=book-open
+Book SVG source: Feather Icons, https://feathericons.com/?query=book-open
+Close SVG source: Feather Icons, https://feathericons.com/?query=close
+
+CSS Filter Generator to Convert From Black to Target Hex Color:
+- Source: Codepen, https://codepen.io/sosuke/pen/Pjoqqp

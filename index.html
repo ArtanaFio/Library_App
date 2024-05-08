@@ -28,13 +28,13 @@
             }
 
             body {
-                background-image: url('Assets/Images/book-open.svg'), linear-gradient(black, #004100);
+                background-image: url('Assets/Images/darkseagreen_book.svg'), linear-gradient(#38261a, darkseagreen);
                 background-size: 5%;
                 display: flex;
                 justify-content: center;
             }
 
-            #book-modal {
+            #book-modal, .open-book-modal {
                 position: absolute;
                 background-color: rgba(250, 235, 215, 0.25);
                 width: 100vw;
@@ -46,7 +46,7 @@
 
             .modal-content {
                 background-color: antiquewhite;
-                width: 50%;
+                width: 75%;
                 padding: 3vmin;
                 border-radius: 5px;
             }
@@ -56,14 +56,9 @@
                 justify-content: end;
             }
 
-            .close {
-                font-weight: bold;
-                font-size: 10vmin;
-                color: var(--modal-color);
-            }
 
-            .close:hover {
-                color: goldenrod;
+            .close:hover, .close-book:hover {
+                filter: invert(68%) sepia(92%) saturate(505%) hue-rotate(1deg) brightness(106%) contrast(103%);
                 cursor: pointer;
             }
 
@@ -367,12 +362,10 @@
                 justify-content: center;
             }
 
-            .visible {
-                display: grid;
-            }
-
             .book:hover {
                 cursor: pointer;
+                background-image: radial-gradient(white, white);
+                background-blend-mode:soft-light;
             }
 
             .title {
@@ -380,6 +373,55 @@
                 font-weight: bold;
                 transform: rotate(90deg);
                 letter-spacing: 0.05rem;
+            }
+
+            .visible {
+                display: grid;
+            }
+
+            .open-book-modal {
+                position: absolute;
+                background-color: transparent;
+                width: 100vw;
+                height: 100vh;
+                display: none;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .book-modal-content {
+                background-color: antiquewhite;
+                border-left: 3vmin solid forestgreen;
+                border-right: 3vmin solid forestgreen;
+                width: 75%;
+                height: 75%;
+                border-radius: 5px;
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .black-side {
+                grid-column: 1 / 2;
+            }
+
+            .details {
+                grid-column: 2 / 3;
+                padding: 5vmin;
+                color: var(--dark-brown);
+                text-align: center;
+                font-size: 3vmin;
+                border-left: 2px solid burlywood;
+            }
+
+            .title-display {
+                color: black;
+                font-size: 5vmin;
+                margin-bottom: 20vmin;
+            }
+
+            .author {
+                margin-bottom: 5vmin;
             }
 
             @media(max-width: 920px) {
@@ -422,10 +464,10 @@
                     border: none;
                 }
                 .field-content > div {
-                    grid-template-columns: repeat(2, 40vmin);/*250px 300px;*/
+                    grid-template-columns: 30vmin 35vmin;
                 }
-                label, input, option {
-                    font-size: 4vmin;
+                label, input, select, option {
+                    font-size: 3vmin;
                 }
                 .catalog {
                     height: 100%;
@@ -442,6 +484,9 @@
                 }
                 .bookcase-container {
                     grid-column: 2 / 7;
+                }
+                .book-modal-content {
+                    width: 90%;
                 }
             }
 
@@ -496,11 +541,14 @@
                 .field-content > div:not(:last-child) {
                     margin-bottom: 2vmin;
                 }
-                label, input, option {
+                label, input, select, option {
                     font-size: 4vmin;
                 }
                 .submit-form {
                     align-items: center;
+                }
+                .book-modal-content {
+                    height: 70%;
                 }
             }
 
@@ -508,7 +556,7 @@
                 .field-content > h1 {
                     font-size: 6.5vmin;
                 }
-                label, input, option {
+                label, input, select, option {
                     font-size: 6vmin;
                 }
                 .bookcase {
@@ -520,6 +568,15 @@
                 .catalog {
                     width: 100%;
                 }
+                .book-modal-content {
+                    height: 50%;
+                }
+                .details {
+                    font-size: 5vmin;
+                }
+                .title-display {
+                    font-size: 7vmin;
+                }
             }
 
         </style>
@@ -527,26 +584,26 @@
     <body>
         <div id="book-modal">
             <div class="modal-content">
-                <div class="close-box"><div class="close">&times;</div></div>
+                <div class="close-box"><img class="close" src="Assets/Images/x-square.svg" alt="close button"></div>
                 <form>
                     <fieldset>
                         <div class="field-content">
                             <h1>Enter your book into the Catalog:</h1>
                             <div>
                                 <label for="book-title">*BOOK TITLE:</label>
-                                <input type="text" id="book-title" name="book_title" placeholder="Little Women" minlength="2" maxlength="50" required />
+                                <input type="text" id="book-title" name="book_title" placeholder="'Title'" minlength="2" maxlength="50" required />
                             </div>
                             <div>
                                 <label for="book-author">*AUTHOR:</label>
-                                <input type="text" id="book-author" name="author" placeholder="Louisa May Alcott" minlength="5" maxlength="50" required />
+                                <input type="text" id="book-author" name="author" placeholder="'First & Last Name'" minlength="5" maxlength="50" required />
                             </div>
                             <div>
                                 <label for="book-pages">*NUMBER OF PAGES:</label>
-                                <input type="text" id="book-pages" name="page_numbers" placeholder="759" min="1" max="3000" required />
+                                <input type="text" id="book-pages" name="page_numbers" placeholder="enter a number" min="1" max="3000" required />
                             </div>
                             <div>
                                 <label for="book-genre">*GENRE:</label>
-                                <select title="genre-options" id="genre-selection">
+                                <select title="genre-options" id="book-genre">
                                     <option value="">Select the genre</option>
                                     <option value="Fiction">Fiction</option>
                                     <option value="Historical Fiction">Historical Fiction</option>
@@ -568,9 +625,9 @@
                                 <button class="submit-button" type="button">Submit Book</button>
                                 <p class="message"></p>
                             </div>
-                            <div class="reset">
+                            <!--<div class="reset">
                                 <input type="reset" value="Reset">
-                            </div>
+                            </div>-->
                         </div>
                     </fieldset>
                 </form>
