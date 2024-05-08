@@ -29,3 +29,4 @@ NOTE: You’re not required to add any type of storage right now to save the inf
 
 CREDITS
 
+Book SVG source: https://feathericons.com/?query=book-open

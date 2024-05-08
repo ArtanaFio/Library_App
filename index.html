@@ -27,6 +27,13 @@
                 scroll-behavior: smooth;
             }
 
+            body {
+                background-image: url('Assets/Images/book-open.svg'), linear-gradient(black, #004100);
+                background-size: 5%;
+                display: flex;
+                justify-content: center;
+            }
+
             #book-modal {
                 position: absolute;
                 background-color: rgba(250, 235, 215, 0.25);
@@ -39,8 +46,8 @@
 
             .modal-content {
                 background-color: antiquewhite;
-                width: 75%;
-                padding: 1rem;
+                width: 50%;
+                padding: 3vmin;
                 border-radius: 5px;
             }
 
@@ -51,7 +58,7 @@
 
             .close {
                 font-weight: bold;
-                font-size: 2rem;
+                font-size: 10vmin;
                 color: var(--modal-color);
             }
 
@@ -61,7 +68,7 @@
             }
 
             fieldset {
-                padding: 5vmin;
+                padding: 3vmin;
                 border-radius: 5px;
                 border-color: var(--modal-color);
                 color: var(--modal-color);
@@ -73,7 +80,7 @@
             }
 
             .field-content h1 {
-                font-size: 1rem;
+                font-size: 5vmin;
                 margin-bottom: 5vmin;
             }
 
@@ -92,7 +99,7 @@
                 justify-self: end;
             }
 
-            input {
+            input, select {
                 font-size: 0.75rem;
                 padding-left: 0.5rem;
                 border-color: var(--modal-color);
@@ -112,6 +119,17 @@
             input:invalid {
                 border: none;
                 border: 3px solid goldenrod;
+            }
+
+            select {
+                border: 3px solid goldenrod;
+                color: rgba(218, 165, 32, 0.5);
+                background-color: white;
+            }
+
+            option {
+                color: goldenrod;
+                background-color: antiquewhite;
             }
 
             .submit-form {
@@ -148,13 +166,21 @@
                 justify-self: center;
 
             }
+            .reset > input {
+                background-color: goldenrod;
+                grid-column: 1 / 3;
+                width: 50%;
+                justify-self: center;
+                padding: 0;
+                border-radius: 5px;
+            }
 
             .room {
-                width: 100vw;
+                justify-self: center;
                 height: 100vh;
                 display: grid;
                 grid-template-rows: repeat(7, 1fr);
-                grid-template-columns: repeat(8, 1fr);
+                grid-template-columns: repeat(6, minmax(100px, 175px));
             }
 
             .wall {
@@ -257,7 +283,8 @@
                 border: 5px solid #b1861a;
                 color: #b1861a;
                 text-align: center;
-                font-size: 4vmin;
+                font-size: 0.75rem;
+                font-weight: bold;
                 margin-top: 10px; 
                 border-radius: 10px;
                 height: 50%;
@@ -266,7 +293,7 @@
             }
 
             .windowsill {
-                grid-column: 7 / 9;
+                grid-column: 1 / 3;
                 grid-row: 2 / 4;
                 width: 50%;
                 justify-self: center;
@@ -301,6 +328,7 @@
             }
 
             .bookcase {
+                background-color: var(--dark-brown);
                 border: 15px solid var(--light-brown);
                 display: grid;
             }
@@ -354,6 +382,146 @@
                 letter-spacing: 0.05rem;
             }
 
+            @media(max-width: 920px) {
+                .room {
+                    height: 100vh;
+                }
+                .windowsill {
+                    display: none;
+                }
+                .table {
+                    width: 100%;
+                    grid-column: 1 / 2;
+                    grid-row: 2 / 3;
+                    display: flex;
+                    justify-content: flex-end;
+                }
+                .tabletop {
+                    display: none;
+                }
+                .table-side {
+                    display: none;
+                }
+                .front-legs {
+                    display: none;
+                }
+                .back-legs {
+                    display: none;
+                }
+                .sign {
+                    grid-column: 3 / 6;
+                }
+                #book-modal {
+                    width: 100%;
+                }
+                .modal-content {
+                    padding: 3vmin;
+                }
+                fieldset {
+                    padding: 3vmin;
+                    border: none;
+                }
+                .field-content > div {
+                    grid-template-columns: repeat(2, 40vmin);/*250px 300px;*/
+                }
+                label, input, option {
+                    font-size: 4vmin;
+                }
+                .catalog {
+                    height: 100%;
+                    width: 90%;
+                    border: none;
+                    background-color: antiquewhite;
+                    padding-top: 10px;
+                    font-size: 25px;
+                    padding: 1vmin;
+                }
+                .catalog:hover {
+                    border: none;
+                    background-color: lightgoldenrodyellow;
+                }
+                .bookcase-container {
+                    grid-column: 2 / 7;
+                }
+            }
+
+            @media(max-width: 600px) {
+                .room {
+                    justify-self: center;
+                    width: 100vw;
+                    height: 100vh;
+                    display: grid;
+                    grid-template-rows: repeat(7, 1fr);
+                    grid-template-columns: repeat(4, 1fr);
+                }
+                .sign {
+                    grid-column: 2 / 4;
+                    font-size:4.5vmin;
+                    height: 60%;
+                }
+                .table {
+                    width: 100%;
+                    grid-column: 2 / 4;
+                    grid-row: 7 / 8;
+                    justify-content: center;
+                    align-items: center;
+                }
+                .catalog {
+                    height: 80%;
+                    width: 50%;
+                }
+                .bookcase-container {
+                    grid-column: 1 / 5;
+                }
+                #book-modal {
+                    align-items: flex-end;
+                }
+                .modal-content {
+                    height: 90%;
+                    width: 95%;
+                    margin-bottom: 2vmin;
+                }
+                .field-content > * {
+                    border: 2px dashed transparent;
+                }
+                .field-content > h1 {
+                    font-size: 5vmin;
+                }
+                .field-content > div {
+                    display: flex;
+                    flex-wrap: wrap;
+                    flex-direction: column;
+                    gap: 0;
+                }
+                .field-content > div:not(:last-child) {
+                    margin-bottom: 2vmin;
+                }
+                label, input, option {
+                    font-size: 4vmin;
+                }
+                .submit-form {
+                    align-items: center;
+                }
+            }
+
+            @media(max-width: 450px) {
+                .field-content > h1 {
+                    font-size: 6.5vmin;
+                }
+                label, input, option {
+                    font-size: 6vmin;
+                }
+                .bookcase {
+                    border: 3vmin solid var(--light-brown);
+                }
+                .casing {
+                    border-bottom: 3vmin solid var(--light-brown);
+                }
+                .catalog {
+                    width: 100%;
+                }
+            }
+
         </style>
     </head>
     <body>
@@ -373,16 +541,35 @@
                                 <input type="text" id="book-author" name="author" placeholder="Louisa May Alcott" minlength="5" maxlength="50" required />
                             </div>
                             <div>
-                                <label for="book-genre">*GENRE:</label>
-                                <input type="text" id="book-genre" name="page_genre" placeholder="Historical Fiction" minlength="4" maxlength="30" required />
-                            </div>
-                            <div>
                                 <label for="book-pages">*NUMBER OF PAGES:</label>
                                 <input type="text" id="book-pages" name="page_numbers" placeholder="759" min="1" max="3000" required />
+                            </div>
+                            <div>
+                                <label for="book-genre">*GENRE:</label>
+                                <select title="genre-options" id="genre-selection">
+                                    <option value="">Select the genre</option>
+                                    <option value="Fiction">Fiction</option>
+                                    <option value="Historical Fiction">Historical Fiction</option>
+                                    <option value="Science Fiction">Science Fiction</option>
+                                    <option value="Non-fiction">Non-fiction</option>
+                                    <option value="Mystery">Mystery</option>
+                                    <option value="Romance">Romance</option>
+                                    <option value="Fantasy">Fantasy</option>
+                                    <option value="Self-help">Self-help</option>
+                                    <option value="Thriller">Thriller</option>
+                                    <option value="Horror">Horror</option>
+                                    <option value="Poetry">Poetry</option>
+                                    <option value="Biography">Biography</option>
+                                    <option value="History">History</option>
+                                    <option value="Science & Technology">Science & Technology</option>
+                                </select>
                             </div>
                             <div class="submit-form">
                                 <button class="submit-button" type="button">Submit Book</button>
                                 <p class="message"></p>
+                            </div>
+                            <div class="reset">
+                                <input type="reset" value="Reset">
                             </div>
                         </div>
                     </fieldset>
@@ -394,6 +581,7 @@
             <div class="floor"></div>
             <div class="sign">Welcome to the Library</div>
             <div class="table">
+                <div class="fill"></div>
                 <div class="tabletop"></div>
                 <div class="table-side"></div>
                 <div class="front-legs">
@@ -406,9 +594,9 @@
                     <p>Book Catalog</p>
                 </div>
             </div>
-            <div class="bookcase-container">
+            <div  id="storage" class="bookcase-container">
                 <div class="bookcase-top"></div>
-                <div id="storage" class="bookcase">
+                <div class="bookcase">
                     <div class="casing">
                         <div class="shelf-siding">
                             <div class="first shelf">
