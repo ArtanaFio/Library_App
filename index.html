@@ -330,11 +330,22 @@
 
             .casing {
                 border-bottom: 10px solid var(--light-brown);
-                display: flexbox;
+                display: grid;
+            }
+
+            .shelf {
+                width: 100%;
+                height: 100%;
+                grid-row: 1 / 2;
+                grid-column: 1 / 2;
+                display: flex;
+                gap: 10px;
+                padding: 2px;
             }
 
             .shelf-siding {
-                flex: 1;
+                grid-row: 1 / 2;
+                grid-column: 1 / 2;
                 height: 100%;
                 background-color: var(--medium-brown);
                 border-left: 25px solid var(--medium-brown);
@@ -342,7 +353,7 @@
                 border-bottom: 25px solid var(--dark-brown);
             }
 
-            .shelf {
+            .shelf-backing {
                 height: 100%;
                 background-color: var(--dark-medium-brown);
                 border-left: 1px solid var(--dark-brown);
@@ -350,16 +361,17 @@
             }
 
             .book {
-                position:absolute; /* to position on the shelf */
-                margin-top: 15px; /* specific to the front edge of the shelf */
-                margin-left: -20px; /* specific to the left edge of the shelf */
-                width: 30px;
-                height: 70px;
+                /*position:absolute;*/ /* to position on the shelf */
+                /*margin-top: 15px;*/ /* specific to the front edge of the shelf */
+                /*margin-left: -20px;*/ /* specific to the left edge of the shelf */
+                width: 25px;
+                height: 80%;
+                align-self: flex-end;
                 background-color:forestgreen;
                 border-radius: 5px;
-                display: grid;
-                align-items: center;
-                justify-content: center;
+                display: grid; /* to align the title */
+                align-items: center; /* to align the title */
+                justify-content: center; /* to align the title */
             }
 
             .book:hover {
@@ -369,10 +381,12 @@
             }
 
             .title {
-                font-size: 12px;
+                width: 70px; /* same length as the book's height*/
+                font-size: 20%;
                 font-weight: bold;
                 transform: rotate(90deg);
-                letter-spacing: 0.05rem;
+                letter-spacing: 0.03rem;
+                text-align: center;
             }
 
             .visible {
@@ -412,16 +426,14 @@
                 text-align: center;
                 font-size: 3vmin;
                 border-left: 2px solid burlywood;
+                display: grid;
+                grid-template-rows: 2fr 3fr 1fr 1fr 1fr; 
             }
 
             .title-display {
+                grid-row: 1 / 2;
                 color: black;
                 font-size: 5vmin;
-                margin-bottom: 20vmin;
-            }
-
-            .author {
-                margin-bottom: 5vmin;
             }
 
             @media(max-width: 920px) {
@@ -603,8 +615,8 @@
                             </div>
                             <div>
                                 <label for="book-genre">*GENRE:</label>
-                                <select title="genre-options" id="book-genre">
-                                    <option value="">Select the genre</option>
+                                <select title="Select book genre" id="book-genre">
+                                    <option value="" disabled selected>Select the genre</option>
                                     <option value="Fiction">Fiction</option>
                                     <option value="Historical Fiction">Historical Fiction</option>
                                     <option value="Science Fiction">Science Fiction</option>
@@ -651,34 +663,39 @@
                     <p>Book Catalog</p>
                 </div>
             </div>
-            <div  id="storage" class="bookcase-container">
+            <div id="storage" class="bookcase-container">
                 <div class="bookcase-top"></div>
                 <div class="bookcase">
                     <div class="casing">
                         <div class="shelf-siding">
-                            <div class="first shelf">
+                            <div class="shelf-backing">
                             </div>
                         </div>
+                        <div class="first shelf"></div>
                     </div>
                     <div class="casing">
                         <div class="shelf-siding">
-                            <div class="second shelf"></div>
+                            <div class="shelf-backing"></div>
                         </div>
+                        <div class="second shelf"></div>
                     </div>
                     <div class="casing">
                         <div class="shelf-siding">
-                            <div class="third shelf"></div>
+                            <div class="shelf-backing"></div>
                         </div>
+                        <div class="third shelf"></div>
                     </div>
                     <div class="casing">
                         <div class="shelf-siding">
-                            <div class="fourth shelf"></div>
+                            <div class="shelf-backing"></div>
                         </div>
+                        <div class="fourth shelf"></div>
                     </div>
-                    <div class="six casing">
+                    <div class="casing">
                         <div class="shelf-siding">
-                            <div class="shelf"></div>
+                            <div class="shelf-backing"></div>
                         </div>
+                        <div class="fifth shelf"></div>
                     </div>
                 </div>
             </div>

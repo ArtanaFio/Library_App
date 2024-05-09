@@ -12,13 +12,15 @@ const submitMessage = document.querySelector(".message");
 const bookTitleInput = document.getElementById("book-title");
 const bookAuthorInput = document.getElementById("book-author");
 const bookPagesInput = document.getElementById("book-pages");
+const bookGenreOptions = document.getElementById("book-genre");
 const bookcase = document.getElementById("storage");
 const firstShelf = document.querySelector(".first");
 const secondShelf = document.querySelector(".second");
 const thirdShelf = document.querySelector(".third");
 const fourthShelf = document.querySelector(".fourth");
 
-const bookGenreInput = document.querySelectorAll("option");
+
+
 
 // Function to create a "book" object using an object constructor
 function Book(title, author, pages, genre) {
@@ -33,6 +35,32 @@ function Book(title, author, pages, genre) {
     };
 }
 
+// Test Book
+/*
+const pumpkinQueen = new Book("Long Live the Pumpkin Queen", "Shea Ernshaw", "311", "Fantasy");
+console.log(pumpkinQueen);
+myLibrary.push(pumpkinQueen);
+console.log(myLibrary);
+const pumpkinQueenBook = document.createElement('div');
+const pumpkinQueenTitle = document.createElement('p');
+pumpkinQueenTitle.textContent = "Long Live the Pumpkin Queen";
+pumpkinQueenBook.classList.add('book');
+pumpkinQueenTitle.classList.add('title');
+firstShelf.appendChild(pumpkinQueenBook);
+pumpkinQueenBook.appendChild(pumpkinQueenTitle);
+
+const learnCode = new Book("Learn Code", "Some Developer", "300", "Non-Fiction");
+console.log(learnCode);
+myLibrary.push(learnCode);
+console.log(myLibrary);
+const learnCodeBook = document.createElement('div');
+const learnCodeTitle = document.createElement('p');
+learnCodeTitle.textContent = "Learn Code";
+learnCodeBook.classList.add('book');
+learnCodeTitle.classList.add('title');
+firstShelf.appendChild(learnCodeBook);
+learnCodeBook.appendChild(learnCodeTitle);
+*/
 // Function to add the "book" objects to the "myLibrary" array
 function addBookToLibrary() {
 
@@ -41,7 +69,7 @@ function addBookToLibrary() {
         const bookTitle = bookTitleInput.value;
         const bookAuthor = bookAuthorInput.value;
         const bookPages = bookPagesInput.value;
-        const bookGenre =bookGenreInput.value;
+        const bookGenre = bookGenreOptions.value;
 
         
 
@@ -51,16 +79,18 @@ function addBookToLibrary() {
             submitMessage.style.color = "red";
         } else {
             const libraryBook = new Book(bookTitle, bookAuthor, bookPages, bookGenre);
-            console.log(libraryBook);
+            console.log("You have created a book");
             myLibrary.push(libraryBook);
+            console.log("Check your library:");
             console.log(myLibrary);
             submitMessage.style.color = "forestgreen";
             submitMessage.textContent = "You have added a book to the library!";
-            let newBook = document.createElement('div');
+            let newBook = document.createElement('div'); // Create visual representation of book
             let newTitle = document.createElement('p');
             newBook.classList.add('book');
             newTitle.classList.add('title');
             newTitle.textContent = bookTitle;
+
             firstShelf.appendChild(newBook);
             newBook.appendChild(newTitle);
 
@@ -79,15 +109,20 @@ function addBookToLibrary() {
             bookDetails.classList.add('details');
             let title = document.createElement('p');
             title.classList.add('title-display');
-            let author = document.createElement('p');
-            author.classList.add('author');
-            let genre = document.createElement('p');
-            let pages = document.createElement('p');
             title.textContent = `${bookTitle}`;
+            let author = document.createElement('p');
+            author.style.gridRow = "3 / 4";
+            author.style.alignSelf = "center";
             author.textContent = `Written by ${bookAuthor}`;
+            let genre = document.createElement('p');
+            genre.style.gridRow = "4 / 5";
+            genre.style.alignSelf = "end";
             genre.textContent = `Genre: ${bookGenre}`;
+            let pages = document.createElement('p');
+            pages.style.gridRow = "5 / 6";
+            pages.style.alignSelf = "start";
             pages.textContent = `Number of Pages: ${bookPages}`;
-
+            
             body.appendChild(openBook);
             openBook.appendChild(bookContent);
             openBook.appendChild(closeBook);
@@ -112,7 +147,6 @@ function addBookToLibrary() {
 };
 addBookToLibrary();
 
-
 // Open the book catalog submit form
 bookCatalog.addEventListener('click', () => {
     bookModal.style.display = "flex";
@@ -124,6 +158,8 @@ closeButton.addEventListener('click', () => {
     bookModal.style.display = "none";
     submitMessage.textContent = "";
     bookcase.style.display = "grid";
+    console.log("Books in the library:");
+    console.log(myLibrary);
 })
 
 
