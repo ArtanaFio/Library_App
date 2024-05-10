@@ -19,8 +19,10 @@ const secondShelf = document.querySelector(".second");
 const thirdShelf = document.querySelector(".third");
 const fourthShelf = document.querySelector(".fourth");
 
-
-
+function colorCode () {
+    const colorsArray = [];
+    const color = Math.floor(Math.random() * colorsArray.length);
+};
 
 // Function to create a "book" object using an object constructor
 function Book(title, author, pages, genre) {
@@ -35,32 +37,6 @@ function Book(title, author, pages, genre) {
     };
 }
 
-// Test Book
-/*
-const pumpkinQueen = new Book("Long Live the Pumpkin Queen", "Shea Ernshaw", "311", "Fantasy");
-console.log(pumpkinQueen);
-myLibrary.push(pumpkinQueen);
-console.log(myLibrary);
-const pumpkinQueenBook = document.createElement('div');
-const pumpkinQueenTitle = document.createElement('p');
-pumpkinQueenTitle.textContent = "Long Live the Pumpkin Queen";
-pumpkinQueenBook.classList.add('book');
-pumpkinQueenTitle.classList.add('title');
-firstShelf.appendChild(pumpkinQueenBook);
-pumpkinQueenBook.appendChild(pumpkinQueenTitle);
-
-const learnCode = new Book("Learn Code", "Some Developer", "300", "Non-Fiction");
-console.log(learnCode);
-myLibrary.push(learnCode);
-console.log(myLibrary);
-const learnCodeBook = document.createElement('div');
-const learnCodeTitle = document.createElement('p');
-learnCodeTitle.textContent = "Learn Code";
-learnCodeBook.classList.add('book');
-learnCodeTitle.classList.add('title');
-firstShelf.appendChild(learnCodeBook);
-learnCodeBook.appendChild(learnCodeTitle);
-*/
 // Function to add the "book" objects to the "myLibrary" array
 function addBookToLibrary() {
 
@@ -96,32 +72,102 @@ function addBookToLibrary() {
 
             let openBook = document.createElement('div');
             openBook.classList.add('open-book-modal');
+
             let closeBook = document.createElement('div');
             closeBook.classList.add("close-box");
+
             let closeBookButton = document.createElement('img');
             closeBookButton.src = "Assets/Images/x-square.svg";
             closeBookButton.classList.add("close-book");
+
             let bookContent = document.createElement('div');
             bookContent.classList.add('book-modal-content');
+
             let blankSide = document.createElement('div');
             blankSide.classList.add('blank-side');
+
             let bookDetails = document.createElement('div');
             bookDetails.classList.add('details');
+
             let title = document.createElement('p');
             title.classList.add('title-display');
             title.textContent = `${bookTitle}`;
+
             let author = document.createElement('p');
             author.style.gridRow = "3 / 4";
             author.style.alignSelf = "center";
             author.textContent = `Written by ${bookAuthor}`;
+
             let genre = document.createElement('p');
             genre.style.gridRow = "4 / 5";
             genre.style.alignSelf = "end";
             genre.textContent = `Genre: ${bookGenre}`;
+
             let pages = document.createElement('p');
             pages.style.gridRow = "5 / 6";
             pages.style.alignSelf = "start";
             pages.textContent = `Number of Pages: ${bookPages}`;
+
+            switch (bookGenre) {
+                case 'Adventure':
+                    newBook.style.backgroundColor = "red";
+                    bookContent.style.borderColor = "red";
+                    break;
+                case 'Fantasy':
+                    newBook.style.backgroundColor = "mediumseagreen";
+                    bookContent.style.borderColor = "mediumseagreen";
+                    break;
+                case 'Mystery':
+                    newBook.style.backgroundColor = "indigo";
+                    newBook.style.color = "chocolate";
+                    bookContent.style.borderColor = "indigo";
+                    break;
+                case 'Horror & Thriller':
+                    newBook.style.backgroundColor = "midnightblue";
+                    newBook.style.color = "chocolate";
+                    bookContent.style.borderColor = "midnightblue";
+                    break;
+                case 'Science Fiction':
+                    newBook.style.backgroundColor = "darkviolet";
+                    bookContent.style.borderColor = "darkviolet";
+                    break;
+                case 'Historical Fiction':
+                    newBook.style.backgroundColor = "crimson";
+                    bookContent.style.borderColor = "crimson";
+                    break;
+                case 'Contemporary Fiction':
+                    newBook.style.backgroundColor = "aqua";
+                    bookContent.style.borderColor = "aqua";
+                    break;
+                case 'Romance':
+                    newBook.style.backgroundColor = "deeppink";
+                    bookContent.style.borderColor = "deeppink";
+                    break;
+                case 'Poetry':
+                    newBook.style.backgroundColor = "forestgreen";
+                    bookContent.style.borderColor = "forestgreen";
+                    break;
+                case 'Self-Help':
+                    newBook.style.backgroundColor = "mediumpurple";
+                    bookContent.style.borderColor = "mediumpurple";
+                    break;
+                case 'Biography & Memoirs':
+                    newBook.style.backgroundColor = "coral";
+                    bookContent.style.borderColor = "coral";
+                    break;
+                case 'Religion & Philosophy':
+                    newBook.style.backgroundColor = "sandybrown";
+                    bookContent.style.borderColor = "sandybrown";
+                    break;
+                case 'History':
+                    newBook.style.backgroundColor = "cornflowerblue";
+                    bookContent.style.borderColor = "cornflowerblue";
+                    break;
+                case 'Science & Technology':
+                    newBook.style.backgroundColor = "slateblue";
+                    bookContent.style.borderColor = "slateblue";
+                    break;
+            }
             
             body.appendChild(openBook);
             openBook.appendChild(bookContent);
