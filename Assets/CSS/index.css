@@ -1,0 +1,405 @@
+/* Library Stylesheet */
+        
+            * {
+                box-sizing: border-box;
+                margin: 0;
+                padding: 0;
+            }
+
+            :root {
+                --lightest-brown: #a15016;
+                --light-brown: saddlebrown;
+                --medium-brown: #66330f;
+                --dark-medium-brown: #5c2e0e;
+                --dark-brown: #4d2509;
+                --modal-color: darkgoldenrod;
+            }
+
+            html{
+                font-size: 25pt;
+                scroll-behavior: smooth;
+            }
+
+            body {
+                background-image: url('../Images/darkseagreen_book.svg'), linear-gradient(#38261a, darkseagreen);
+                background-size: 5%;
+                display: flex;
+                justify-content: center;
+            }
+
+            .room {
+                justify-self: center;
+                height: 100vh;
+                display: grid;
+                grid-template-rows: repeat(7, 1fr);
+                grid-template-columns: repeat(6, minmax(100px, 175px));
+            }
+
+            .wall {
+                background-color: darkseagreen;
+                grid-row: 1 / 6;
+                grid-column: 1 / 9;
+            }
+
+            .floor {
+                background-color: #38261a;
+                grid-row: 6 / 8;
+                grid-column: 1 / 9;
+            }
+
+            .table {
+                width: 90%;
+                justify-self: end;
+                grid-row: 5 / 7;
+                grid-column: 1 / 3;
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                grid-template-rows: repeat(6, 1fr);
+            }
+
+            .tabletop {
+                border-bottom: 50px solid var(--lightest-brown);
+                border-left: 25px solid transparent;
+                border-right: 25px solid transparent;
+                height: 0;
+                grid-column: 1 / 5;
+                grid-row: 1 / 2;
+            }
+
+            .table-side {
+                background-color: var(--light-brown);
+                border-top: 1px solid var(--medium-brown);
+                border-bottom: 1px solid var(--medium-brown);
+                grid-row: 2 / 3;
+                grid-column: 1 / 6;
+            }
+
+            .front-legs {
+                grid-column: 1 / 5;
+                grid-row: 3 / 7;
+                display: flex;
+                border-left: 25px solid var(--light-brown);
+                border-right: 25px solid var(--light-brown);
+            }
+
+            .front-sides {
+                flex: 1;
+                border-left: 10px solid var(--medium-brown);
+                border-right: 10px solid var(--medium-brown);
+                border-bottom: 20px solid transparent;
+            }
+
+            .back-legs {
+                grid-column: 1 / 5;
+                grid-row: 3 / 6;
+                height: 80%;
+                width: 70%;
+                justify-self: center;
+                display: flex;
+                border-left: 20px solid var(--dark-medium-brown);
+                border-right: 20px solid var(--dark-medium-brown);
+            }
+
+            .back-sides {
+                flex: 1;
+                border-left: 8px solid var(--dark-brown);
+                border-right: 8px solid var(--dark-brown);
+                border-bottom: 16px solid transparent;
+            }
+
+            .catalog {
+                border-bottom: 45px solid antiquewhite;
+                border-left: 25px solid transparent;
+                border-right: 25px solid transparent;
+                height: 0;
+                grid-column: 2 / 4;
+                grid-row: 1 / 2;
+                font-size: 12px;
+                text-align: center;
+                color: darkgoldenrod;
+                box-shadow: 0px 5px darkgoldenrod;
+            }
+
+            .catalog:hover {
+                cursor: pointer;
+                border-bottom: 45px solid lightgoldenrodyellow;
+                box-shadow: 0px 5px gold;
+            }
+
+            .sign {
+                grid-column: 4 / 6;
+                grid-row: 1 / 2;
+                background-image: linear-gradient(100deg, gold, goldenrod, gold, goldenrod, gold, goldenrod, gold);
+                background-color: gold;
+                border: 5px solid #b1861a;
+                color: #b1861a;
+                text-align: center;
+                font-size: 0.75rem;
+                font-weight: bold;
+                margin-top: 10px; 
+                border-radius: 10px;
+                height: 50%;
+                display: grid;
+                align-items: center;
+            }
+
+            .windowsill {
+                grid-column: 1 / 3;
+                grid-row: 2 / 4;
+                width: 50%;
+                justify-self: center;
+                border-bottom: 15px solid var(--medium-brown);
+                display: grid;
+                
+            }
+
+            .window {
+                width: 90%;
+                justify-self: center;
+                background-image: linear-gradient(deepskyblue, skyblue);
+                background-size: cover;
+                background-color: skyblue;
+                border: 10px solid var(--light-brown);
+                border-bottom: 5px solid var(--light-brown);
+            }
+
+            .bookcase-container {
+                width: 90%;
+                grid-column: 3 / 7;
+                grid-row: 1 / 7;
+                display: grid;
+                grid-template-rows: 1fr 5fr;
+                justify-self: center;
+            }
+
+            .bookcase-top {
+                border-left: 25px solid transparent;
+                border-right: 25px solid transparent;
+                border-bottom: 25px solid var(--lightest-brown);
+            }
+
+            .bookcase {
+                background-color: var(--dark-brown);
+                border: 15px solid var(--light-brown);
+                display: grid;
+            }
+
+            .casing {
+                border-bottom: 10px solid var(--light-brown);
+                display: grid;
+            }
+
+            .shelf {
+                width: 100%;
+                height: 100%;
+                grid-row: 1 / 2;
+                grid-column: 1 / 2;
+                display: flex;
+                gap: 10px;
+                padding: 2px;
+            }
+
+            .shelf-siding {
+                grid-row: 1 / 2;
+                grid-column: 1 / 2;
+                height: 100%;
+                background-color: var(--medium-brown);
+                border-left: 25px solid var(--medium-brown);
+                border-right: 25px solid var(--medium-brown);
+                border-bottom: 25px solid var(--dark-brown);
+            }
+
+            .shelf-backing {
+                height: 100%;
+                background-color: var(--dark-medium-brown);
+                border-left: 1px solid var(--dark-brown);
+                border-right: 1px solid var(--dark-brown);
+            }
+
+            .book {
+                width: 25px;
+                height: 80%;
+                align-self: flex-end;
+                border-radius: 5px;
+                display: grid; /* to align the title */
+                align-items: center; /* to align the title */
+                justify-content: center; /* to align the title */
+                overflow: hidden;
+            }
+
+            .book:hover {
+                cursor: pointer;
+                background-image: radial-gradient(white, lime);
+                background-blend-mode:lighten;
+            }
+
+            .title {
+                width: 70px; /* same length as the book's height*/
+                font-size: 20%;
+                font-weight: bold;
+                transform: rotate(90deg);
+                letter-spacing: 0.03rem;
+                text-align: center;
+            }
+
+            .visible {
+                display: grid;
+            }
+
+            @media(max-width: 920px) {
+                .room {
+                    height: 100vh;
+                }
+                .windowsill {
+                    display: none;
+                }
+                .table {
+                    width: 100%;
+                    grid-column: 1 / 2;
+                    grid-row: 2 / 3;
+                    display: flex;
+                    justify-content: flex-end;
+                }
+                .tabletop {
+                    display: none;
+                }
+                .table-side {
+                    display: none;
+                }
+                .front-legs {
+                    display: none;
+                }
+                .back-legs {
+                    display: none;
+                }
+                .sign {
+                    grid-column: 3 / 6;
+                }
+                #book-modal {
+                    width: 100%;
+                }
+                fieldset {
+                    padding: 0;
+                    border: none;
+                }
+                .field-content > h1 {
+                    text-align: center;
+                }
+                .field-content > div {
+                    grid-template-columns: 30vmin 35vmin;
+                }
+                label, input, select, option {
+                    font-size: 3vmin;
+                }
+                .catalog {
+                    height: 100%;
+                    width: 90%;
+                    border: none;
+                    background-color: antiquewhite;
+                    padding-top: 10px;
+                    font-size: 25px;
+                    padding: 1vmin;
+                }
+                .catalog:hover {
+                    border: none;
+                    background-color: lightgoldenrodyellow;
+                }
+                .bookcase-container {
+                    grid-column: 2 / 7;
+                }
+                .book-modal-content {
+                    width: 90%;
+                }
+            }
+
+            @media(max-width: 600px) {
+                .room {
+                    justify-self: center;
+                    width: 100vw;
+                    height: 100vh;
+                    display: grid;
+                    grid-template-rows: repeat(7, 1fr);
+                    grid-template-columns: repeat(4, 1fr);
+                }
+                .sign {
+                    grid-column: 2 / 4;
+                    font-size:4.5vmin;
+                    height: 60%;
+                }
+                .table {
+                    width: 100%;
+                    grid-column: 2 / 4;
+                    grid-row: 7 / 8;
+                    justify-content: center;
+                    align-items: center;
+                }
+                .catalog {
+                    height: 80%;
+                    width: 50%;
+                }
+                .bookcase-container {
+                    grid-column: 1 / 5;
+                }
+                #book-modal {
+                    align-items: flex-end;
+                }
+                .modal-content {
+                    height: 90%;
+                    width: 95%;
+                    margin-bottom: 2vmin;
+                }
+                fieldset {
+                    padding: 3vmin;
+                }
+                .field-content > * {
+                    border: 2px dashed transparent;
+                }
+                .field-content > h1 {
+                    font-size: 5vmin;
+                }
+                .field-content > div {
+                    display: flex;
+                    flex-wrap: wrap;
+                    flex-direction: column;
+                    gap: 0;
+                }
+                .field-content > div:not(:last-child) {
+                    margin-bottom: 2vmin;
+                }
+                label, input, select, option {
+                    font-size: 4vmin;
+                }
+                .submit-form {
+                    align-items: center;
+                }
+                .book-modal-content {
+                    height: 70%;
+                }
+            }
+
+            @media(max-width: 450px) {
+                .field-content > h1 {
+                    font-size: 6.5vmin;
+                }
+                label, input, select, option {
+                    font-size: 6vmin;
+                }
+                .bookcase {
+                    border: 3vmin solid var(--light-brown);
+                }
+                .casing {
+                    border-bottom: 3vmin solid var(--light-brown);
+                }
+                .catalog {
+                    width: 100%;
+                }
+                .book-modal-content {
+                    height: 50%;
+                }
+                .details {
+                    font-size: 5vmin;
+                }
+                .title-display {
+                    font-size: 7vmin;
+                }
+            }

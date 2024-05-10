@@ -6,25 +6,27 @@ const myLibrary = [];
 const body = document.querySelector("body");
 const bookCatalog = document.querySelector(".catalog");
 const bookModal = document.getElementById("book-modal");
+
 const closeButton = document.querySelector(".close");
 const submitButton = document.querySelector(".submit-button");
-const submitMessage = document.querySelector(".message");
+
+const messageBox = document.querySelector(".messages");
+
 const bookTitleInput = document.getElementById("book-title");
 const bookAuthorInput = document.getElementById("book-author");
 const bookPagesInput = document.getElementById("book-pages");
 const bookGenreOptions = document.getElementById("book-genre");
+
 const bookcase = document.getElementById("storage");
 const firstShelf = document.querySelector(".first");
 const secondShelf = document.querySelector(".second");
 const thirdShelf = document.querySelector(".third");
 const fourthShelf = document.querySelector(".fourth");
 
-function colorCode () {
-    const colorsArray = [];
-    const color = Math.floor(Math.random() * colorsArray.length);
-};
+const oldMessages = document.querySelectorAll("old");
 
 // Function to create a "book" object using an object constructor
+
 function Book(title, author, pages, genre) {
 
     // "book" constructor
@@ -37,30 +39,73 @@ function Book(title, author, pages, genre) {
     };
 }
 
+// Function to transform any string input into a title case version of the string
+
+function titleCase(string) {
+    const newString = string
+    .split(' ')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .join(' ');
+    return newString;
+}
+
 // Function to add the "book" objects to the "myLibrary" array
+
 function addBookToLibrary() {
 
     submitButton.addEventListener('click', () => {
-        
-        const bookTitle = bookTitleInput.value;
-        const bookAuthor = bookAuthorInput.value;
+        /*
+        oldMessages.forEach((text) => {
+            text.remove();
+        });
+        */
+
+        const bookTitle = titleCase(bookTitleInput.value);
+        const bookAuthor = titleCase(bookAuthorInput.value);
         const bookPages = bookPagesInput.value;
         const bookGenre = bookGenreOptions.value;
 
-        
-
         // Creates a book object from user input and alert missing information
+
         if (bookTitle === '' || bookAuthor === '' || bookPages === '' || bookGenre === '') {
-            submitMessage.textContent = "Some information is missing.";
-            submitMessage.style.color = "red";
-        } else {
+            const missingMessage = document.createElement('p');
+            missingMessage.textContent = "Some information is missing.";
+            missingMessage.classList.add('error', 'old');
+            messageBox.appendChild(missingMessage);
+        } 
+        
+        if (bookTitle === 'Title' || bookTitle === 'Book Title'|| bookTitle === 'A Title'|| bookTitle === 'Any Title') {
+            const titleMessage = document.createElement('p');
+            titleMessage.textContent = "Please enter a proper book title.";
+            titleMessage.classList.add('error', 'old');
+            messageBox.appendChild(titleMessage);
+        }
+        
+        if (bookAuthor === 'First & Last Name' || bookAuthor === 'Author' || bookAuthor === 'Author Name' || bookAuthor === 'First Last' ||  bookAuthor === 'First Name' ||  bookAuthor === 'Last Name') {
+            const authorMessage = document.createElement('p');
+            authorMessage.textContent = "Please enter a valid name.";
+            authorMessage.classList.add('error', 'old');
+            messageBox.appendChild(authorMessage);
+        }
+        
+        if (bookPages === '') {
+            console.log("nothing was entered for number of pages.");
+        } else if (bookPages < 5) {
+            const pagesMessage = document.createElement('p');
+            pagesMessage.textContent = "Please make sure your book has at least 5 pages.";
+            pagesMessage.classList.add('error', 'old');
+            messageBox.appendChild(pagesMessage);
+        }
+        
+        if ((bookTitle !== '' && bookAuthor !== '' && bookPages !== '' && bookGenre !== '') && (bookTitle !== 'Title' && bookTitle !== 'Book Title') && (bookAuthor !== 'First & Last Name' && bookAuthor !== 'Author' && bookAuthor !== 'Author Name' && bookAuthor !== 'First Last' &&  bookAuthor !== 'First Name' &&  bookAuthor !== 'Last Name') && (bookPages >= 5)) {
             const libraryBook = new Book(bookTitle, bookAuthor, bookPages, bookGenre);
-            console.log("You have created a book");
             myLibrary.push(libraryBook);
-            console.log("Check your library:");
             console.log(myLibrary);
-            submitMessage.style.color = "forestgreen";
-            submitMessage.textContent = "You have added a book to the library!";
+            const successMessage = document.createElement('p');
+            successMessage.classList.add('correct', 'old');
+            successMessage.textContent = `You have added ${bookTitle} to the library!`;
+            messageBox.appendChild(successMessage);
+
             let newBook = document.createElement('div'); // Create visual representation of book
             let newTitle = document.createElement('p');
             newBook.classList.add('book');
@@ -189,9 +234,11 @@ function addBookToLibrary() {
                 bookcase.style.display = "grid";
             })
         }  
+
     });
 };
 addBookToLibrary();
+
 
 // Open the book catalog submit form
 bookCatalog.addEventListener('click', () => {
@@ -202,7 +249,7 @@ bookCatalog.addEventListener('click', () => {
 // Close the book modal
 closeButton.addEventListener('click', () => {
     bookModal.style.display = "none";
-    submitMessage.textContent = "";
+    //submitMessage.textContent = "";
     bookcase.style.display = "grid";
     console.log("Books in the library:");
     console.log(myLibrary);
