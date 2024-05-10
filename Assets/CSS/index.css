@@ -275,22 +275,6 @@
                 .sign {
                     grid-column: 3 / 6;
                 }
-                #book-modal {
-                    width: 100%;
-                }
-                fieldset {
-                    padding: 0;
-                    border: none;
-                }
-                .field-content > h1 {
-                    text-align: center;
-                }
-                .field-content > div {
-                    grid-template-columns: 30vmin 35vmin;
-                }
-                label, input, select, option {
-                    font-size: 3vmin;
-                }
                 .catalog {
                     height: 100%;
                     width: 90%;
@@ -306,9 +290,6 @@
                 }
                 .bookcase-container {
                     grid-column: 2 / 7;
-                }
-                .book-modal-content {
-                    width: 90%;
                 }
             }
 
@@ -340,50 +321,9 @@
                 .bookcase-container {
                     grid-column: 1 / 5;
                 }
-                #book-modal {
-                    align-items: flex-end;
-                }
-                .modal-content {
-                    height: 90%;
-                    width: 95%;
-                    margin-bottom: 2vmin;
-                }
-                fieldset {
-                    padding: 3vmin;
-                }
-                .field-content > * {
-                    border: 2px dashed transparent;
-                }
-                .field-content > h1 {
-                    font-size: 5vmin;
-                }
-                .field-content > div {
-                    display: flex;
-                    flex-wrap: wrap;
-                    flex-direction: column;
-                    gap: 0;
-                }
-                .field-content > div:not(:last-child) {
-                    margin-bottom: 2vmin;
-                }
-                label, input, select, option {
-                    font-size: 4vmin;
-                }
-                .submit-form {
-                    align-items: center;
-                }
-                .book-modal-content {
-                    height: 70%;
-                }
             }
 
-            @media(max-width: 450px) {
-                .field-content > h1 {
-                    font-size: 6.5vmin;
-                }
-                label, input, select, option {
-                    font-size: 6vmin;
-                }
+            @media(max-width: 450px) {                
                 .bookcase {
                     border: 3vmin solid var(--light-brown);
                 }
@@ -392,14 +332,5 @@
                 }
                 .catalog {
                     width: 100%;
-                }
-                .book-modal-content {
-                    height: 50%;
-                }
-                .details {
-                    font-size: 5vmin;
-                }
-                .title-display {
-                    font-size: 7vmin;
                 }
             }

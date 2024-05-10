@@ -23,8 +23,6 @@ const secondShelf = document.querySelector(".second");
 const thirdShelf = document.querySelector(".third");
 const fourthShelf = document.querySelector(".fourth");
 
-const oldMessages = document.querySelectorAll("old");
-
 // Function to create a "book" object using an object constructor
 
 function Book(title, author, pages, genre) {
@@ -54,11 +52,14 @@ function titleCase(string) {
 function addBookToLibrary() {
 
     submitButton.addEventListener('click', () => {
-        /*
-        oldMessages.forEach((text) => {
-            text.remove();
+        
+        //remove old notifications
+        const oldMessages = messageBox.querySelectorAll("p");
+
+        oldMessages.forEach((notice) => {
+            notice.remove();
         });
-        */
+        
 
         const bookTitle = titleCase(bookTitleInput.value);
         const bookAuthor = titleCase(bookAuthorInput.value);
@@ -70,30 +71,30 @@ function addBookToLibrary() {
         if (bookTitle === '' || bookAuthor === '' || bookPages === '' || bookGenre === '') {
             const missingMessage = document.createElement('p');
             missingMessage.textContent = "Some information is missing.";
-            missingMessage.classList.add('error', 'old');
+            missingMessage.classList.add('error');
             messageBox.appendChild(missingMessage);
         } 
         
         if (bookTitle === 'Title' || bookTitle === 'Book Title'|| bookTitle === 'A Title'|| bookTitle === 'Any Title') {
             const titleMessage = document.createElement('p');
             titleMessage.textContent = "Please enter a proper book title.";
-            titleMessage.classList.add('error', 'old');
+            titleMessage.classList.add('error');
             messageBox.appendChild(titleMessage);
         }
         
         if (bookAuthor === 'First & Last Name' || bookAuthor === 'Author' || bookAuthor === 'Author Name' || bookAuthor === 'First Last' ||  bookAuthor === 'First Name' ||  bookAuthor === 'Last Name') {
             const authorMessage = document.createElement('p');
             authorMessage.textContent = "Please enter a valid name.";
-            authorMessage.classList.add('error', 'old');
+            authorMessage.classList.add('error');
             messageBox.appendChild(authorMessage);
         }
         
         if (bookPages === '') {
-            console.log("nothing was entered for number of pages.");
+            // do need to do anything
         } else if (bookPages < 5) {
             const pagesMessage = document.createElement('p');
             pagesMessage.textContent = "Please make sure your book has at least 5 pages.";
-            pagesMessage.classList.add('error', 'old');
+            pagesMessage.classList.add('error');
             messageBox.appendChild(pagesMessage);
         }
         
@@ -102,7 +103,7 @@ function addBookToLibrary() {
             myLibrary.push(libraryBook);
             console.log(myLibrary);
             const successMessage = document.createElement('p');
-            successMessage.classList.add('correct', 'old');
+            successMessage.classList.add('correct');
             successMessage.textContent = `You have added ${bookTitle} to the library!`;
             messageBox.appendChild(successMessage);
 
