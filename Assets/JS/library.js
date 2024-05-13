@@ -9,7 +9,11 @@ const bookModal = document.getElementById("book-modal");
 
 const closeButton = document.querySelector(".close");
 const submitButton = document.querySelector(".submit-button");
+const donateButton = document.querySelector(".donate-button");
+const searchButton = document.querySelector(".search-button");
 
+const header = document.querySelector("h1");
+const submitDiv = document.querySelector(".submit-form");
 const messageBox = document.querySelector(".messages");
 
 const allInput = document.querySelectorAll("input");
@@ -24,13 +28,19 @@ const secondShelf = document.querySelector(".second");
 const thirdShelf = document.querySelector(".third");
 const fourthShelf = document.querySelector(".fourth");
 
+const newBookInputs = document.querySelectorAll(".new-input");
+
 let bookTitle;
 let bookAuthor;
 let bookPages;
 let bookGenre;
 
-// Function to create a "book" object using an object constructor
+bookTitleInput.value = "Learn Code";
+bookAuthorInput.value = "Some Developer";
+bookPagesInput.value = 130;
+bookGenreOptions.selectedIndex = 14;
 
+// Function to create a "book" object using an object constructor
 function Book(title, author, pages, genre) {
 
     // "book" constructor
@@ -43,11 +53,7 @@ function Book(title, author, pages, genre) {
     };
 }
 
-// if checkBook = newBook, don't add it
-// don't forget to commit about clearing inputs after successfully adding book
-
 // Function to transform any string input into a title case version of the string
-
 function titleCase(string) {
     const newString = string
     .split(' ')
@@ -56,10 +62,8 @@ function titleCase(string) {
     return newString;
 }
 
-// Function to add the "book" objects to the "myLibrary" array
 
-
-
+//Functon to clear input fields
 function clearInput() {
     bookTitleInput.value = '';
     bookAuthorInput.value = '';
@@ -67,8 +71,8 @@ function clearInput() {
     bookGenreOptions.selectedIndex = 0;
 };
 
+// Function to remove old notifications
 function clearNotices() {
-    //remove old notifications
     const oldMessages = messageBox.querySelectorAll("p");
 
     oldMessages.forEach((notice) => {
@@ -132,19 +136,13 @@ submitButton.addEventListener('click', () => {
             console.log(myLibrary);
         };
         addBookToLibrary();
-        const successMessage = document.createElement('p');
-        successMessage.classList.add('correct');
-        successMessage.textContent = `You have added ${bookTitle} to the library!`;
-        messageBox.appendChild(successMessage);
 
         clearInput();
-
         allInput.forEach((input) => {
             input.addEventListener('click', () => {
                 clearNotices();
             });
         })
-
         bookGenreOptions.addEventListener('click', () => {
             clearNotices();
         });
@@ -261,13 +259,46 @@ submitButton.addEventListener('click', () => {
             openBook.style.display = "flex";
             bookcase.style.display = "none";
         })
-
         closeBookButton.addEventListener('click', () => {
             openBook.style.display = "none";
             bookcase.style.display = "grid";
         })
-    }  
 
+        header.textContent = `You have added "${bookTitle}" to the library!`;
+        header.classList.add("submitted-header");
+        submitDiv.style.gridTemplateRows = "1fr 1fr";
+    
+        messageBox.classList.add('action');
+        messageBox.textContent =  "Or close the catalog and check the bookcase";
+
+        newBookInputs.forEach((input) => {
+            input.style.display = "none";
+        });
+    
+        submitButton.style.display = "none";
+        donateButton.style.display = "block";
+        searchButton.style.display = "block";
+
+    }  
+});
+
+donateButton.addEventListener('click', () => {
+    header.textContent = "Enter your book into the Catalog:";
+    header.classList.add("normal-header");
+    header.classList.remove("submitted-header");
+    messageBox.textContent = "";
+    messageBox.classList.remove('action');
+    newBookInputs.forEach((input) => {
+        input.style.display = "grid";
+    });
+    donateButton.style.display = "none";
+    searchButton.style.display = "none";
+    submitButton.style.display = "block";
+});
+
+searchButton.addEventListener('click', () => {
+    messageBox.textContent = "";
+    messageBox.classList.remove('action');
 });
 
 
