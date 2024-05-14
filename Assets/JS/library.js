@@ -35,7 +35,7 @@ let bookAuthor;
 let bookPages;
 let bookGenre;
 
-bookTitleInput.value = "Learn Code";
+bookTitleInput.value = "0 Index";
 bookAuthorInput.value = "Some Developer";
 bookPagesInput.value = 130;
 bookGenreOptions.selectedIndex = 14;
@@ -51,7 +51,7 @@ function Book(title, author, pages, genre) {
     this.info = function() {
         return `${this.title} is written by ${this.author}, belongs to the ${this.genre} genre, and has ${this.pages} pages.`;
     };
-}
+};
 
 // Function to transform any string input into a title case version of the string
 function titleCase(string) {
@@ -78,6 +78,12 @@ function clearNotices() {
     oldMessages.forEach((notice) => {
         notice.remove();
     });
+};
+
+submitButton.addEventListener('click', submitClick, false);
+
+function submitClick(event) {
+    event.preventDefault();
 };
 
 submitButton.addEventListener('click', () => {
@@ -155,33 +161,36 @@ submitButton.addEventListener('click', () => {
         let bookContent = document.createElement('div');
         let blankSide = document.createElement('div');
         let bookDetails = document.createElement('div');
-        let title = document.createElement('p');
-        let author = document.createElement('p');
-        let genre = document.createElement('p');
-        let pages = document.createElement('p');
+        let writtenTitle = document.createElement('p');
+        let writtenAuthor = document.createElement('p');
+        let writtenGenre = document.createElement('p');
+        let writtenPages = document.createElement('p');
+        let removeButton = document.createElement('button');
 
-        title.textContent = `${bookTitle}`;        
-        author.textContent = `Written by ${bookAuthor}`;
-        genre.textContent = `Genre: ${bookGenre}`;
-        pages.textContent = `Number of Pages: ${bookPages}`;
+        writtenTitle.textContent = `${bookTitle}`;        
+        writtenAuthor.textContent = `Written by ${bookAuthor}`;
+        writtenGenre.textContent = `Genre: ${bookGenre}`;
+        writtenPages.textContent = `Number of Pages: ${bookPages}`;
+        newTitle.textContent = bookTitle;
+        removeButton.textContent = "Remove book";
 
         newBook.classList.add('book');
         newTitle.classList.add('title');
-        newTitle.textContent = bookTitle;
         openBook.classList.add('open-book-modal');
         closeBook.classList.add("close-box");       
         closeBookButton.src = "Assets/Images/x-square.svg";
         closeBookButton.classList.add("close-book");        
         bookContent.classList.add('book-modal-content');       
-        blankSide.classList.add('blank-side');        
+        blankSide.classList.add('blank-side');
+        removeButton.classList.add('remove-option');        
         bookDetails.classList.add('details');        
-        title.classList.add('title-display');
-        author.style.gridRow = "3 / 4";
-        author.style.alignSelf = "center";
-        genre.style.gridRow = "4 / 5";
-        genre.style.alignSelf = "end";
-        pages.style.gridRow = "5 / 6";
-        pages.style.alignSelf = "start";
+        writtenTitle.classList.add('title-display');
+        writtenAuthor.style.gridRow = "3 / 4";
+        writtenAuthor.style.alignSelf = "center";
+        writtenGenre.style.gridRow = "4 / 5";
+        writtenGenre.style.alignSelf = "end";
+        writtenPages.style.gridRow = "5 / 6";
+        writtenPages.style.alignSelf = "start";
         switch (bookGenre) {
             case 'Adventure':
                 newBook.style.backgroundColor = "red";
@@ -249,20 +258,66 @@ submitButton.addEventListener('click', () => {
         openBook.appendChild(bookContent);
         openBook.appendChild(closeBook);
         closeBook.appendChild(closeBookButton);
+        bookContent.appendChild(blankSide);
         bookContent.appendChild(bookDetails);
-        bookDetails.appendChild(title);
-        bookDetails.appendChild(author);
-        bookDetails.appendChild(genre);
-        bookDetails.appendChild(pages);
+        blankSide.appendChild(removeButton);
+        bookDetails.appendChild(writtenTitle);
+        bookDetails.appendChild(writtenAuthor);
+        bookDetails.appendChild(writtenGenre);
+        bookDetails.appendChild(writtenPages);
 
         newBook.addEventListener('click', () => {
             openBook.style.display = "flex";
-            bookcase.style.display = "none";
+            let thisBookTitle = writtenTitle.textContent;
+            let thisBookAuthor = writtenTitle.textContent;
+            let thisBookPages = writtenPages.textContent;
+            let thisBookGenre = writtenGenre.textContent;
+
+            console.log(`You opened ${thisBookTitle}`);
+            
+            removeButton.addEventListener('click', () => {
+                
+                removeButton.classList.add("invisible");
+                const confirmDelete = document.createElement('p');
+                confirmDelete.textContent = `Are you sure you want to remove ${thisBookTitle}?`;
+                confirmDelete.classList.add("delete-message");
+                blankSide.appendChild(confirmDelete);
+                const yesDeleteButton = document.createElement('button');
+                yesDeleteButton.textContent = "yes";
+                yesDeleteButton.classList.add("yes");
+                blankSide.appendChild(yesDeleteButton);
+                yesDeleteButton.addEventListener('click', () => {
+                    newBook.remove();
+                    openBook.remove();
+                    /*let unwantedBook = myLibrary.findIndex(bookyBook =>
+                        bookyBook.title === thisBookTitle && bookyBook.author === thisBookAuthor
+                    );
+                    console.log(unwantedBook);
+                    if (unwantedBook !== -1) {
+                        myLibrary.splice(unwantedBook, 1);
+                        console.log(`${thisBookTitle} was removed. Check the library`);
+                        console.log(myLibrary);
+                    } else {
+                        console.log("something went wrong.");
+                    }*/                    
+                })
+                const noDeleteButton = document.createElement('button');
+                noDeleteButton.textContent = "no";
+                noDeleteButton.classList.add("no");
+                blankSide.appendChild(noDeleteButton);
+                noDeleteButton.addEventListener('click', () => {
+                    removeButton.classList.remove("invisible");
+                    confirmDelete.remove();
+                    yesDeleteButton.remove();
+                    noDeleteButton.remove();
+                })
+            })
         })
         closeBookButton.addEventListener('click', () => {
             openBook.style.display = "none";
-            bookcase.style.display = "grid";
         })
+
+        
 
         header.textContent = `You have added "${bookTitle}" to the library!`;
         header.classList.add("submitted-header");
@@ -272,14 +327,14 @@ submitButton.addEventListener('click', () => {
         messageBox.textContent =  "Or close the catalog and check the bookcase";
 
         newBookInputs.forEach((input) => {
-            input.style.display = "none";
+            input.classList.remove("new-input");
+            input.classList.add("invisible");
         });
     
         submitButton.style.display = "none";
         donateButton.style.display = "block";
         searchButton.style.display = "block";
-
-    }  
+    }
 });
 
 donateButton.addEventListener('click', () => {
@@ -289,7 +344,8 @@ donateButton.addEventListener('click', () => {
     messageBox.textContent = "";
     messageBox.classList.remove('action');
     newBookInputs.forEach((input) => {
-        input.style.display = "grid";
+        input.classList.remove("invisible");
+        input.classList.add("new-input");
     });
     donateButton.style.display = "none";
     searchButton.style.display = "none";
@@ -305,17 +361,16 @@ searchButton.addEventListener('click', () => {
 // Open the book catalog submit form
 bookCatalog.addEventListener('click', () => {
     bookModal.style.display = "flex";
-    bookcase.style.display = "none";
 });
 
 // Close the book modal
 closeButton.addEventListener('click', () => {
     bookModal.style.display = "none";
-    bookcase.style.display = "grid";
     clearInput();
     clearNotices();
     console.log("Books in the library:");
     console.log(myLibrary);
 })
+
 
 

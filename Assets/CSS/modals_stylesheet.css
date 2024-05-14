@@ -6,6 +6,8 @@
     display: none;
     justify-content: center;
     align-items: center;
+    z-index: 1000;
+
 }
 
 .modal-content {
@@ -51,7 +53,7 @@ fieldset {
     color: forestgreen;
 }
 
-.field-content > div:not(.submit-form) {
+.new-input {
     display: grid;
     grid-template-columns: 250px 300px;
     gap: 2vmin;
@@ -162,6 +164,7 @@ button {
     text-align: center;
     width: 100%;
     height: 100%;
+    margin-top: 5vmin;
 }
 
 .error {
@@ -202,6 +205,49 @@ button {
 
 .blank-side {
     grid-column: 1 / 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.remove-option {
+    background-color: crimson;
+    color: white;
+}
+
+.remove-option:hover {
+    background-color: white;
+    color: coral;
+    border-color: red;
+}
+
+.delete-message {
+    color: red;
+    font-style: italic;
+    font-weight: bold;
+    font-size: 3vmin;
+    text-align: center;
+}
+
+.yes {
+    background-color: chartreuse;
+    color: white;
+}
+
+.yes:hover {
+    font-weight: bold;
+    background-color: #d2ffa5;
+}
+
+.no {
+    background-color: red;
+    color: white;
+}
+
+.no:hover {
+    font-weight: bold;
+    background-color: #ff7c7c;
 }
 
 .details {
@@ -221,9 +267,16 @@ button {
     font-size: 5vmin;
 }
 
+.invisible {
+    display: none;
+}
+
 @media(max-width: 920px) {
     #book-modal {
         width: 100%;
+    }
+    .modal-content {
+        padding: 0;
     }
     fieldset {
         padding: 0;
@@ -231,12 +284,13 @@ button {
     }
     .field-content > h1 {
         text-align: center;
+        font-size: 4vmin;
     }
-    .field-content > div {
-        grid-template-columns: 30vmin 35vmin;
+    .new-input {
+        grid-template-columns: 29vmin 35vmin;
     }
-    label, input, select, option {
-        font-size: 3vmin;
+    label, input, select, option, .messages {
+        font-size: 2.5vmin;
     }
     .book-modal-content {
         width: 90%;
@@ -261,13 +315,13 @@ button {
     .field-content > h1 {
         font-size: 5vmin;
     }
-    .field-content > div {
+    .new-input {
         display: flex;
         flex-wrap: wrap;
         flex-direction: column;
         gap: 0;
     }
-    .field-content > div:not(:last-child) {
+    .new-input {
         margin-bottom: 2vmin;
     }
     label, input, select, option {
@@ -283,10 +337,10 @@ button {
 
 @media(max-width: 450px) {
     .field-content > h1 {
-        font-size: 6.5vmin;
+        font-size: 6vmin;
     }
     label, input, select, option {
-        font-size: 6vmin;
+        font-size: 5vmin;
     }
     .book-modal-content {
         height: 50%;
