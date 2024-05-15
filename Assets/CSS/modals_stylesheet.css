@@ -28,7 +28,7 @@
 }
 
 fieldset {
-    padding: 0/*3vmin*/;
+    padding: 0;
     border-radius: 5px;
     border-color: var(--modal-color);
     color: var(--modal-color);
@@ -214,12 +214,12 @@ button {
 .remove-option {
     background-color: crimson;
     color: white;
-}
-
-.remove-option:hover {
-    background-color: white;
-    color: coral;
-    border-color: red;
+    border-width: 2px;
+    border-style: solid;
+    border-right-color: darkred;
+    border-bottom-color: darkred;
+    border-left-color: crimson;
+    border-top-color: crimson;
 }
 
 .delete-message {
@@ -230,24 +230,44 @@ button {
     text-align: center;
 }
 
+.align-box {
+    display: flex;
+    margin-top: 5vmin;
+    gap: 5vmin;
+}
+
 .yes {
     background-color: chartreuse;
     color: white;
+    border-width: 2px;
+    border-style: solid;
+    border-bottom-color: #65c901;
+    border-right-color: #65c901;
+    border-left-color: #d2ffa5;
+    border-top-color: #d2ffa5;
 }
 
 .yes:hover {
     font-weight: bold;
     background-color: #d2ffa5;
+    color: #65c901;
 }
 
 .no {
     background-color: red;
     color: white;
+    border-width: 2px;
+    border-style: solid;
+    border-right-color: darkred;
+    border-bottom-color: darkred;
+    border-left-color: #ff7c7c;
+    border-top-color: #ff7c7c;
 }
 
 .no:hover {
     font-weight: bold;
     background-color: #ff7c7c;
+    color: #c00000;
 }
 
 .details {
@@ -265,6 +285,21 @@ button {
     grid-row: 1 / 2;
     color: black;
     font-size: 5vmin;
+}
+
+.author-display {
+    grid-row: 3 / 4;
+    align-self: center;
+}
+
+.genre-display {
+    grid-row: 4 / 5;
+    align-self: end;
+}
+
+.pages-display {
+    grid-row: 5 / 6;
+    align-self: start;
 }
 
 .invisible {

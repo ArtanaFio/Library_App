@@ -81,7 +81,6 @@ function clearNotices() {
 };
 
 submitButton.addEventListener('click', submitClick, false);
-
 function submitClick(event) {
     event.preventDefault();
 };
@@ -152,25 +151,29 @@ submitButton.addEventListener('click', () => {
         bookGenreOptions.addEventListener('click', () => {
             clearNotices();
         });
-            
-        let newBook = document.createElement('div'); // Create visual representation of book
-        let newTitle = document.createElement('p');
-        let openBook = document.createElement('div');
-        let closeBook = document.createElement('div');
-        let closeBookButton = document.createElement('img');
-        let bookContent = document.createElement('div');
-        let blankSide = document.createElement('div');
-        let bookDetails = document.createElement('div');
-        let writtenTitle = document.createElement('p');
-        let writtenAuthor = document.createElement('p');
-        let writtenGenre = document.createElement('p');
-        let writtenPages = document.createElement('p');
-        let removeButton = document.createElement('button');
+        
+        const idTitle = bookTitle;
+        const idAuthor = bookAuthor;
+        const idGenre = bookGenre;
+        const idPages = bookPages;    
+        const newBook = document.createElement('div');
+        const newTitle = document.createElement('p');
+        const openBook = document.createElement('div');
+        const closeBook = document.createElement('div');
+        const closeBookButton = document.createElement('img');
+        const bookContent = document.createElement('div');
+        const blankSide = document.createElement('div');
+        const bookDetails = document.createElement('div');
+        const printTitle = document.createElement('p');
+        const printAuthor = document.createElement('p');
+        const printGenre = document.createElement('p');
+        const printPages = document.createElement('p');
+        const removeButton = document.createElement('button');
 
-        writtenTitle.textContent = `${bookTitle}`;        
-        writtenAuthor.textContent = `Written by ${bookAuthor}`;
-        writtenGenre.textContent = `Genre: ${bookGenre}`;
-        writtenPages.textContent = `Number of Pages: ${bookPages}`;
+        printTitle.textContent = `${bookTitle}`;        
+        printAuthor.textContent = `Written by ${bookAuthor}`;
+        printGenre.textContent = `Genre: ${bookGenre}`;
+        printPages.textContent = `Number of Pages: ${bookPages}`;
         newTitle.textContent = bookTitle;
         removeButton.textContent = "Remove book";
 
@@ -184,13 +187,10 @@ submitButton.addEventListener('click', () => {
         blankSide.classList.add('blank-side');
         removeButton.classList.add('remove-option');        
         bookDetails.classList.add('details');        
-        writtenTitle.classList.add('title-display');
-        writtenAuthor.style.gridRow = "3 / 4";
-        writtenAuthor.style.alignSelf = "center";
-        writtenGenre.style.gridRow = "4 / 5";
-        writtenGenre.style.alignSelf = "end";
-        writtenPages.style.gridRow = "5 / 6";
-        writtenPages.style.alignSelf = "start";
+        printTitle.classList.add('title-display');
+        printAuthor.classList.add('author-display');
+        printGenre.classList.add('genre-display');
+        printPages.classList.add('pages-display');
         switch (bookGenre) {
             case 'Adventure':
                 newBook.style.backgroundColor = "red";
@@ -261,50 +261,49 @@ submitButton.addEventListener('click', () => {
         bookContent.appendChild(blankSide);
         bookContent.appendChild(bookDetails);
         blankSide.appendChild(removeButton);
-        bookDetails.appendChild(writtenTitle);
-        bookDetails.appendChild(writtenAuthor);
-        bookDetails.appendChild(writtenGenre);
-        bookDetails.appendChild(writtenPages);
+        bookDetails.appendChild(printTitle);
+        bookDetails.appendChild(printAuthor);
+        bookDetails.appendChild(printGenre);
+        bookDetails.appendChild(printPages);
 
         newBook.addEventListener('click', () => {
             openBook.style.display = "flex";
-            let thisBookTitle = writtenTitle.textContent;
-            let thisBookAuthor = writtenTitle.textContent;
-            let thisBookPages = writtenPages.textContent;
-            let thisBookGenre = writtenGenre.textContent;
-
-            console.log(`You opened ${thisBookTitle}`);
+            console.log(`You opened ${printTitle.textContent}`);
             
-            removeButton.addEventListener('click', () => {
-                
+            removeButton.addEventListener('mouseover', () => {
+                console.log(`${idTitle}, ${idAuthor}, ${idGenre}, ${idPages}`);                
                 removeButton.classList.add("invisible");
                 const confirmDelete = document.createElement('p');
-                confirmDelete.textContent = `Are you sure you want to remove ${thisBookTitle}?`;
+                confirmDelete.textContent = `Are you sure you want to remove ${printTitle.textContent}?`;
                 confirmDelete.classList.add("delete-message");
                 blankSide.appendChild(confirmDelete);
+                const alignBox = document.createElement('div');
+                alignBox.classList.add('align-box');
+                blankSide.appendChild(alignBox);
                 const yesDeleteButton = document.createElement('button');
                 yesDeleteButton.textContent = "yes";
                 yesDeleteButton.classList.add("yes");
-                blankSide.appendChild(yesDeleteButton);
+                alignBox.appendChild(yesDeleteButton);
                 yesDeleteButton.addEventListener('click', () => {
                     newBook.remove();
                     openBook.remove();
-                    /*let unwantedBook = myLibrary.findIndex(bookyBook =>
-                        bookyBook.title === thisBookTitle && bookyBook.author === thisBookAuthor
+                    const unwantedBook = myLibrary.findIndex(book =>
+                        book.title === idTitle && book.author === idAuthor && book.pages === idPages && book.genre === idGenre
                     );
                     console.log(unwantedBook);
                     if (unwantedBook !== -1) {
                         myLibrary.splice(unwantedBook, 1);
-                        console.log(`${thisBookTitle} was removed. Check the library`);
+                        console.log(`${printTitle.textContent} was removed. Check the library`);
                         console.log(myLibrary);
                     } else {
                         console.log("something went wrong.");
-                    }*/                    
+                        console.log(myLibrary);
+                    }                 
                 })
                 const noDeleteButton = document.createElement('button');
                 noDeleteButton.textContent = "no";
                 noDeleteButton.classList.add("no");
-                blankSide.appendChild(noDeleteButton);
+                alignBox.appendChild(noDeleteButton);
                 noDeleteButton.addEventListener('click', () => {
                     removeButton.classList.remove("invisible");
                     confirmDelete.remove();
