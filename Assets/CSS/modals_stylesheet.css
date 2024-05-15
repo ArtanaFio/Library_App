@@ -205,9 +205,15 @@ button {
 
 .blank-side {
     grid-column: 1 / 2;
+    display: grid;
+    grid-template-rows: repeat(3, 1fr);
+    align-items: center;
+}
+
+.remove-box {
+    grid-row: 3 / 4;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
 }
 
@@ -224,6 +230,21 @@ button {
 
 .delete-message {
     color: red;
+    font-style: italic;
+    font-weight: bold;
+    font-size: 3vmin;
+    text-align: center;
+}
+
+.read-box {
+    grid-row: 1 / 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.read-message {
+    color: forestgreen;
     font-style: italic;
     font-weight: bold;
     font-size: 3vmin;
@@ -268,6 +289,26 @@ button {
     font-weight: bold;
     background-color: #ff7c7c;
     color: #c00000;
+}
+
+.invisible {
+    display: none;
+}
+
+.update {
+    background-color: mediumpurple;
+    color: white;
+    border-width: 2px;
+    border-style: solid;
+    border-bottom-color: #7e54d1;
+    border-right-color: #7e54d1;
+    border-left-color: #bc9aff;
+    border-top-color: #bc9aff;
+}
+
+.update:hover {
+    color: mediumpurple;
+    background-color: #bc9aff;
 }
 
 .details {

@@ -35,22 +35,26 @@ let bookAuthor;
 let bookPages;
 let bookGenre;
 
-bookTitleInput.value = "0 Index";
+bookTitleInput.value = "Learn Code";
 bookAuthorInput.value = "Some Developer";
 bookPagesInput.value = 130;
 bookGenreOptions.selectedIndex = 14;
 
 // Function to create a "book" object using an object constructor
-function Book(title, author, pages, genre) {
+function Book(title, author, pages, genre, read) {
 
     // "book" constructor
     this.title = title; // enter a string representing the book's title
     this.author = author; // enter a string representing the author's name
     this.pages = pages; // enter a number representing the number of pages within the book
     this.genre = genre; // enter a string representing the book's genre
+    this.read = read; // enter a strng ("read" or "not read") representing whether the user has read the book
     this.info = function() {
         return `${this.title} is written by ${this.author}, belongs to the ${this.genre} genre, and has ${this.pages} pages.`;
     };
+    this.readInfo = function () {
+        return `You have ${this.read ? "read" : "not read"} this book`;
+    }
 };
 
 // Function to transform any string input into a title case version of the string
@@ -98,6 +102,8 @@ submitButton.addEventListener('click', () => {
         existingBook.title === titleCase(bookTitleInput.value) && existingBook.author === titleCase(bookAuthorInput.value) && existingBook.pages === bookPagesInput.value && existingBook.genre === bookGenreOptions.value
     );
 
+    function addBookToLibrary() {
+        
     if (bookDuplicate) {
         const bookDuplicateMessage = document.createElement('p');
         bookDuplicateMessage.textContent = "Sorry, the library already has this book. Please donate another book.";
@@ -134,13 +140,12 @@ submitButton.addEventListener('click', () => {
     }
         
     if (!bookDuplicate && (bookTitle !== '' && bookAuthor !== '' && bookPages !== '' && bookGenre !== '') && (bookTitle !== 'Title' && bookTitle !== 'Book Title') && (bookAuthor !== 'First & Last Name' && bookAuthor !== 'Author' && bookAuthor !== 'Author Name' && bookAuthor !== 'First Last' &&  bookAuthor !== 'First Name' &&  bookAuthor !== 'Last Name') && (bookPages >= 5)) {
-        function addBookToLibrary() {
+        
             // Creates a book object from correct user input
             const libraryBook = new Book(bookTitle, bookAuthor, bookPages, bookGenre);
             myLibrary.push(libraryBook);
             console.log(myLibrary);
-        };
-        addBookToLibrary();
+        
 
         clearInput();
         allInput.forEach((input) => {
@@ -168,7 +173,14 @@ submitButton.addEventListener('click', () => {
         const printAuthor = document.createElement('p');
         const printGenre = document.createElement('p');
         const printPages = document.createElement('p');
+        const removeSection = document.createElement('div');
         const removeButton = document.createElement('button');
+        const readSection = document.createElement('div');
+        const readMessage = document.createElement('p');
+        const readAlignBox = document.createElement('div');
+        const yesReadButton = document.createElement('button');
+        const noReadButton = document.createElement('button');
+        const updateButton = document.createElement('button');
 
         printTitle.textContent = `${bookTitle}`;        
         printAuthor.textContent = `Written by ${bookAuthor}`;
@@ -176,6 +188,10 @@ submitButton.addEventListener('click', () => {
         printPages.textContent = `Number of Pages: ${bookPages}`;
         newTitle.textContent = bookTitle;
         removeButton.textContent = "Remove book";
+        readMessage.textContent = "Have you read this book?";
+        yesReadButton.textContent = "yes";
+        noReadButton.textContent = "not yet";
+        updateButton.textContent = "update status";
 
         newBook.classList.add('book');
         newTitle.classList.add('title');
@@ -185,7 +201,14 @@ submitButton.addEventListener('click', () => {
         closeBookButton.classList.add("close-book");        
         bookContent.classList.add('book-modal-content');       
         blankSide.classList.add('blank-side');
-        removeButton.classList.add('remove-option');        
+        readSection.classList.add('read-box');
+        removeSection.classList.add('remove-box');
+        removeButton.classList.add('remove-option');
+        readMessage.classList.add('read-message');
+        readAlignBox.classList.add('align-box');
+        yesReadButton.classList.add('yes');
+        noReadButton.classList.add('no');
+        updateButton.classList.add('update', 'invisible');        
         bookDetails.classList.add('details');        
         printTitle.classList.add('title-display');
         printAuthor.classList.add('author-display');
@@ -260,7 +283,14 @@ submitButton.addEventListener('click', () => {
         closeBook.appendChild(closeBookButton);
         bookContent.appendChild(blankSide);
         bookContent.appendChild(bookDetails);
-        blankSide.appendChild(removeButton);
+        blankSide.appendChild(removeSection);
+        removeSection.appendChild(removeButton);
+        blankSide.appendChild(readSection);
+        readSection.appendChild(readMessage);
+        readSection.appendChild(readAlignBox);
+        readAlignBox.appendChild(yesReadButton);
+        readAlignBox.appendChild(noReadButton);
+        readAlignBox.appendChild(updateButton);
         bookDetails.appendChild(printTitle);
         bookDetails.appendChild(printAuthor);
         bookDetails.appendChild(printGenre);
@@ -269,17 +299,44 @@ submitButton.addEventListener('click', () => {
         newBook.addEventListener('click', () => {
             openBook.style.display = "flex";
             console.log(`You opened ${printTitle.textContent}`);
+
+            yesReadButton.addEventListener('click', () => {
+                console.log("you clicked yes");
+                libraryBook.read = "read";
+                console.log(libraryBook);
+                yesReadButton.classList.add('invisible');
+                noReadButton.classList.add('invisible');
+                updateButton.classList.remove('invisible');
+                readMessage.textContent = "Status: read";
+
+            })
+            noReadButton.addEventListener('click', () => {
+                 console.log("you clicked no");
+                 libraryBook.read = "not read";
+                 console.log(libraryBook);
+                 yesReadButton.classList.add('invisible');
+                 noReadButton.classList.add('invisible');
+                 updateButton.classList.remove('invisible');
+                 readMessage.textContent = "Status: unread";
+            })
+
+            updateButton.addEventListener('click', () => {
+                readMessage.textContent = "Have you read this book?"
+                updateButton.classList.add('invisible');
+                yesReadButton.classList.remove('invisible');
+                noReadButton.classList.remove('invisible');
+            })
             
-            removeButton.addEventListener('mouseover', () => {
+            removeButton.addEventListener('click', () => {
                 console.log(`${idTitle}, ${idAuthor}, ${idGenre}, ${idPages}`);                
                 removeButton.classList.add("invisible");
                 const confirmDelete = document.createElement('p');
                 confirmDelete.textContent = `Are you sure you want to remove ${printTitle.textContent}?`;
                 confirmDelete.classList.add("delete-message");
-                blankSide.appendChild(confirmDelete);
+                removeSection.appendChild(confirmDelete);
                 const alignBox = document.createElement('div');
                 alignBox.classList.add('align-box');
-                blankSide.appendChild(alignBox);
+                removeSection.appendChild(alignBox);
                 const yesDeleteButton = document.createElement('button');
                 yesDeleteButton.textContent = "yes";
                 yesDeleteButton.classList.add("yes");
@@ -306,9 +363,8 @@ submitButton.addEventListener('click', () => {
                 alignBox.appendChild(noDeleteButton);
                 noDeleteButton.addEventListener('click', () => {
                     removeButton.classList.remove("invisible");
+                    alignBox.remove();
                     confirmDelete.remove();
-                    yesDeleteButton.remove();
-                    noDeleteButton.remove();
                 })
             })
         })
@@ -334,6 +390,8 @@ submitButton.addEventListener('click', () => {
         donateButton.style.display = "block";
         searchButton.style.display = "block";
     }
+    };
+    addBookToLibrary();
 });
 
 donateButton.addEventListener('click', () => {
