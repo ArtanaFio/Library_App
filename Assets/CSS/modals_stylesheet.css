@@ -27,6 +27,16 @@
     cursor: pointer;
 }
 
+.close-book {
+    background-color: white;
+    border-radius: 10px;
+    margin-top: 2vmin;
+}
+
+.close-book:hover {
+    background-color: transparent;
+}
+
 fieldset {
     padding: 0;
     border-radius: 5px;
@@ -92,7 +102,7 @@ input:invalid {
 
 select {
     border: 3px solid goldenrod;
-    color: rgba(218, 165, 32, 0.5);
+    color: goldenrod;
     background-color: white;
 }
 
@@ -194,20 +204,55 @@ button {
     background-color: antiquewhite;
     border-left-width: 3vmin;
     border-right-width: 3vmin;
-    border-left-style: solid;
-    border-right-style: solid;
+    border-top-width: 1vmin;
+    border-bottom-width: 1vmin;
+    border-style: solid;
     width: 75%;
     height: 75%;
     border-radius: 5px;
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 20fr 20fr 1fr;
+}
+
+.book-button {
+    width: 15vmin;
+    font-size: 2vmin;
+}
+
+.page-sides {
+    grid-column: 3 / 4;
+    border-left: 2px solid burlywood;
+    border-right: 2px solid burlywood;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    overflow: hidden;
+}
+
+.edges {
+    width: 2px;
+    height: 100%;
+    background-color: burlywood;
+}
+
+.first-edge {
+    margin-left: 75%;
+}
+
+.second-edge {
+    margin-left: 50%;
+}
+
+.third-edge {
+    margin-left: 25%;
 }
 
 .blank-side {
     grid-column: 1 / 2;
+    grid-row: 1 / 2;
     display: grid;
     grid-template-rows: repeat(3, 1fr);
     align-items: center;
+    padding: 3vmin;
 }
 
 .remove-box {
@@ -226,6 +271,10 @@ button {
     border-bottom-color: darkred;
     border-left-color: crimson;
     border-top-color: crimson;
+}
+
+.remove-option:hover {
+    box-shadow: 1vmin 1vmin 20px coral, -1vmin -1vmin 20px coral, -1vmin 1vmin 20px coral, 1vmin -1vmin 20px coral;
 }
 
 .delete-message {
@@ -253,8 +302,8 @@ button {
 
 .align-box {
     display: flex;
-    margin-top: 5vmin;
-    gap: 5vmin;
+    margin-top: 3vmin;
+    gap: 3vmin;
 }
 
 .yes {
@@ -291,10 +340,6 @@ button {
     color: #c00000;
 }
 
-.invisible {
-    display: none;
-}
-
 .update {
     background-color: mediumpurple;
     color: white;
@@ -313,6 +358,7 @@ button {
 
 .details {
     grid-column: 2 / 3;
+    grid-row: 1 / 2;
     padding: 5vmin;
     color: var(--dark-brown);
     text-align: center;
@@ -347,6 +393,10 @@ button {
     display: none;
 }
 
+.block-visible {
+    display: block;
+}
+
 @media(max-width: 920px) {
     #book-modal {
         width: 100%;
@@ -371,15 +421,19 @@ button {
     .book-modal-content {
         width: 90%;
     }
+    .details {
+        border-left: 1px solid burlywood;
+    }
+    .page-sides {
+        border-width: 1px;
+    }
+    .edges {
+        width: 1px;
+    }
 }
 
 @media(max-width: 600px) {
-    #book-modal {
-        align-items: flex-end;
-    }
     .modal-content {
-        height: 90%;
-        width: 95%;
         margin-bottom: 2vmin;
     }
     fieldset {
@@ -409,9 +463,24 @@ button {
     .book-modal-content {
         height: 70%;
     }
+    .details {
+        border-left: 0.5px solid burlywood;
+    }
+    .page-sides {
+        border-width: 0.5px;
+    }
+    .edges {
+        width: 0.5px;
+    }
 }
 
 @media(max-width: 450px) {
+    #book-modal {
+        align-items: center;
+    }
+    .modal-content {
+        height: 75%;
+    }
     .field-content > h1 {
         font-size: 6vmin;
     }
@@ -422,7 +491,8 @@ button {
         height: 50%;
     }
     .details {
-        font-size: 5vmin;
+        font-size: 12px;
+        overflow: hidden;
     }
     .title-display {
         font-size: 7vmin;

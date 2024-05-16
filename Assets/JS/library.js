@@ -35,11 +35,6 @@ let bookAuthor;
 let bookPages;
 let bookGenre;
 
-bookTitleInput.value = "Learn Code";
-bookAuthorInput.value = "Some Developer";
-bookPagesInput.value = 130;
-bookGenreOptions.selectedIndex = 14;
-
 // Function to create a "book" object using an object constructor
 function Book(title, author, pages, genre, read) {
 
@@ -169,6 +164,10 @@ submitButton.addEventListener('click', () => {
         const bookContent = document.createElement('div');
         const blankSide = document.createElement('div');
         const bookDetails = document.createElement('div');
+        const pageSides = document.createElement('div');
+        const firstPageEdge = document.createElement('div');
+        const secondPageEdge = document.createElement('div');
+        const thirdPageEdge = document.createElement('div');
         const printTitle = document.createElement('p');
         const printAuthor = document.createElement('p');
         const printGenre = document.createElement('p');
@@ -203,13 +202,17 @@ submitButton.addEventListener('click', () => {
         blankSide.classList.add('blank-side');
         readSection.classList.add('read-box');
         removeSection.classList.add('remove-box');
-        removeButton.classList.add('remove-option');
+        removeButton.classList.add('remove-option', 'book-button');
         readMessage.classList.add('read-message');
         readAlignBox.classList.add('align-box');
-        yesReadButton.classList.add('yes');
-        noReadButton.classList.add('no');
-        updateButton.classList.add('update', 'invisible');        
-        bookDetails.classList.add('details');        
+        yesReadButton.classList.add('yes', 'book-button');
+        noReadButton.classList.add('no', 'book-button');
+        updateButton.classList.add('update', 'invisible', 'book-button');        
+        bookDetails.classList.add('details');
+        pageSides.classList.add('page-sides');
+        firstPageEdge.classList.add('edges', 'first-edge');
+        secondPageEdge.classList.add('edges', 'second-edge');
+        thirdPageEdge.classList.add('edges', 'third-edge');
         printTitle.classList.add('title-display');
         printAuthor.classList.add('author-display');
         printGenre.classList.add('genre-display');
@@ -283,6 +286,10 @@ submitButton.addEventListener('click', () => {
         closeBook.appendChild(closeBookButton);
         bookContent.appendChild(blankSide);
         bookContent.appendChild(bookDetails);
+        bookContent.appendChild(pageSides);
+        pageSides.appendChild(firstPageEdge);
+        pageSides.appendChild(secondPageEdge);
+        pageSides.appendChild(thirdPageEdge);
         blankSide.appendChild(removeSection);
         removeSection.appendChild(removeButton);
         blankSide.appendChild(readSection);
@@ -339,7 +346,7 @@ submitButton.addEventListener('click', () => {
                 removeSection.appendChild(alignBox);
                 const yesDeleteButton = document.createElement('button');
                 yesDeleteButton.textContent = "yes";
-                yesDeleteButton.classList.add("yes");
+                yesDeleteButton.classList.add("yes", 'book-button');
                 alignBox.appendChild(yesDeleteButton);
                 yesDeleteButton.addEventListener('click', () => {
                     newBook.remove();
@@ -359,7 +366,7 @@ submitButton.addEventListener('click', () => {
                 })
                 const noDeleteButton = document.createElement('button');
                 noDeleteButton.textContent = "no";
-                noDeleteButton.classList.add("no");
+                noDeleteButton.classList.add("no", 'book-button');
                 alignBox.appendChild(noDeleteButton);
                 noDeleteButton.addEventListener('click', () => {
                     removeButton.classList.remove("invisible");
@@ -410,8 +417,13 @@ donateButton.addEventListener('click', () => {
 });
 
 searchButton.addEventListener('click', () => {
-    messageBox.textContent = "";
+    messageBox.textContent = "Search by genre and author: coming soon!";
     messageBox.classList.remove('action');
+    header.textContent = "Search the catalog:";
+    header.classList.add("normal-header");
+    header.classList.remove("submitted-header");
+    searchButton.style.display = "none";
+    donateButton.style.gridColumn = "1 / 3";
 });
 
 
