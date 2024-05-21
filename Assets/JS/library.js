@@ -70,6 +70,480 @@ function Book(title, author, pages, genre, read) {
     }
 };
 
+scotQueen = new Book("Embroidering Her Truth: Mary, Queen of Scots and the Language of Power", "Clare Hunter", "400", "History");
+myLibrary.push(scotQueen);   
+const newQueenBook = document.createElement('div');
+const newQueenTitle = document.createElement('p');
+newQueenTitle.textContent = `${scotQueen.title}`;
+newQueenBook.style.backgroundColor = "cornflowerblue";
+newQueenBook.classList.add('book');
+newQueenTitle.classList.add('title');
+firstShelf.appendChild(newQueenBook);
+newQueenBook.appendChild(newQueenTitle);
+const openQueenBook = document.createElement('div');
+const closeQueenBook = document.createElement('div');
+const closeQueenBookButton = document.createElement('img');
+const queenBookContent = document.createElement('div');
+openQueenBook.classList.add('open-book-modal');
+closeQueenBook.classList.add("close-box");       
+closeQueenBookButton.src = "Assets/Images/x-square.svg";
+closeQueenBookButton.classList.add("close-book");        
+queenBookContent.classList.add('book-modal-content');
+const queenBlankSide = document.createElement('div');
+const queenBookDetails = document.createElement('div');
+const queenPageSides = document.createElement('div');
+const queenFirstPageEdge = document.createElement('div');
+const queenSecondPageEdge = document.createElement('div');
+const queenThirdPageEdge = document.createElement('div');
+const printQueenTitle = document.createElement('p');
+const printQueenAuthor = document.createElement('p');
+const printQueenGenre = document.createElement('p');
+const printQueenPages = document.createElement('p');
+const removeQueenSection = document.createElement('div');
+const removeQueenButton = document.createElement('button');
+const queenReadSection = document.createElement('div');
+const queenReadMessage = document.createElement('p');
+const queenReadAlignBox = document.createElement('div');
+const queenYesReadButton = document.createElement('button');
+const queenNoReadButton = document.createElement('button');
+const queenUpdateButton = document.createElement('button');
+printQueenTitle.textContent = `${scotQueen.title}`;        
+printQueenAuthor.textContent = `Written by ${scotQueen.author}`;
+printQueenGenre.textContent = `Genre: ${scotQueen.genre}`;
+printQueenPages.textContent = `Number of Pages: ${scotQueen.pages}`;
+removeQueenButton.textContent = "Remove book";
+queenReadMessage.textContent = "Have you read this book?";
+queenYesReadButton.textContent = "yes";
+queenNoReadButton.textContent = "not yet";
+queenUpdateButton.textContent = "update status";
+queenBlankSide.classList.add('blank-side');
+queenReadSection.classList.add('read-box');
+removeQueenSection.classList.add('remove-box');
+removeQueenButton.classList.add('remove-option', 'book-button');
+queenReadMessage.classList.add('read-message');
+queenReadAlignBox.classList.add('align-box');
+queenYesReadButton.classList.add('yes', 'book-button');
+queenNoReadButton.classList.add('no', 'book-button');
+queenUpdateButton.classList.add('update', 'invisible', 'book-button');        
+queenBookDetails.classList.add('details');
+queenPageSides.classList.add('page-sides');
+queenFirstPageEdge.classList.add('edges', 'first-edge');
+queenSecondPageEdge.classList.add('edges', 'second-edge');
+queenThirdPageEdge.classList.add('edges', 'third-edge');
+printQueenTitle.classList.add('title-display');
+printQueenAuthor.classList.add('author-display');
+printQueenGenre.classList.add('genre-display');
+printQueenPages.classList.add('pages-display');
+queenBookContent.style.borderColor = "cornflowerblue";
+body.appendChild(openQueenBook);
+openQueenBook.appendChild(queenBookContent);
+openQueenBook.appendChild(closeQueenBook);
+closeQueenBook.appendChild(closeQueenBookButton);
+queenBookContent.appendChild(queenBlankSide);
+queenBookContent.appendChild(queenBookDetails);
+queenBookContent.appendChild(queenPageSides);
+queenPageSides.appendChild(queenFirstPageEdge);
+queenPageSides.appendChild(queenSecondPageEdge);
+queenPageSides.appendChild(queenThirdPageEdge);
+queenBlankSide.appendChild(removeQueenSection);
+removeQueenSection.appendChild(removeQueenButton);
+queenBlankSide.appendChild(queenReadSection);
+queenReadSection.appendChild(queenReadMessage);
+queenReadSection.appendChild(queenReadAlignBox);
+queenReadAlignBox.appendChild(queenYesReadButton);
+queenReadAlignBox.appendChild(queenNoReadButton);
+queenReadAlignBox.appendChild(queenUpdateButton); 
+queenBookDetails.appendChild(printQueenTitle);
+queenBookDetails.appendChild(printQueenAuthor);
+queenBookDetails.appendChild(printQueenGenre);
+queenBookDetails.appendChild(printQueenPages);
+newQueenBook.addEventListener('click', () => {
+    openQueenBook.style.display = "flex";
+
+    queenYesReadButton.addEventListener('click', () => {
+        scotQueen.read = "read";
+        queenYesReadButton.classList.add('invisible');
+        queenNoReadButton.classList.add('invisible');
+        queenUpdateButton.classList.remove('invisible');
+        queenReadMessage.textContent = "Status: read";
+
+    })
+    queenNoReadButton.addEventListener('click', () => {
+        scotQueen.read = "not read";
+        queenYesReadButton.classList.add('invisible');
+        queenNoReadButton.classList.add('invisible');
+        queenUpdateButton.classList.remove('invisible');
+        queenReadMessage.textContent = "Status: unread";
+    })
+    queenUpdateButton.addEventListener('click', () => {
+        queenReadMessage.textContent = "Have you read this book?"
+        queenUpdateButton.classList.add('invisible');
+        queenYesReadButton.classList.remove('invisible');
+        queenNoReadButton.classList.remove('invisible');
+    })            
+    removeQueenButton.addEventListener('click', () => {               
+        removeQueenButton.classList.add("invisible");
+        const confirmDeleteQueen = document.createElement('p');
+        confirmDeleteQueen.textContent = `Are you sure you want to remove ${scotQueen.title}?`;
+        confirmDeleteQueen.classList.add("delete-message");
+        removeQueenSection.appendChild(confirmDeleteQueen);
+        const alignQueenBox = document.createElement('div');
+        alignQueenBox.classList.add('align-box');
+        removeQueenSection.appendChild(alignQueenBox);
+        const yesDeleteQueenButton = document.createElement('button');
+        yesDeleteQueenButton.textContent = "yes";
+        yesDeleteQueenButton.classList.add("yes", 'book-button');
+        alignQueenBox.appendChild(yesDeleteQueenButton);
+        yesDeleteQueenButton.addEventListener('click', () => {
+            newQueenBook.remove();
+            openQueenBook.remove();
+
+            const removeQueenBook = myLibrary.findIndex(book =>
+                book.title === scotQueen.title && book.author === scotQueen.author && book.pages === scotQueen.pages && book.genre === scotQueen.genre
+            );
+            console.log(removeQueenBook);
+            if (removeQueenBook !== -1) {
+                myLibrary.splice(removeQueenBook, 1);
+                console.log(`${scotQueen.title} was removed. Check the library`);
+                console.log(myLibrary);
+            } else {
+                console.log("something went wrong.");
+                console.log(myLibrary);
+            }               
+        })
+        const noDeleteQueenButton = document.createElement('button');
+        noDeleteQueenButton.textContent = "no";
+        noDeleteQueenButton.classList.add("no", 'book-button');
+        alignQueenBox.appendChild(noDeleteQueenButton);
+        noDeleteQueenButton.addEventListener('click', () => {
+            removeQueenButton.classList.remove("invisible");
+            alignQueenBox.remove();
+            confirmDeleteQueen.remove();
+        })
+    })
+})
+closeQueenBookButton.addEventListener('click', () => {
+    openQueenBook.style.display = "none";
+})
+
+rumiBook = new Book("Rumi's Little Book Of Life: The Garden Of The Soul, The Heart, And The Spirit", ["Jalal al-Din Muhammad Rumi", "Maryam Mafi", "Melita Kolin"], "203", "Poetry");
+myLibrary.push(rumiBook);   
+const newRumiBook = document.createElement('div');
+const newRumiTitle = document.createElement('p');
+newRumiTitle.textContent = `${rumiBook.title}`;
+newRumiBook.style.backgroundColor = "forestgreen";
+newRumiBook.classList.add('book');
+newRumiTitle.classList.add('title');
+firstShelf.appendChild(newRumiBook);
+newRumiBook.appendChild(newRumiTitle);
+const openRumiBook = document.createElement('div');
+const closeRumiBook = document.createElement('div');
+const closeRumiBookButton = document.createElement('img');
+const rumiBookContent = document.createElement('div');
+openRumiBook.classList.add('open-book-modal');
+closeRumiBook.classList.add("close-box");       
+closeRumiBookButton.src = "Assets/Images/x-square.svg";
+closeRumiBookButton.classList.add("close-book");        
+rumiBookContent.classList.add('book-modal-content');
+const rumiBlankSide = document.createElement('div');
+const rumiBookDetails = document.createElement('div');
+const rumiPageSides = document.createElement('div');
+const rumiFirstPageEdge = document.createElement('div');
+const rumiSecondPageEdge = document.createElement('div');
+const rumiThirdPageEdge = document.createElement('div');
+const printRumiTitle = document.createElement('p');
+const printRumiAuthor = document.createElement('p');
+const printRumiGenre = document.createElement('p');
+const printRumiPages = document.createElement('p');
+const removeRumiSection = document.createElement('div');
+const removeRumiButton = document.createElement('button');
+const rumiReadSection = document.createElement('div');
+const rumiReadMessage = document.createElement('p');
+const rumiReadAlignBox = document.createElement('div');
+const rumiYesReadButton = document.createElement('button');
+const rumiNoReadButton = document.createElement('button');
+const rumiUpdateButton = document.createElement('button');
+printRumiTitle.textContent = `${rumiBook.title}`;        
+printRumiAuthor.textContent = `Written by ${rumiBook.author}`;
+printRumiGenre.textContent = `Genre: ${rumiBook.genre}`;
+printRumiPages.textContent = `Number of Pages: ${rumiBook.pages}`;
+removeRumiButton.textContent = "Remove book";
+rumiReadMessage.textContent = "Have you read this book?";
+rumiYesReadButton.textContent = "yes";
+rumiNoReadButton.textContent = "not yet";
+rumiUpdateButton.textContent = "update status";
+rumiBlankSide.classList.add('blank-side');
+rumiReadSection.classList.add('read-box');
+removeRumiSection.classList.add('remove-box');
+removeRumiButton.classList.add('remove-option', 'book-button');
+rumiReadMessage.classList.add('read-message');
+rumiReadAlignBox.classList.add('align-box');
+rumiYesReadButton.classList.add('yes', 'book-button');
+rumiNoReadButton.classList.add('no', 'book-button');
+rumiUpdateButton.classList.add('update', 'invisible', 'book-button');        
+rumiBookDetails.classList.add('details');
+rumiPageSides.classList.add('page-sides');
+rumiFirstPageEdge.classList.add('edges', 'first-edge');
+rumiSecondPageEdge.classList.add('edges', 'second-edge');
+rumiThirdPageEdge.classList.add('edges', 'third-edge');
+printRumiTitle.classList.add('title-display');
+printRumiAuthor.classList.add('author-display');
+printRumiGenre.classList.add('genre-display');
+printRumiPages.classList.add('pages-display');
+rumiBookContent.style.borderColor = "forestgreen";
+body.appendChild(openRumiBook);
+openRumiBook.appendChild(rumiBookContent);
+openRumiBook.appendChild(closeRumiBook);
+closeRumiBook.appendChild(closeRumiBookButton);
+rumiBookContent.appendChild(rumiBlankSide);
+rumiBookContent.appendChild(rumiBookDetails);
+rumiBookContent.appendChild(rumiPageSides);
+rumiPageSides.appendChild(rumiFirstPageEdge);
+rumiPageSides.appendChild(rumiSecondPageEdge);
+rumiPageSides.appendChild(rumiThirdPageEdge);
+rumiBlankSide.appendChild(removeRumiSection);
+removeRumiSection.appendChild(removeRumiButton);
+
+rumiBlankSide.appendChild(rumiReadSection);
+rumiReadSection.appendChild(rumiReadMessage);
+rumiReadSection.appendChild(rumiReadAlignBox);
+rumiReadAlignBox.appendChild(rumiYesReadButton);
+rumiReadAlignBox.appendChild(rumiNoReadButton);
+rumiReadAlignBox.appendChild(rumiUpdateButton); 
+rumiBookDetails.appendChild(printRumiTitle);
+rumiBookDetails.appendChild(printRumiAuthor);
+rumiBookDetails.appendChild(printRumiGenre);
+rumiBookDetails.appendChild(printRumiPages);
+newRumiBook.addEventListener('click', () => {
+    openRumiBook.style.display = "flex";
+
+    rumiYesReadButton.addEventListener('click', () => {
+        rumiBook.read = "read";
+        rumiYesReadButton.classList.add('invisible');
+        rumiNoReadButton.classList.add('invisible');
+        rumiUpdateButton.classList.remove('invisible');
+        rumiReadMessage.textContent = "Status: read";
+
+    })
+    rumiNoReadButton.addEventListener('click', () => {
+        rumiBook.read = "not read";
+        rumiYesReadButton.classList.add('invisible');
+        rumiNoReadButton.classList.add('invisible');
+        rumiUpdateButton.classList.remove('invisible');
+        rumiReadMessage.textContent = "Status: unread";
+    })
+    rumiUpdateButton.addEventListener('click', () => {
+        rumiReadMessage.textContent = "Have you read this book?"
+        rumiUpdateButton.classList.add('invisible');
+        rumiYesReadButton.classList.remove('invisible');
+        rumiNoReadButton.classList.remove('invisible');
+    })            
+    removeRumiButton.addEventListener('click', () => {               
+        removeRumiButton.classList.add("invisible");
+        const confirmDeleteRumi = document.createElement('p');
+        confirmDeleteRumi.textContent = `Are you sure you want to remove ${rumiBook.title}?`;
+        confirmDeleteRumi.classList.add("delete-message");
+        removeRumiSection.appendChild(confirmDeleteRumi);
+        const alignRumiBox = document.createElement('div');
+        alignRumiBox.classList.add('align-box');
+        removeRumiSection.appendChild(alignRumiBox);
+        const yesDeleteRumiButton = document.createElement('button');
+        yesDeleteRumiButton.textContent = "yes";
+        yesDeleteRumiButton.classList.add("yes", 'book-button');
+        alignRumiBox.appendChild(yesDeleteRumiButton);
+        yesDeleteRumiButton.addEventListener('click', () => {
+            newRumiBook.remove();
+            openRumiBook.remove();
+            const removeRumiBook = myLibrary.findIndex(book =>
+                book.title === rumiBook.title && book.author === rumiBook.author && book.pages === rumiBook.pages && book.genre === rumiBook.genre
+            );
+            console.log(removeRumiBook);
+            if (removeRumiBook !== -1) {
+                myLibrary.splice(removeRumiBook, 1);
+                console.log(`${rumiBook.title} was removed. Check the library`);
+                console.log(myLibrary);
+            } else {
+                console.log("something went wrong.");
+                console.log(myLibrary);
+            }             
+        })
+        const noDeleteRumiButton = document.createElement('button');
+        noDeleteRumiButton.textContent = "no";
+        noDeleteRumiButton.classList.add("no", 'book-button');
+        alignRumiBox.appendChild(noDeleteRumiButton);
+
+        noDeleteRumiButton.addEventListener('click', () => {
+            removeRumiButton.classList.remove("invisible");
+            alignRumiBox.remove();
+            confirmDeleteRumi.remove();
+        })
+    })
+})
+closeRumiBookButton.addEventListener('click', () => {
+    openRumiBook.style.display = "none";
+})
+
+butterflyBook = new Book("The Butterfly Garden", "Dot Hutchison", "286", "Horror & Thriller");
+myLibrary.push(butterflyBook);   
+const newButterflyBook = document.createElement('div');
+const newButterflyTitle = document.createElement('p');
+newButterflyTitle.textContent = `${butterflyBook.title}`;
+newButterflyBook.style.backgroundColor = "midnightblue";
+newButterflyBook.classList.add('book');
+newButterflyTitle.classList.add('title');
+newButterflyTitle.style.color = "chocolate";
+firstShelf.appendChild(newButterflyBook);
+newButterflyBook.appendChild(newButterflyTitle);
+const openButterflyBook = document.createElement('div');
+const closeButterflyBook = document.createElement('div');
+const closeButterflyBookButton = document.createElement('img');
+const butterflyBookContent = document.createElement('div');
+openButterflyBook.classList.add('open-book-modal');
+closeButterflyBook.classList.add("close-box");       
+closeButterflyBookButton.src = "Assets/Images/x-square.svg";
+closeButterflyBookButton.classList.add("close-book");        
+butterflyBookContent.classList.add('book-modal-content');
+const butterflyBlankSide = document.createElement('div');
+const butterflyBookDetails = document.createElement('div');
+const butterflyPageSides = document.createElement('div');
+const butterflyFirstPageEdge = document.createElement('div');
+const butterflySecondPageEdge = document.createElement('div');
+const butterflyThirdPageEdge = document.createElement('div');
+const printButterflyTitle = document.createElement('p');
+const printButterflyAuthor = document.createElement('p');
+const printButterflyGenre = document.createElement('p');
+const printButterflyPages = document.createElement('p');
+const removeButterflySection = document.createElement('div');
+const removeButterflyButton = document.createElement('button');
+const butterflyReadSection = document.createElement('div');
+const butterflyReadMessage = document.createElement('p');
+const butterflyReadAlignBox = document.createElement('div');
+const butterflyYesReadButton = document.createElement('button');
+const butterflyNoReadButton = document.createElement('button');
+const butterflyUpdateButton = document.createElement('button');
+printButterflyTitle.textContent = `${butterflyBook.title}`;        
+printButterflyAuthor.textContent = `Written by ${butterflyBook.author}`;
+printButterflyGenre.textContent = `Genre: ${butterflyBook.genre}`;
+printButterflyPages.textContent = `Number of Pages: ${butterflyBook.pages}`;
+removeButterflyButton.textContent = "Remove book";
+butterflyReadMessage.textContent = "Have you read this book?";
+butterflyYesReadButton.textContent = "yes";
+butterflyNoReadButton.textContent = "not yet";
+butterflyUpdateButton.textContent = "update status";
+butterflyBlankSide.classList.add('blank-side');
+butterflyReadSection.classList.add('read-box');
+removeButterflySection.classList.add('remove-box');
+removeButterflyButton.classList.add('remove-option', 'book-button');
+butterflyReadMessage.classList.add('read-message');
+butterflyReadAlignBox.classList.add('align-box');
+butterflyYesReadButton.classList.add('yes', 'book-button');
+butterflyNoReadButton.classList.add('no', 'book-button');
+butterflyUpdateButton.classList.add('update', 'invisible', 'book-button');        
+butterflyBookDetails.classList.add('details');
+butterflyPageSides.classList.add('page-sides');
+butterflyFirstPageEdge.classList.add('edges', 'first-edge');
+butterflySecondPageEdge.classList.add('edges', 'second-edge');
+butterflyThirdPageEdge.classList.add('edges', 'third-edge');
+printButterflyTitle.classList.add('title-display');
+printButterflyAuthor.classList.add('author-display');
+printButterflyGenre.classList.add('genre-display');
+printButterflyPages.classList.add('pages-display');
+butterflyBookContent.style.borderColor = "forestgreen";
+
+body.appendChild(openButterflyBook);
+openButterflyBook.appendChild(butterflyBookContent);
+openButterflyBook.appendChild(closeButterflyBook);
+closeButterflyBook.appendChild(closeButterflyBookButton);
+butterflyBookContent.appendChild(butterflyBlankSide);
+butterflyBookContent.appendChild(butterflyBookDetails);
+butterflyBookContent.appendChild(butterflyPageSides);
+butterflyPageSides.appendChild(butterflyFirstPageEdge);
+butterflyPageSides.appendChild(butterflySecondPageEdge);
+butterflyPageSides.appendChild(butterflyThirdPageEdge);
+butterflyBlankSide.appendChild(removeButterflySection);
+removeButterflySection.appendChild(removeButterflyButton);
+
+butterflyBlankSide.appendChild(butterflyReadSection);
+butterflyReadSection.appendChild(butterflyReadMessage);
+butterflyReadSection.appendChild(butterflyReadAlignBox);
+butterflyReadAlignBox.appendChild(butterflyYesReadButton);
+butterflyReadAlignBox.appendChild(butterflyNoReadButton);
+butterflyReadAlignBox.appendChild(butterflyUpdateButton); 
+butterflyBookDetails.appendChild(printButterflyTitle);
+butterflyBookDetails.appendChild(printButterflyAuthor);
+butterflyBookDetails.appendChild(printButterflyGenre);
+butterflyBookDetails.appendChild(printButterflyPages);
+newButterflyBook.addEventListener('click', () => {
+    openButterflyBook.style.display = "flex";
+
+    butterflyYesReadButton.addEventListener('click', () => {
+        butterflyBook.read = "read";
+        butterflyYesReadButton.classList.add('invisible');
+        butterflyNoReadButton.classList.add('invisible');
+        butterflyUpdateButton.classList.remove('invisible');
+        butterflyReadMessage.textContent = "Status: read";
+
+    })
+    butterflyNoReadButton.addEventListener('click', () => {
+        butterflyBook.read = "not read";
+        butterflyYesReadButton.classList.add('invisible');
+        butterflyNoReadButton.classList.add('invisible');
+        butterflyUpdateButton.classList.remove('invisible');
+        butterflyReadMessage.textContent = "Status: unread";
+    })
+    butterflyUpdateButton.addEventListener('click', () => {
+        butterflyReadMessage.textContent = "Have you read this book?"
+        butterflyUpdateButton.classList.add('invisible');
+        butterflyYesReadButton.classList.remove('invisible');
+        butterflyNoReadButton.classList.remove('invisible');
+    })            
+    removeButterflyButton.addEventListener('click', () => {               
+        removeButterflyButton.classList.add("invisible");
+        const confirmDeleteButterfly = document.createElement('p');
+        confirmDeleteButterfly.textContent = `Are you sure you want to remove ${butterflyBook.title}?`;
+        confirmDeleteButterfly.classList.add("delete-message");
+        removeButterflySection.appendChild(confirmDeleteButterfly);
+        const alignButterflyBox = document.createElement('div');
+        alignButterflyBox.classList.add('align-box');
+        removeButterflySection.appendChild(alignButterflyBox);
+        const yesDeleteButterflyButton = document.createElement('button');
+        yesDeleteButterflyButton.textContent = "yes";
+        yesDeleteButterflyButton.classList.add("yes", 'book-button');
+        alignButterflyBox.appendChild(yesDeleteButterflyButton);
+        yesDeleteButterflyButton.addEventListener('click', () => {
+            newButterflyBook.remove();
+            openButterflyBook.remove();
+            const removeButterflyBook = myLibrary.findIndex(book =>
+                book.title === butterflyBook.title && book.author === butterflyBook.author && book.pages === butterflyBook.pages && book.genre === butterflyBook.genre
+            );
+            console.log(removeButterflyBook);
+            if (removeButterflyBook !== -1) {
+                myLibrary.splice(removeButterflyBook, 1);
+                console.log(`${butterflyBook.title} was removed. Check the library`);
+                console.log(myLibrary);
+            } else {
+                console.log("something went wrong.");
+                console.log(myLibrary);
+            }                  
+        })
+        const noDeleteButterflyButton = document.createElement('button');
+        noDeleteButterflyButton.textContent = "no";
+        noDeleteButterflyButton.classList.add("no", 'book-button');
+        alignButterflyBox.appendChild(noDeleteButterflyButton);
+        noDeleteButterflyButton.addEventListener('click', () => {
+            removeButterflyButton.classList.remove("invisible");
+            alignButterflyBox.remove();
+            confirmDeleteButterfly.remove();
+        })
+    })
+})
+closeButterflyBookButton.addEventListener('click', () => {
+    openButterflyBook.style.display = "none";
+})
+
+console.log(myLibrary);
+
+
 // Function to transform any string input into a title case version of the string
 function titleCase(string) {
     const newString = string
@@ -328,7 +802,7 @@ submitButton.addEventListener('click', () => {
                 console.log(`Number of books on the fifth shelf: ${fifthShelfBooks}`);
                 console.log(`Remaining avaiable shelf space: ${fifthShelfSpace}px`);
             } else {
-                alert("The library is full and can no longer accept any more donations!");
+                alert("");
             }
 
             newBook.appendChild(newTitle);
@@ -457,6 +931,22 @@ submitButton.addEventListener('click', () => {
             bookPagesInput.disabled = true;
             bookGenreOptions.disabled = true;
             submitButton.disabled = true;
+
+            header.textContent = `The library is full and can no longer accept any more donations!`;
+            header.classList.add("submitted-header");
+            submitDiv.style.gridTemplateRows = "1fr 1fr";
+        
+            messageBox.classList.add('action');
+            messageBox.textContent =  "Or close the catalog and check the bookcase";
+            
+            newBookInputs.forEach((input) => {
+                input.classList.remove("new-input");
+                input.classList.add("invisible");
+            });
+            
+            submitButton.style.display = "block";
+            donateButton.style.display = "none";
+            searchButton.style.display = "none";
             const fullMessage = document.createElement('p');
             fullMessage.textContent = "The library is full and cannot accept donations anymore.";
             fullMessage.classList.add('error');
