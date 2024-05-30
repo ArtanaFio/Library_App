@@ -542,7 +542,7 @@ closeButterflyBookButton.addEventListener('click', () => {
 })
 
 console.log(myLibrary);
-
+console.log(`Initial number of books on the first shelf: ${firstShelf.children.length}`);
 
 // Function to transform any string input into a title case version of the string
 function titleCase(string) {
@@ -627,11 +627,11 @@ submitButton.addEventListener('click', () => {
         
         if (/*!bookDuplicate && */myLibrary.length < maxLibraryCapacity && (bookTitle !== '' && bookAuthor !== '' && bookPages !== '' && bookGenre !== '') && (bookTitle !== 'Title' && bookTitle !== 'Book Title') && (bookAuthor !== 'First & Last Name' && bookAuthor !== 'Author' && bookAuthor !== 'Author Name' && bookAuthor !== 'First Last' &&  bookAuthor !== 'First Name' &&  bookAuthor !== 'Last Name') && (bookPages >= 5)) {
             
-                // Creates a book object from correct user input
-                const libraryBook = new Book(bookTitle, bookAuthor, bookPages, bookGenre);
-                myLibrary.push(libraryBook);
-                console.log(myLibrary);
-                console.log(`Current number of library books: ${myLibrary.length}`);
+            // Creates a book object from correct user input
+            const libraryBook = new Book(bookTitle, bookAuthor, bookPages, bookGenre);
+            myLibrary.push(libraryBook);
+            console.log(myLibrary);
+            console.log(`Current number of library books: ${myLibrary.length}`);
 
             //clearInput();
             allInput.forEach((input) => {
@@ -781,28 +781,31 @@ submitButton.addEventListener('click', () => {
             let fourthShelfSpace = shelfWidth - (fourthShelfBooks * bookWidth) - ((fourthShelfBooks -1) * shelfGap);
             let fifthShelfSpace = shelfWidth- (fifthShelfBooks * bookWidth) - ((fifthShelfBooks -1) * shelfGap);
 
-            if (libraryBooks <= maximumBooks) {
+            if (libraryBooks <= maximumBooks || firstShelf.children.length < maximumBooks) {
                 firstShelf.appendChild(newBook);
-                console.log(`Number of books on the first shelf: ${libraryBooks}`);
+                console.log(`Number of books on the first shelf: ${firstShelf.children.length}`);
                 console.log(`Remaining avaiable shelf space: ${firstShelfSpace}px`);
-            } else if (libraryBooks > maximumBooks && libraryBooks <= (2 * maximumBooks)) {
+                if (libraryBooks < maximumBooks) {
+                    console.log("The first shelf still has space");
+                } else {
+                    console.log("The first shelf is full");
+                }
+            } else if ((libraryBooks > maximumBooks && libraryBooks <= (2 * maximumBooks)) || secondShelf.children.length < maximumBooks) {
                 secondShelf.appendChild(newBook);
                 console.log(`Number of books on the second shelf: ${secondShelfBooks}`);
                 console.log(`Remaining avaiable shelf space: ${secondShelfSpace}px`);
-            } else if (libraryBooks > maximumBooks && libraryBooks <= (3 * maximumBooks)) {
+            } else if ((libraryBooks > maximumBooks && libraryBooks <= (3 * maximumBooks)) || thirdShelf.children.length < maximumBooks) {
                 thirdShelf.appendChild(newBook);
                 console.log(`Number of books on the third shelf: ${thirdShelfBooks}`);
                 console.log(`Remaining avaiable shelf space: ${thirdShelfSpace}px`);
-            } else if (libraryBooks > maximumBooks && libraryBooks <= (4 * maximumBooks)) {
+            } else if ((libraryBooks > maximumBooks && libraryBooks <= (4 * maximumBooks)) || fourthShelf.children.length < maximumBooks) {
                 fourthShelf.appendChild(newBook);
                 console.log(`Number of books on the fourth shelf: ${fourthShelfBooks}`);
                 console.log(`Remaining avaiable shelf space: ${fourthShelfSpace}px`);
-            } else if (libraryBooks > maximumBooks && libraryBooks <= (5 * maximumBooks)) {
+            } else if ((libraryBooks > maximumBooks && libraryBooks <= (5 * maximumBooks)) || fifthShelf.children.length < maximumBooks) {
                 fifthShelf.appendChild(newBook);
                 console.log(`Number of books on the fifth shelf: ${fifthShelfBooks}`);
                 console.log(`Remaining avaiable shelf space: ${fifthShelfSpace}px`);
-            } else {
-                alert("");
             }
 
             newBook.appendChild(newTitle);
@@ -932,8 +935,10 @@ submitButton.addEventListener('click', () => {
             bookGenreOptions.disabled = true;
             submitButton.disabled = true;
 
-            header.textContent = `The library is full and can no longer accept any more donations!`;
-            header.classList.add("submitted-header");
+            submitButton.style.display = "none";
+
+            header.textContent = `The library is full and can no longer accept any more donations`;
+            header.classList.add("submitted-header", "error");
             submitDiv.style.gridTemplateRows = "1fr 1fr";
         
             messageBox.classList.add('action');
@@ -944,13 +949,34 @@ submitButton.addEventListener('click', () => {
                 input.classList.add("invisible");
             });
             
-            submitButton.style.display = "block";
+            submitButton.style.display = "none";
             donateButton.style.display = "none";
-            searchButton.style.display = "none";
-            const fullMessage = document.createElement('p');
-            fullMessage.textContent = "The library is full and cannot accept donations anymore.";
-            fullMessage.classList.add('error');
-            messageBox.appendChild(fullMessage);
+            searchButton.style.display = "block";
+            searchButton.style.gridColumn = "1 / 3";
+        } else {
+            bookTitleInput.disabled = false;
+            bookAuthorInput.disabled = false;
+            bookPagesInput.disabled = false;
+            bookGenreOptions.disabled = false;
+            submitButton.disabled = false;
+
+            header.textContent = `Do you want to donate or search for a book?`; // Fix the issue of this replaceing `You have added "${bookTitle}" to the library!` after submitting books;
+            header.classList.add("submitted-header");
+            submitDiv.style.gridTemplateRows = "1fr 1fr";
+        
+            messageBox.classList.add('action');
+            messageBox.textContent =  "Or close the catalog and browse the bookcase";
+
+            newBookInputs.forEach((input) => {
+                input.classList.remove("new-input");
+                input.classList.add("invisible");
+            });
+        
+            submitButton.style.display = "none";
+            donateButton.style.display = "block";
+            donateButton.style.gridColumn = "1 / 2";
+            searchButton.style.display = "block";
+            searchButton.style.gridColumn = "2 / 3";
         }
     };
     addBookToLibrary();
@@ -968,24 +994,61 @@ donateButton.addEventListener('click', () => {
         input.classList.add("new-input");
     });
     donateButton.style.display = "none";
-    searchButton.style.display = "none";
+    searchButton.style.display = "block";
     submitButton.style.display = "block";
+    submitButton.style.gridColumn = "1 / 2";
 });
 
 searchButton.addEventListener('click', () => {
-    messageBox.textContent = "Search by genre and author: coming soon!";
+    messageBox.textContent = "The search feature is coming soon!";
     messageBox.classList.remove('action');
-    header.textContent = "Search the catalog:";
     header.classList.add("normal-header");
     header.classList.remove("submitted-header");
     searchButton.style.display = "none";
-    donateButton.style.gridColumn = "1 / 3";
+
+    if (header.textContent = "Enter your book into the Catalog:") { // Fix this issue of displaying the appropriate header text and buttons
+        submitButton.style.gridColumn = "1 / 3";
+    } else {
+        donateButton.style.gridColumn = "1 / 3";
+    }
+    /*
+    if (donateButton.style.display = "none") {
+        submitButton.style.gridColumn = "1 / 3";
+        header.textContent = "Enter your book into the Catalog:";
+    } else if (donateButton.style.display = "block") {
+        donateButton.style.gridColumn = "1 / 3";
+        header.textContent = "Search the catalog";
+    }*/
 });
 
 
 // Open the book catalog submit form
 bookCatalog.addEventListener('click', () => {
     bookModal.style.display = "flex";
+    console.log("myLibrary.length: " + myLibrary.length);
+    console.log("maxLibraryCapacity: " + maxLibraryCapacity);
+    if (myLibrary.length < maxLibraryCapacity) {
+        bookTitleInput.disabled = false;
+        bookAuthorInput.disabled = false;
+        bookPagesInput.disabled = false;
+        bookGenreOptions.disabled = false;
+        submitButton.disabled = false;
+
+        header.textContent = "Enter your book into the Catalog:";
+        header.classList.add("normal-header");
+        header.classList.remove("submitted-header", "error");
+        submitDiv.style.gridTemplateRows = "1fr 1fr";
+        messageBox.textContent = "";
+        messageBox.classList.remove('action');
+        newBookInputs.forEach((input) => {
+            input.classList.remove("invisible");
+            input.classList.add("new-input");
+        });
+        donateButton.style.display = "none";
+        searchButton.style.display = "block";
+        submitButton.style.display = "block";
+        submitButton.style.gridColumn = "1 / 2";
+    }
 });
 
 // Close the book modal
