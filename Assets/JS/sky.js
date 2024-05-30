@@ -11,7 +11,7 @@ const sunRays = document.createElement("div");
 const sun = document.createElement("div");
 const stars = document.createElement("div");
 const farStars = document.createElement("div");
-    
+
 sky.appendChild(sunRays);
 sunRays.appendChild(sun);
 sky.appendChild(cloudOne);
@@ -49,7 +49,7 @@ function changeSky() {
     cloudBaseTwo.classList.remove("cloud-base", "pale-yellow-clouds", "white-clouds", "pink-clouds");
     cloudMiniBumpTwo.classList.remove("cloud-mini-bump", "mini-two", "pale-yellow-clouds", "white-clouds", "pink-clouds");
     cloudMainBumpTwo.classList.remove("cloud-main-bump", "main-two", "pale-yellow-clouds", "white-clouds", "pink-clouds");
-    sunRays.classList.remove("sun-rays");
+    sunRays.classList.remove("sun-rays", "no-rays");
     sun.classList.remove("sun", "sunrise", "sunset");
     stars.classList.remove("stars");
     farStars.classList.remove("small-stars");
@@ -88,7 +88,7 @@ function changeSky() {
         cloudBaseTwo.classList.add("cloud-base", "pink-clouds");
         cloudMiniBumpTwo.classList.add("cloud-mini-bump", "mini-two", "pink-clouds");
         cloudMainBumpTwo.classList.add("cloud-main-bump", "main-two", "pink-clouds");
-        sunRays.classList.add("sun-rays");
+        sunRays.classList.add("sun-rays", "no-rays");
         sun.classList.add("sun", "sunset");
 
     } else if (hour >= 20 || hour < 5) {
