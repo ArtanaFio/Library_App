@@ -923,7 +923,8 @@ submitButton.addEventListener('click', () => {
             donateButton.style.display = "block";
             searchButton.style.display = "block";
         }
-
+        
+        
         if (myLibrary.length >= maxLibraryCapacity) {
             bookTitleInput.disabled = true;
             bookAuthorInput.disabled = true;
@@ -934,8 +935,8 @@ submitButton.addEventListener('click', () => {
             submitButton.style.display = "none";
 
             header.textContent = `The library is full and can no longer accept any more donations`;
-            header.classList.add("submitted-header", "error");
-            submitDiv.style.gridTemplateRows = "1fr 1fr";
+            header.classList.add("submitted-header", "full");
+            submitDiv.style.gridTemplateRows = "55px 1fr";
         
             messageBox.classList.add('action');
             messageBox.textContent =  "Or close the catalog and check the bookcase";
@@ -949,34 +950,11 @@ submitButton.addEventListener('click', () => {
             donateButton.style.display = "none";
             searchButton.style.display = "block";
             searchButton.style.gridColumn = "1 / 3";
-        } else {
-            bookTitleInput.disabled = false;
-            bookAuthorInput.disabled = false;
-            bookPagesInput.disabled = false;
-            bookGenreOptions.disabled = false;
-            submitButton.disabled = false;
-
-            header.classList.add("submitted-header");
-            submitDiv.style.gridTemplateRows = "1fr 1fr";
-        
-            messageBox.classList.add('action');
-            messageBox.textContent =  "Or close the catalog and browse the bookcase";
-
-            newBookInputs.forEach((input) => {
-                input.classList.remove("new-input");
-                input.classList.add("invisible");
-            });
-        
-            submitButton.style.display = "none";
-            donateButton.style.display = "block";
-            donateButton.style.gridColumn = "1 / 2";
-            searchButton.style.display = "block";
-            searchButton.style.gridColumn = "2 / 3";
         }
+        
     };
     addBookToLibrary();
 });
-
 
 donateButton.addEventListener('click', () => {
     header.textContent = "Enter your book into the Catalog:";
@@ -1015,8 +993,8 @@ bookCatalog.addEventListener('click', () => {
 
         header.textContent = "Enter your book into the Catalog:";
         header.classList.add("normal-header");
-        header.classList.remove("submitted-header", "error");
-        submitDiv.style.gridTemplateRows = "1fr 1fr";
+        header.classList.remove("submitted-header", "full");
+        submitDiv.style.gridTemplateRows = "55px 1fr";
         messageBox.textContent = "";
         messageBox.classList.remove('action');
         newBookInputs.forEach((input) => {

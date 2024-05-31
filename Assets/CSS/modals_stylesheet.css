@@ -124,6 +124,7 @@ button {
     font-size: 0.5rem;
     font-weight: bold;
     width: 150px;
+    height: 7vmin;
     padding: 5px;
     border-radius: 5px;
     justify-self: center;
@@ -168,6 +169,10 @@ button {
 
 .error {
     font-weight: bold;
+    color: red;
+}
+
+.full {
     color: darkred;
 }
 
