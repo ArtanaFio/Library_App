@@ -10,6 +10,7 @@ const closeButton = document.querySelector(".close");
 const submitButton = document.querySelector(".submit-button");
 const donateButton = document.querySelector(".donate-button");
 const searchButton = document.querySelector(".search-button");
+searchButton.classList.add("working-search-button");
 
 const header = document.querySelector("h1");
 const submitDiv = document.querySelector(".submit-form");
@@ -40,11 +41,6 @@ let bookTitle;
 let bookAuthor;
 let bookPages;
 let bookGenre;
-
-bookTitleInput.value = "Patience";
-bookAuthorInput.value = "Faith Hope";
-bookPagesInput.value = "130";
-bookGenreOptions.selectedIndex = 10;
 
 console.log(`Shelf width: ${shelfWidth}px`);
 console.log(`Book width: ${bookWidth}px`);
@@ -625,7 +621,7 @@ submitButton.addEventListener('click', () => {
             messageBox.appendChild(pagesMessage);
         }
         
-        if (/*!bookDuplicate && */myLibrary.length < maxLibraryCapacity && (bookTitle !== '' && bookAuthor !== '' && bookPages !== '' && bookGenre !== '') && (bookTitle !== 'Title' && bookTitle !== 'Book Title') && (bookAuthor !== 'First & Last Name' && bookAuthor !== 'Author' && bookAuthor !== 'Author Name' && bookAuthor !== 'First Last' &&  bookAuthor !== 'First Name' &&  bookAuthor !== 'Last Name') && (bookPages >= 5)) {
+        if (!bookDuplicate && myLibrary.length < maxLibraryCapacity && (bookTitle !== '' && bookAuthor !== '' && bookPages !== '' && bookGenre !== '') && (bookTitle !== 'Title' && bookTitle !== 'Book Title') && (bookAuthor !== 'First & Last Name' && bookAuthor !== 'Author' && bookAuthor !== 'Author Name' && bookAuthor !== 'First Last' &&  bookAuthor !== 'First Name' &&  bookAuthor !== 'Last Name') && (bookPages >= 5)) {
             
             // Creates a book object from correct user input
             const libraryBook = new Book(bookTitle, bookAuthor, bookPages, bookGenre);
@@ -633,7 +629,7 @@ submitButton.addEventListener('click', () => {
             console.log(myLibrary);
             console.log(`Current number of library books: ${myLibrary.length}`);
 
-            //clearInput();
+            clearInput();
             allInput.forEach((input) => {
                 input.addEventListener('click', () => {
                     clearNotices();
@@ -960,7 +956,6 @@ submitButton.addEventListener('click', () => {
             bookGenreOptions.disabled = false;
             submitButton.disabled = false;
 
-            header.textContent = `Do you want to donate or search for a book?`; // Fix the issue of this replaceing `You have added "${bookTitle}" to the library!` after submitting books;
             header.classList.add("submitted-header");
             submitDiv.style.gridTemplateRows = "1fr 1fr";
         
@@ -996,29 +991,13 @@ donateButton.addEventListener('click', () => {
     donateButton.style.display = "none";
     searchButton.style.display = "block";
     submitButton.style.display = "block";
-    submitButton.style.gridColumn = "1 / 2";
 });
 
 searchButton.addEventListener('click', () => {
     messageBox.textContent = "The search feature is coming soon!";
-    messageBox.classList.remove('action');
     header.classList.add("normal-header");
-    header.classList.remove("submitted-header");
-    searchButton.style.display = "none";
-
-    if (header.textContent = "Enter your book into the Catalog:") { // Fix this issue of displaying the appropriate header text and buttons
-        submitButton.style.gridColumn = "1 / 3";
-    } else {
-        donateButton.style.gridColumn = "1 / 3";
-    }
-    /*
-    if (donateButton.style.display = "none") {
-        submitButton.style.gridColumn = "1 / 3";
-        header.textContent = "Enter your book into the Catalog:";
-    } else if (donateButton.style.display = "block") {
-        donateButton.style.gridColumn = "1 / 3";
-        header.textContent = "Search the catalog";
-    }*/
+    searchButton.disabled = "true";
+    searchButton.classList.remove("working-search-button");
 });
 
 
@@ -1047,14 +1026,14 @@ bookCatalog.addEventListener('click', () => {
         donateButton.style.display = "none";
         searchButton.style.display = "block";
         submitButton.style.display = "block";
-        submitButton.style.gridColumn = "1 / 2";
+        searchButton.style.gridColumn = "2 / 3";
     }
 });
 
 // Close the book modal
 closeButton.addEventListener('click', () => {
     bookModal.style.display = "none";
-    //clearInput();
+    clearInput();
     clearNotices();
     console.log("Books in the library:");
     console.log(myLibrary);
