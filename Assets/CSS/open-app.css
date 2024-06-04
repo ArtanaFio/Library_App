@@ -1,0 +1,73 @@
+#app-sign {
+    position: absolute;
+    background-color: gold;
+    border: 5px solid darkgoldenrod;
+    border-radius: 25px;
+    color: darkgoldenrod;
+    padding: 5vmin;
+    font-size: 3vmax;
+    font-weight: bold;
+    text-shadow: none;
+    top: 0vh;
+    opacity: 0;
+    background-image: linear-gradient(135deg, gold, goldenrod, gold, palegoldenrod);
+    animation: 6s slideDown;
+}
+
+@keyframes slideDown {
+    0% {
+        top: 0vh;
+        opacity: 0;
+        background-image: linear-gradient(135deg, gold, gold);
+        color: darkgoldenrod;
+        text-shadow: none;
+    }
+    30% {
+        top: 40vh;
+        opacity: 1;
+        background-image: linear-gradient(135deg, gold, gold);
+        color: darkgoldenrod;
+        text-shadow: none;
+    }
+    33% {
+        top: 40vh;
+        opacity: 1;
+        background-image: linear-gradient(135deg, palegoldenrod, gold, goldenrod, gold);
+        color: darkgoldenrod;
+        text-shadow: none;
+    }
+    36% {
+        top: 40vh;
+        opacity: 1;
+        background-image: linear-gradient(135deg, gold, palegoldenrod, gold, goldenrod);
+        color: darkgoldenrod;
+        text-shadow: none;
+    }
+    39% {
+        top: 40vh;
+        opacity: 1;
+        background-image: linear-gradient(135deg, goldenrod, gold, palegoldenrod, gold);
+        color: darkgoldenrod;
+        text-shadow: none;
+    }
+    42% {
+        top: 40vh;
+        opacity: 1;
+        background-image: linear-gradient(135deg, gold, gold, gold, palegoldenrod);
+        color: darkgoldenrod;
+        text-shadow: none;
+    }
+    80% {
+        top: 40vh;
+        opacity: 1;
+        background-image: linear-gradient(135deg, palegoldenrod, gold, gold, palegoldenrod);
+        color: #fff9bb;
+        text-shadow:  5px 5px 2px darkgoldenrod;
+    }
+    99% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 0;
+    }
+}
