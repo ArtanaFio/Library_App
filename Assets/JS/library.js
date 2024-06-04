@@ -85,6 +85,7 @@ closeQueenBook.classList.add("close-box");
 closeQueenBookButton.src = "Assets/Images/x-square.svg";
 closeQueenBookButton.classList.add("close-book");        
 queenBookContent.classList.add('book-modal-content');
+
 const queenBlankSide = document.createElement('div');
 const queenBookDetails = document.createElement('div');
 const queenPageSides = document.createElement('div');
@@ -95,8 +96,14 @@ const printQueenTitle = document.createElement('p');
 const printQueenAuthor = document.createElement('p');
 const printQueenGenre = document.createElement('p');
 const printQueenPages = document.createElement('p');
+
 const removeQueenSection = document.createElement('div');
 const removeQueenButton = document.createElement('button');
+const confirmDeleteQueen = document.createElement('p');
+const alignQueenBox = document.createElement('div');
+const yesDeleteQueenButton = document.createElement('button');
+const noDeleteQueenButton = document.createElement('button');
+
 const queenReadSection = document.createElement('div');
 const queenReadMessage = document.createElement('p');
 const queenReadAlignBox = document.createElement('div');
@@ -114,8 +121,10 @@ queenNoReadButton.textContent = "not yet";
 queenUpdateButton.textContent = "update status";
 queenBlankSide.classList.add('blank-side');
 queenReadSection.classList.add('read-box');
+
 removeQueenSection.classList.add('remove-box');
 removeQueenButton.classList.add('remove-option', 'book-button');
+
 queenReadMessage.classList.add('read-message');
 queenReadAlignBox.classList.add('align-box');
 queenYesReadButton.classList.add('yes', 'book-button');
@@ -141,8 +150,10 @@ queenBookContent.appendChild(queenPageSides);
 queenPageSides.appendChild(queenFirstPageEdge);
 queenPageSides.appendChild(queenSecondPageEdge);
 queenPageSides.appendChild(queenThirdPageEdge);
+
 queenBlankSide.appendChild(removeQueenSection);
 removeQueenSection.appendChild(removeQueenButton);
+
 queenBlankSide.appendChild(queenReadSection);
 queenReadSection.appendChild(queenReadMessage);
 queenReadSection.appendChild(queenReadAlignBox);
@@ -178,18 +189,20 @@ newQueenBook.addEventListener('click', () => {
         queenNoReadButton.classList.remove('invisible');
     })            
     removeQueenButton.addEventListener('click', () => {               
-        removeQueenButton.classList.add("invisible");
-        const confirmDeleteQueen = document.createElement('p');
+        //removeQueenButton.classList.add("invisible");
+        removeQueenButton.remove();
+        
         confirmDeleteQueen.textContent = `Are you sure you want to remove ${scotQueen.title}?`;
         confirmDeleteQueen.classList.add("delete-message");
         removeQueenSection.appendChild(confirmDeleteQueen);
-        const alignQueenBox = document.createElement('div');
+        
         alignQueenBox.classList.add('align-box');
         removeQueenSection.appendChild(alignQueenBox);
-        const yesDeleteQueenButton = document.createElement('button');
+        
         yesDeleteQueenButton.textContent = "yes";
         yesDeleteQueenButton.classList.add("yes", 'book-button');
         alignQueenBox.appendChild(yesDeleteQueenButton);
+
         yesDeleteQueenButton.addEventListener('click', () => {
             newQueenBook.remove();
             openQueenBook.remove();
@@ -207,12 +220,13 @@ newQueenBook.addEventListener('click', () => {
                 console.log(myLibrary);
             }               
         })
-        const noDeleteQueenButton = document.createElement('button');
+        
         noDeleteQueenButton.textContent = "no";
         noDeleteQueenButton.classList.add("no", 'book-button');
         alignQueenBox.appendChild(noDeleteQueenButton);
         noDeleteQueenButton.addEventListener('click', () => {
-            removeQueenButton.classList.remove("invisible");
+            removeQueenSection.appendChild(removeQueenButton);
+            //removeQueenButton.classList.remove("invisible");
             alignQueenBox.remove();
             confirmDeleteQueen.remove();
         })
@@ -251,8 +265,14 @@ const printRumiTitle = document.createElement('p');
 const printRumiAuthor = document.createElement('p');
 const printRumiGenre = document.createElement('p');
 const printRumiPages = document.createElement('p');
+
 const removeRumiSection = document.createElement('div');
 const removeRumiButton = document.createElement('button');
+const confirmDeleteRumi = document.createElement('p');
+const alignRumiBox = document.createElement('div');
+const yesDeleteRumiButton = document.createElement('button');
+const noDeleteRumiButton = document.createElement('button');
+
 const rumiReadSection = document.createElement('div');
 const rumiReadMessage = document.createElement('p');
 const rumiReadAlignBox = document.createElement('div');
@@ -270,8 +290,10 @@ rumiNoReadButton.textContent = "not yet";
 rumiUpdateButton.textContent = "update status";
 rumiBlankSide.classList.add('blank-side');
 rumiReadSection.classList.add('read-box');
+
 removeRumiSection.classList.add('remove-box');
 removeRumiButton.classList.add('remove-option', 'book-button');
+
 rumiReadMessage.classList.add('read-message');
 rumiReadAlignBox.classList.add('align-box');
 rumiYesReadButton.classList.add('yes', 'book-button');
@@ -297,6 +319,7 @@ rumiBookContent.appendChild(rumiPageSides);
 rumiPageSides.appendChild(rumiFirstPageEdge);
 rumiPageSides.appendChild(rumiSecondPageEdge);
 rumiPageSides.appendChild(rumiThirdPageEdge);
+
 rumiBlankSide.appendChild(removeRumiSection);
 removeRumiSection.appendChild(removeRumiButton);
 
@@ -336,17 +359,19 @@ newRumiBook.addEventListener('click', () => {
     })            
     removeRumiButton.addEventListener('click', () => {               
         removeRumiButton.classList.add("invisible");
-        const confirmDeleteRumi = document.createElement('p');
+        removeQueenButton.remove();
+        
         confirmDeleteRumi.textContent = `Are you sure you want to remove ${rumiBook.title}?`;
         confirmDeleteRumi.classList.add("delete-message");
         removeRumiSection.appendChild(confirmDeleteRumi);
-        const alignRumiBox = document.createElement('div');
+        
         alignRumiBox.classList.add('align-box');
         removeRumiSection.appendChild(alignRumiBox);
-        const yesDeleteRumiButton = document.createElement('button');
+        
         yesDeleteRumiButton.textContent = "yes";
         yesDeleteRumiButton.classList.add("yes", 'book-button');
         alignRumiBox.appendChild(yesDeleteRumiButton);
+
         yesDeleteRumiButton.addEventListener('click', () => {
             newRumiBook.remove();
             openRumiBook.remove();
@@ -363,7 +388,7 @@ newRumiBook.addEventListener('click', () => {
                 console.log(myLibrary);
             }             
         })
-        const noDeleteRumiButton = document.createElement('button');
+        
         noDeleteRumiButton.textContent = "no";
         noDeleteRumiButton.classList.add("no", 'book-button');
         alignRumiBox.appendChild(noDeleteRumiButton);
@@ -973,6 +998,7 @@ donateButton.addEventListener('click', () => {
 
 searchButton.addEventListener('click', () => {
     messageBox.textContent = "The search feature is coming soon!";
+    
     header.classList.add("normal-header");
     searchButton.disabled = "true";
     searchButton.classList.remove("working-search-button");
