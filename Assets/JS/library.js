@@ -188,8 +188,7 @@ newQueenBook.addEventListener('click', () => {
         queenYesReadButton.classList.remove('invisible');
         queenNoReadButton.classList.remove('invisible');
     })            
-    removeQueenButton.addEventListener('click', () => {               
-        //removeQueenButton.classList.add("invisible");
+    removeQueenButton.addEventListener('click', () => {
         removeQueenButton.remove();
         
         confirmDeleteQueen.textContent = `Are you sure you want to remove ${scotQueen.title}?`;
@@ -226,7 +225,6 @@ newQueenBook.addEventListener('click', () => {
         alignQueenBox.appendChild(noDeleteQueenButton);
         noDeleteQueenButton.addEventListener('click', () => {
             removeQueenSection.appendChild(removeQueenButton);
-            //removeQueenButton.classList.remove("invisible");
             alignQueenBox.remove();
             confirmDeleteQueen.remove();
         })
@@ -436,6 +434,10 @@ const printButterflyGenre = document.createElement('p');
 const printButterflyPages = document.createElement('p');
 const removeButterflySection = document.createElement('div');
 const removeButterflyButton = document.createElement('button');
+const confirmDeleteButterfly = document.createElement('p');
+const alignButterflyBox = document.createElement('div');
+const yesDeleteButterflyButton = document.createElement('button');
+const noDeleteButterflyButton = document.createElement('button');
 const butterflyReadSection = document.createElement('div');
 const butterflyReadMessage = document.createElement('p');
 const butterflyReadAlignBox = document.createElement('div');
@@ -520,14 +522,11 @@ newButterflyBook.addEventListener('click', () => {
     })            
     removeButterflyButton.addEventListener('click', () => {               
         removeButterflyButton.classList.add("invisible");
-        const confirmDeleteButterfly = document.createElement('p');
         confirmDeleteButterfly.textContent = `Are you sure you want to remove ${butterflyBook.title}?`;
         confirmDeleteButterfly.classList.add("delete-message");
         removeButterflySection.appendChild(confirmDeleteButterfly);
-        const alignButterflyBox = document.createElement('div');
         alignButterflyBox.classList.add('align-box');
         removeButterflySection.appendChild(alignButterflyBox);
-        const yesDeleteButterflyButton = document.createElement('button');
         yesDeleteButterflyButton.textContent = "yes";
         yesDeleteButterflyButton.classList.add("yes", 'book-button');
         alignButterflyBox.appendChild(yesDeleteButterflyButton);
@@ -547,7 +546,7 @@ newButterflyBook.addEventListener('click', () => {
                 console.log(myLibrary);
             }                  
         })
-        const noDeleteButterflyButton = document.createElement('button');
+        
         noDeleteButterflyButton.textContent = "no";
         noDeleteButterflyButton.classList.add("no", 'book-button');
         alignButterflyBox.appendChild(noDeleteButterflyButton);
@@ -684,8 +683,14 @@ submitButton.addEventListener('click', () => {
             const printAuthor = document.createElement('p');
             const printGenre = document.createElement('p');
             const printPages = document.createElement('p');
+
             const removeSection = document.createElement('div');
             const removeButton = document.createElement('button');
+            const confirmDelete = document.createElement('p');
+            const alignBox = document.createElement('div');
+            const yesDeleteButton = document.createElement('button');
+            const noDeleteButton = document.createElement('button');
+
             const readSection = document.createElement('div');
             const readMessage = document.createElement('p');
             const readAlignBox = document.createElement('div');
@@ -713,8 +718,10 @@ submitButton.addEventListener('click', () => {
             bookContent.classList.add('book-modal-content');       
             blankSide.classList.add('blank-side');
             readSection.classList.add('read-box');
+
             removeSection.classList.add('remove-box');
             removeButton.classList.add('remove-option', 'book-button');
+
             readMessage.classList.add('read-message');
             readAlignBox.classList.add('align-box');
             yesReadButton.classList.add('yes', 'book-button');
@@ -885,17 +892,16 @@ submitButton.addEventListener('click', () => {
                 removeButton.addEventListener('click', () => {
                     console.log(`${idTitle}, ${idAuthor}, ${idGenre}, ${idPages}`);                
                     removeButton.classList.add("invisible");
-                    const confirmDelete = document.createElement('p');
+                    
                     confirmDelete.textContent = `Are you sure you want to remove ${printTitle.textContent}?`;
                     confirmDelete.classList.add("delete-message");
                     removeSection.appendChild(confirmDelete);
-                    const alignBox = document.createElement('div');
                     alignBox.classList.add('align-box');
                     removeSection.appendChild(alignBox);
-                    const yesDeleteButton = document.createElement('button');
                     yesDeleteButton.textContent = "yes";
                     yesDeleteButton.classList.add("yes", 'book-button');
                     alignBox.appendChild(yesDeleteButton);
+
                     yesDeleteButton.addEventListener('click', () => {
                         newBook.remove();
                         openBook.remove();
@@ -917,7 +923,7 @@ submitButton.addEventListener('click', () => {
                         bookGenreOptions.disabled = false;
                         submitButton.disabled = false;                 
                     })
-                    const noDeleteButton = document.createElement('button');
+                    
                     noDeleteButton.textContent = "no";
                     noDeleteButton.classList.add("no", 'book-button');
                     alignBox.appendChild(noDeleteButton);
