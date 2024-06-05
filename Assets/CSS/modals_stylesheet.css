@@ -210,6 +210,7 @@ button {
     border-radius: 5px;
     display: grid;
     grid-template-columns: 20fr 20fr 1fr;
+    grid-template-rows: 100%;
 }
 
 .book-button {

@@ -51,7 +51,6 @@ console.log("Remaining available shelf space: shelf-width - (number of books * b
 
 // Function to create a "book" object using an object constructor
 function Book(title, author, pages, genre, read) {
-
     // "book" constructor
     this.title = title; // enter a string representing the book's title
     this.author = author; // enter a string representing the author's name
@@ -65,8 +64,7 @@ function Book(title, author, pages, genre, read) {
         return `You have ${this.read ? "read" : "not read"} this book`;
     }
 };
-
-scotQueen = new Book("Embroidering Her Truth: Mary, Queen of Scots and the Language of Power", "Clare Hunter", "400", "History");
+const scotQueen = new Book("Embroidering Her Truth: Mary, Queen of Scots and the Language of Power", "Clare Hunter", "400", "History");
 myLibrary.push(scotQueen);   
 const newQueenBook = document.createElement('div');
 const newQueenTitle = document.createElement('p');
@@ -85,7 +83,6 @@ closeQueenBook.classList.add("close-box");
 closeQueenBookButton.src = "Assets/Images/x-square.svg";
 closeQueenBookButton.classList.add("close-book");        
 queenBookContent.classList.add('book-modal-content');
-
 const queenBlankSide = document.createElement('div');
 const queenBookDetails = document.createElement('div');
 const queenPageSides = document.createElement('div');
@@ -96,14 +93,12 @@ const printQueenTitle = document.createElement('p');
 const printQueenAuthor = document.createElement('p');
 const printQueenGenre = document.createElement('p');
 const printQueenPages = document.createElement('p');
-
 const removeQueenSection = document.createElement('div');
 const removeQueenButton = document.createElement('button');
 const confirmDeleteQueen = document.createElement('p');
 const alignQueenBox = document.createElement('div');
 const yesDeleteQueenButton = document.createElement('button');
 const noDeleteQueenButton = document.createElement('button');
-
 const queenReadSection = document.createElement('div');
 const queenReadMessage = document.createElement('p');
 const queenReadAlignBox = document.createElement('div');
@@ -121,10 +116,8 @@ queenNoReadButton.textContent = "not yet";
 queenUpdateButton.textContent = "update status";
 queenBlankSide.classList.add('blank-side');
 queenReadSection.classList.add('read-box');
-
 removeQueenSection.classList.add('remove-box');
 removeQueenButton.classList.add('remove-option', 'book-button');
-
 queenReadMessage.classList.add('read-message');
 queenReadAlignBox.classList.add('align-box');
 queenYesReadButton.classList.add('yes', 'book-button');
@@ -150,10 +143,8 @@ queenBookContent.appendChild(queenPageSides);
 queenPageSides.appendChild(queenFirstPageEdge);
 queenPageSides.appendChild(queenSecondPageEdge);
 queenPageSides.appendChild(queenThirdPageEdge);
-
 queenBlankSide.appendChild(removeQueenSection);
 removeQueenSection.appendChild(removeQueenButton);
-
 queenBlankSide.appendChild(queenReadSection);
 queenReadSection.appendChild(queenReadMessage);
 queenReadSection.appendChild(queenReadAlignBox);
@@ -166,14 +157,12 @@ queenBookDetails.appendChild(printQueenGenre);
 queenBookDetails.appendChild(printQueenPages);
 newQueenBook.addEventListener('click', () => {
     openQueenBook.style.display = "flex";
-
     queenYesReadButton.addEventListener('click', () => {
         scotQueen.read = "read";
         queenYesReadButton.classList.add('invisible');
         queenNoReadButton.classList.add('invisible');
         queenUpdateButton.classList.remove('invisible');
         queenReadMessage.textContent = "Status: read";
-
     })
     queenNoReadButton.addEventListener('click', () => {
         scotQueen.read = "not read";
@@ -189,23 +178,18 @@ newQueenBook.addEventListener('click', () => {
         queenNoReadButton.classList.remove('invisible');
     })            
     removeQueenButton.addEventListener('click', () => {
-        removeQueenButton.remove();
-        
+        removeQueenButton.remove();        
         confirmDeleteQueen.textContent = `Are you sure you want to remove ${scotQueen.title}?`;
         confirmDeleteQueen.classList.add("delete-message");
-        removeQueenSection.appendChild(confirmDeleteQueen);
-        
+        removeQueenSection.appendChild(confirmDeleteQueen);        
         alignQueenBox.classList.add('align-box');
-        removeQueenSection.appendChild(alignQueenBox);
-        
+        removeQueenSection.appendChild(alignQueenBox);        
         yesDeleteQueenButton.textContent = "yes";
         yesDeleteQueenButton.classList.add("yes", 'book-button');
         alignQueenBox.appendChild(yesDeleteQueenButton);
-
         yesDeleteQueenButton.addEventListener('click', () => {
             newQueenBook.remove();
             openQueenBook.remove();
-
             const removeQueenBook = myLibrary.findIndex(book =>
                 book.title === scotQueen.title && book.author === scotQueen.author && book.pages === scotQueen.pages && book.genre === scotQueen.genre
             );
@@ -214,12 +198,8 @@ newQueenBook.addEventListener('click', () => {
                 myLibrary.splice(removeQueenBook, 1);
                 console.log(`${scotQueen.title} was removed. Check the library`);
                 console.log(myLibrary);
-            } else {
-                console.log("something went wrong.");
-                console.log(myLibrary);
-            }               
-        })
-        
+            }              
+        })        
         noDeleteQueenButton.textContent = "no";
         noDeleteQueenButton.classList.add("no", 'book-button');
         alignQueenBox.appendChild(noDeleteQueenButton);
@@ -233,8 +213,7 @@ newQueenBook.addEventListener('click', () => {
 closeQueenBookButton.addEventListener('click', () => {
     openQueenBook.style.display = "none";
 })
-
-rumiBook = new Book("Rumi's Little Book Of Life: The Garden Of The Soul, The Heart, And The Spirit", ["Jalal al-Din Muhammad Rumi", "Maryam Mafi", "Melita Kolin"], "203", "Poetry");
+const rumiBook = new Book("Rumi's Little Book Of Life: The Garden Of The Soul, The Heart, And The Spirit", ["Jalal al-Din Muhammad Rumi", "Maryam Mafi", "Melita Kolin"], "203", "Poetry");
 myLibrary.push(rumiBook);   
 const newRumiBook = document.createElement('div');
 const newRumiTitle = document.createElement('p');
@@ -263,14 +242,12 @@ const printRumiTitle = document.createElement('p');
 const printRumiAuthor = document.createElement('p');
 const printRumiGenre = document.createElement('p');
 const printRumiPages = document.createElement('p');
-
 const removeRumiSection = document.createElement('div');
 const removeRumiButton = document.createElement('button');
 const confirmDeleteRumi = document.createElement('p');
 const alignRumiBox = document.createElement('div');
 const yesDeleteRumiButton = document.createElement('button');
 const noDeleteRumiButton = document.createElement('button');
-
 const rumiReadSection = document.createElement('div');
 const rumiReadMessage = document.createElement('p');
 const rumiReadAlignBox = document.createElement('div');
@@ -288,10 +265,8 @@ rumiNoReadButton.textContent = "not yet";
 rumiUpdateButton.textContent = "update status";
 rumiBlankSide.classList.add('blank-side');
 rumiReadSection.classList.add('read-box');
-
 removeRumiSection.classList.add('remove-box');
 removeRumiButton.classList.add('remove-option', 'book-button');
-
 rumiReadMessage.classList.add('read-message');
 rumiReadAlignBox.classList.add('align-box');
 rumiYesReadButton.classList.add('yes', 'book-button');
@@ -317,10 +292,8 @@ rumiBookContent.appendChild(rumiPageSides);
 rumiPageSides.appendChild(rumiFirstPageEdge);
 rumiPageSides.appendChild(rumiSecondPageEdge);
 rumiPageSides.appendChild(rumiThirdPageEdge);
-
 rumiBlankSide.appendChild(removeRumiSection);
 removeRumiSection.appendChild(removeRumiButton);
-
 rumiBlankSide.appendChild(rumiReadSection);
 rumiReadSection.appendChild(rumiReadMessage);
 rumiReadSection.appendChild(rumiReadAlignBox);
@@ -333,14 +306,12 @@ rumiBookDetails.appendChild(printRumiGenre);
 rumiBookDetails.appendChild(printRumiPages);
 newRumiBook.addEventListener('click', () => {
     openRumiBook.style.display = "flex";
-
     rumiYesReadButton.addEventListener('click', () => {
         rumiBook.read = "read";
         rumiYesReadButton.classList.add('invisible');
         rumiNoReadButton.classList.add('invisible');
         rumiUpdateButton.classList.remove('invisible');
         rumiReadMessage.textContent = "Status: read";
-
     })
     rumiNoReadButton.addEventListener('click', () => {
         rumiBook.read = "not read";
@@ -357,19 +328,14 @@ newRumiBook.addEventListener('click', () => {
     })            
     removeRumiButton.addEventListener('click', () => {               
         removeRumiButton.classList.add("invisible");
-        removeQueenButton.remove();
-        
         confirmDeleteRumi.textContent = `Are you sure you want to remove ${rumiBook.title}?`;
         confirmDeleteRumi.classList.add("delete-message");
         removeRumiSection.appendChild(confirmDeleteRumi);
-        
         alignRumiBox.classList.add('align-box');
         removeRumiSection.appendChild(alignRumiBox);
-        
         yesDeleteRumiButton.textContent = "yes";
         yesDeleteRumiButton.classList.add("yes", 'book-button');
         alignRumiBox.appendChild(yesDeleteRumiButton);
-
         yesDeleteRumiButton.addEventListener('click', () => {
             newRumiBook.remove();
             openRumiBook.remove();
@@ -381,16 +347,11 @@ newRumiBook.addEventListener('click', () => {
                 myLibrary.splice(removeRumiBook, 1);
                 console.log(`${rumiBook.title} was removed. Check the library`);
                 console.log(myLibrary);
-            } else {
-                console.log("something went wrong.");
-                console.log(myLibrary);
             }             
         })
-        
         noDeleteRumiButton.textContent = "no";
         noDeleteRumiButton.classList.add("no", 'book-button');
         alignRumiBox.appendChild(noDeleteRumiButton);
-
         noDeleteRumiButton.addEventListener('click', () => {
             removeRumiButton.classList.remove("invisible");
             alignRumiBox.remove();
@@ -402,7 +363,7 @@ closeRumiBookButton.addEventListener('click', () => {
     openRumiBook.style.display = "none";
 })
 
-butterflyBook = new Book("The Butterfly Garden", "Dot Hutchison", "286", "Horror & Thriller");
+const butterflyBook = new Book("The Butterfly Garden", "Dot Hutchison", "286", "Horror & Thriller");
 myLibrary.push(butterflyBook);   
 const newButterflyBook = document.createElement('div');
 const newButterflyTitle = document.createElement('p');
@@ -471,8 +432,7 @@ printButterflyTitle.classList.add('title-display');
 printButterflyAuthor.classList.add('author-display');
 printButterflyGenre.classList.add('genre-display');
 printButterflyPages.classList.add('pages-display');
-butterflyBookContent.style.borderColor = "forestgreen";
-
+butterflyBookContent.style.borderColor = "midnightblue";
 body.appendChild(openButterflyBook);
 openButterflyBook.appendChild(butterflyBookContent);
 openButterflyBook.appendChild(closeButterflyBook);
@@ -485,7 +445,6 @@ butterflyPageSides.appendChild(butterflySecondPageEdge);
 butterflyPageSides.appendChild(butterflyThirdPageEdge);
 butterflyBlankSide.appendChild(removeButterflySection);
 removeButterflySection.appendChild(removeButterflyButton);
-
 butterflyBlankSide.appendChild(butterflyReadSection);
 butterflyReadSection.appendChild(butterflyReadMessage);
 butterflyReadSection.appendChild(butterflyReadAlignBox);
@@ -498,14 +457,12 @@ butterflyBookDetails.appendChild(printButterflyGenre);
 butterflyBookDetails.appendChild(printButterflyPages);
 newButterflyBook.addEventListener('click', () => {
     openButterflyBook.style.display = "flex";
-
     butterflyYesReadButton.addEventListener('click', () => {
         butterflyBook.read = "read";
         butterflyYesReadButton.classList.add('invisible');
         butterflyNoReadButton.classList.add('invisible');
         butterflyUpdateButton.classList.remove('invisible');
         butterflyReadMessage.textContent = "Status: read";
-
     })
     butterflyNoReadButton.addEventListener('click', () => {
         butterflyBook.read = "not read";
@@ -541,12 +498,8 @@ newButterflyBook.addEventListener('click', () => {
                 myLibrary.splice(removeButterflyBook, 1);
                 console.log(`${butterflyBook.title} was removed. Check the library`);
                 console.log(myLibrary);
-            } else {
-                console.log("something went wrong.");
-                console.log(myLibrary);
-            }                  
-        })
-        
+            }                 
+        })        
         noDeleteButterflyButton.textContent = "no";
         noDeleteButterflyButton.classList.add("no", 'book-button');
         alignButterflyBox.appendChild(noDeleteButterflyButton);
@@ -560,7 +513,6 @@ newButterflyBook.addEventListener('click', () => {
 closeButterflyBookButton.addEventListener('click', () => {
     openButterflyBook.style.display = "none";
 })
-
 console.log(myLibrary);
 console.log(`Initial number of books on the first shelf: ${firstShelf.children.length}`);
 
