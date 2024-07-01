@@ -10,7 +10,6 @@ A Library app project using JavaScript objects. This project was created as part
 - [Instructions](#instructions)
 - [Usage](#usage)
 - [Acknowledgments](#acknowledgments)
-- [Contact Information](#contact-information)
 
 ## Project Structure
 ```
@@ -71,8 +70,3 @@ NOTE: You’re not required to add any type of storage right now to save the inf
    - Book SVG by Feather Icons, https://feathericons.com/?query=book-open
    - Close SVG by Feather Icons, https://feathericons.com/?query=close
 - CSS Filter Generator to Convert From Black to Target Hex Color: https://codepen.io/sosuke/pen/Pjoqqp
-
-## Contact Information
-For any inquiries or feedback, please contact:
-- Name: Niada Niederhauser Roble
-- Email: niada.niederhauser.roble@gmail.com
