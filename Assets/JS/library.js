@@ -727,7 +727,7 @@ submitButton.addEventListener('click', () => {
                     newBook.style.backgroundColor = "forestgreen";
                     bookContent.style.borderColor = "forestgreen";
                     break;
-                case 'Self-Help':
+                case 'Self-Help & Guides':
                     newBook.style.backgroundColor = "mediumpurple";
                     bookContent.style.borderColor = "mediumpurple";
                     break;
@@ -746,6 +746,38 @@ submitButton.addEventListener('click', () => {
                 case 'Science & Technology':
                     newBook.style.backgroundColor = "slateblue";
                     bookContent.style.borderColor = "slateblue";
+                    break;
+                case 'Dystopian':
+                    newBook.style.backgroundColor = "olive";
+                    bookContent.style.borderColor = "olive";
+                    break;
+                case 'Literary Fiction':
+                    newBook.style.backgroundColor = "darkmagenta";
+                    bookContent.style.borderColor = "darkmagenta";
+                    break;
+                case 'Essays':
+                    newBook.style.backgroundColor = "orangered";
+                    bookContent.style.borderColor = "orangered";
+                    break;
+                case 'Politics':
+                    newBook.style.backgroundColor = "brown";
+                    bookContent.style.borderColor = "brown";
+                    break;
+                case 'Business & Economics':
+                    newBook.style.backgroundColor = "olivedrab";
+                    bookContent.style.borderColor = "olivedrab";
+                    break;
+                case 'Health & Wellness':
+                    newBook.style.backgroundColor = "mediumorchid";
+                    bookContent.style.borderColor = "mediumorchid";
+                    break;
+                case 'Young Adult':
+                    newBook.style.backgroundColor = "deepskyblue";
+                    bookContent.style.borderColor = "deepskyblue";
+                    break;
+                case 'Graphic Novels & Comics':
+                    newBook.style.backgroundColor = "orange";
+                    bookContent.style.borderColor = "orange";
                     break;
             }
             

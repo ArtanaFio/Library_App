@@ -110,6 +110,17 @@ option {
     background-color: antiquewhite;
 }
 
+optgroup {
+    background-color: goldenrod;
+    color: white;
+}
+
+.sub-cat {
+    background-color: rgb(247, 212, 123);
+    color: white;
+    font-weight: lighter;
+}
+
 .submit-form {
     display: grid;
     width: 100%;
