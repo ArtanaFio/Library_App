@@ -21,6 +21,7 @@ const bookTitleInput = document.getElementById("book-title");
 const bookAuthorInput = document.getElementById("book-author");
 const bookPagesInput = document.getElementById("book-pages");
 const bookGenreOptions = document.getElementById("book-genre");
+const bookReadInput = document.getElementById("read-toggle");
 
 const bookcase = document.getElementById("storage");
 const firstShelf = document.querySelector(".first");
@@ -41,14 +42,15 @@ let bookTitle;
 let bookAuthor;
 let bookPages;
 let bookGenre;
-
+let bookRead;
+/*
 console.log(`Shelf width: ${shelfWidth}px`);
 console.log(`Book width: ${bookWidth}px`);
 console.log(`Gap between books: ${shelfGap}px`);
 console.log(`Maximum number of books on the shelf: ${maximumBooks}`);
 console.log(`Maximum library capacity: ${maxLibraryCapacity} books`);
 console.log("Remaining available shelf space: shelf-width - (number of books * book-width) - (number of gaps * gap-width)");
-
+*/
 // Function to create a "book" object using an object constructor
 function Book(title, author, pages, genre, read) {
     // "book" constructor
@@ -56,15 +58,26 @@ function Book(title, author, pages, genre, read) {
     this.author = author; // enter a string representing the author's name
     this.pages = pages; // enter a number representing the number of pages within the book
     this.genre = genre; // enter a string representing the book's genre
-    this.read = read; // enter a strng ("read" or "not read") representing whether the user has read the book
+    this.read = read; // boolean value representing whether the user has read the book
     this.info = function() {
         return `${this.title} is written by ${this.author}, belongs to the ${this.genre} genre, and has ${this.pages} pages.`;
     };
     this.readInfo = function () {
-        return `You have ${this.read ? "read" : "not read"} this book`;
+        if (this.read === true) {
+            return `You have read this book`;
+        } else if (this.read === false) {
+            return `You have not read this book`;
+        }
+        
     }
 };
-const scotQueen = new Book("Embroidering Her Truth: Mary, Queen of Scots and the Language of Power", "Clare Hunter", "400", "History");
+
+Book.prototype.toggleRead = function() {
+    this.read = !this.read;
+}
+
+
+const scotQueen = new Book("Embroidering Her Truth: Mary, Queen of Scots and the Language of Power", "Clare Hunter", "400", "History", false);
 myLibrary.push(scotQueen);   
 const newQueenBook = document.createElement('div');
 const newQueenTitle = document.createElement('p');
@@ -157,26 +170,42 @@ queenBookDetails.appendChild(printQueenGenre);
 queenBookDetails.appendChild(printQueenPages);
 newQueenBook.addEventListener('click', () => {
     openQueenBook.style.display = "flex";
-    queenYesReadButton.addEventListener('click', () => {
-        scotQueen.read = "read";
-        queenYesReadButton.classList.add('invisible');
-        queenNoReadButton.classList.add('invisible');
-        queenUpdateButton.classList.remove('invisible');
-        queenReadMessage.textContent = "Status: read";
-    })
-    queenNoReadButton.addEventListener('click', () => {
-        scotQueen.read = "not read";
-        queenYesReadButton.classList.add('invisible');
-        queenNoReadButton.classList.add('invisible');
-        queenUpdateButton.classList.remove('invisible');
-        queenReadMessage.textContent = "Status: unread";
-    })
+    queenYesReadButton.classList.add('invisible');
+    queenNoReadButton.classList.add('invisible');
+    queenUpdateButton.classList.remove('invisible');
+    queenReadMessage.textContent = scotQueen.readInfo();
+    if (scotQueen.read === false) {
+        queenReadMessage.classList.add('unread');
+    } else {
+        queenReadMessage.classList.add('been-read');
+    }
+    
     queenUpdateButton.addEventListener('click', () => {
         queenReadMessage.textContent = "Have you read this book?"
         queenUpdateButton.classList.add('invisible');
         queenYesReadButton.classList.remove('invisible');
         queenNoReadButton.classList.remove('invisible');
-    })            
+        queenReadMessage.classList.remove('unread', 'been-read');
+    })
+    
+    queenYesReadButton.addEventListener('click', () => {
+        scotQueen.read = true;
+        queenYesReadButton.classList.add('invisible');
+        queenNoReadButton.classList.add('invisible');
+        queenUpdateButton.classList.remove('invisible');
+        queenReadMessage.classList.add('been-read');
+        queenReadMessage.textContent = scotQueen.readInfo();
+
+    })
+    queenNoReadButton.addEventListener('click', () => {
+        scotQueen.read = false;
+        queenYesReadButton.classList.add('invisible');
+        queenNoReadButton.classList.add('invisible');
+        queenUpdateButton.classList.remove('invisible');
+        queenReadMessage.classList.add('unread');
+        queenReadMessage.textContent = scotQueen.readInfo();
+    })
+
     removeQueenButton.addEventListener('click', () => {
         removeQueenButton.remove();        
         confirmDeleteQueen.textContent = `Are you sure you want to remove ${scotQueen.title}?`;
@@ -213,7 +242,7 @@ newQueenBook.addEventListener('click', () => {
 closeQueenBookButton.addEventListener('click', () => {
     openQueenBook.style.display = "none";
 })
-const rumiBook = new Book("Rumi's Little Book Of Life: The Garden Of The Soul, The Heart, And The Spirit", ["Jalal al-Din Muhammad Rumi", "Maryam Mafi", "Melita Kolin"], "203", "Poetry");
+const rumiBook = new Book("Rumi's Little Book Of Life: The Garden Of The Soul, The Heart, And The Spirit", ["Jalal al-Din Muhammad Rumi", "Maryam Mafi", "Melita Kolin"], "203", "Poetry", false);
 myLibrary.push(rumiBook);   
 const newRumiBook = document.createElement('div');
 const newRumiTitle = document.createElement('p');
@@ -306,26 +335,42 @@ rumiBookDetails.appendChild(printRumiGenre);
 rumiBookDetails.appendChild(printRumiPages);
 newRumiBook.addEventListener('click', () => {
     openRumiBook.style.display = "flex";
-    rumiYesReadButton.addEventListener('click', () => {
-        rumiBook.read = "read";
-        rumiYesReadButton.classList.add('invisible');
-        rumiNoReadButton.classList.add('invisible');
-        rumiUpdateButton.classList.remove('invisible');
-        rumiReadMessage.textContent = "Status: read";
-    })
-    rumiNoReadButton.addEventListener('click', () => {
-        rumiBook.read = "not read";
-        rumiYesReadButton.classList.add('invisible');
-        rumiNoReadButton.classList.add('invisible');
-        rumiUpdateButton.classList.remove('invisible');
-        rumiReadMessage.textContent = "Status: unread";
-    })
+    rumiYesReadButton.classList.add('invisible');
+    rumiNoReadButton.classList.add('invisible');
+    rumiUpdateButton.classList.remove('invisible');
+    rumiReadMessage.textContent = rumiBook.readInfo();
+    if (rumiBook.read === false) {
+        rumiReadMessage.classList.add('unread');
+    } else {
+        rumiReadMessage.classList.add('been-read');
+    }
+
     rumiUpdateButton.addEventListener('click', () => {
         rumiReadMessage.textContent = "Have you read this book?"
         rumiUpdateButton.classList.add('invisible');
         rumiYesReadButton.classList.remove('invisible');
         rumiNoReadButton.classList.remove('invisible');
-    })            
+        rumiReadMessage.classList.remove('unread', 'been-read');
+        
+    })      
+
+    rumiYesReadButton.addEventListener('click', () => {
+        rumiBook.read = true;
+        rumiYesReadButton.classList.add('invisible');
+        rumiNoReadButton.classList.add('invisible');
+        rumiUpdateButton.classList.remove('invisible');
+        rumiReadMessage.classList.add('been-read');
+        rumiReadMessage.textContent = rumiBook.readInfo();
+    })
+    rumiNoReadButton.addEventListener('click', () => {
+        rumiBook.read = false;
+        rumiYesReadButton.classList.add('invisible');
+        rumiNoReadButton.classList.add('invisible');
+        rumiUpdateButton.classList.remove('invisible');
+        rumiReadMessage.classList.add('unread');
+        rumiReadMessage.textContent = rumiBook.readInfo();
+    })
+
     removeRumiButton.addEventListener('click', () => {               
         removeRumiButton.classList.add("invisible");
         confirmDeleteRumi.textContent = `Are you sure you want to remove ${rumiBook.title}?`;
@@ -363,7 +408,7 @@ closeRumiBookButton.addEventListener('click', () => {
     openRumiBook.style.display = "none";
 })
 
-const butterflyBook = new Book("The Butterfly Garden", "Dot Hutchison", "286", "Horror & Thriller");
+const butterflyBook = new Book("The Butterfly Garden", "Dot Hutchison", "286", "Horror & Thriller", false);
 myLibrary.push(butterflyBook);   
 const newButterflyBook = document.createElement('div');
 const newButterflyTitle = document.createElement('p');
@@ -457,26 +502,40 @@ butterflyBookDetails.appendChild(printButterflyGenre);
 butterflyBookDetails.appendChild(printButterflyPages);
 newButterflyBook.addEventListener('click', () => {
     openButterflyBook.style.display = "flex";
-    butterflyYesReadButton.addEventListener('click', () => {
-        butterflyBook.read = "read";
         butterflyYesReadButton.classList.add('invisible');
         butterflyNoReadButton.classList.add('invisible');
         butterflyUpdateButton.classList.remove('invisible');
-        butterflyReadMessage.textContent = "Status: read";
-    })
-    butterflyNoReadButton.addEventListener('click', () => {
-        butterflyBook.read = "not read";
-        butterflyYesReadButton.classList.add('invisible');
-        butterflyNoReadButton.classList.add('invisible');
-        butterflyUpdateButton.classList.remove('invisible');
-        butterflyReadMessage.textContent = "Status: unread";
-    })
+        butterflyReadMessage.textContent = butterflyBook.readInfo();
+        if (butterflyBook.read === false) {
+            butterflyReadMessage.classList.add('unread');
+        } else {
+            butterflyReadMessage.classList.add('been-read');
+        }
+
     butterflyUpdateButton.addEventListener('click', () => {
         butterflyReadMessage.textContent = "Have you read this book?"
         butterflyUpdateButton.classList.add('invisible');
         butterflyYesReadButton.classList.remove('invisible');
         butterflyNoReadButton.classList.remove('invisible');
-    })            
+        butterflyReadMessage.classList.remove('been-read', 'unread');
+    })
+    
+    butterflyYesReadButton.addEventListener('click', () => {
+        butterflyBook.read = true;
+        butterflyYesReadButton.classList.add('invisible');
+        butterflyNoReadButton.classList.add('invisible');
+        butterflyUpdateButton.classList.remove('invisible');
+        butterflyReadMessage.classList.add('been-read');
+        butterflyReadMessage.textContent = butterflyBook.readInfo();
+    })
+    butterflyNoReadButton.addEventListener('click', () => {
+        butterflyBook.read = false;
+        butterflyYesReadButton.classList.add('invisible');
+        butterflyNoReadButton.classList.add('invisible');
+        butterflyUpdateButton.classList.remove('invisible');
+        butterflyReadMessage.classList.add('unread');
+        butterflyReadMessage.textContent = butterflyBook.readInfo();
+    })
     removeButterflyButton.addEventListener('click', () => {               
         removeButterflyButton.classList.add("invisible");
         confirmDeleteButterfly.textContent = `Are you sure you want to remove ${butterflyBook.title}?`;
@@ -514,7 +573,7 @@ closeButterflyBookButton.addEventListener('click', () => {
     openButterflyBook.style.display = "none";
 })
 console.log(myLibrary);
-console.log(`Initial number of books on the first shelf: ${firstShelf.children.length}`);
+//console.log(`Initial number of books on the first shelf: ${firstShelf.children.length}`);
 
 // Function to transform any string input into a title case version of the string
 function titleCase(string) {
@@ -531,6 +590,7 @@ function clearInput() {
     bookAuthorInput.value = '';
     bookPagesInput.value = '';
     bookGenreOptions.selectedIndex = 0;
+    bookReadInput.checked = false;
 };
 
 // Function to remove old notifications
@@ -555,6 +615,7 @@ submitButton.addEventListener('click', () => {
     const bookAuthor = titleCase(bookAuthorInput.value);
     const bookPages = bookPagesInput.value;
     const bookGenre = bookGenreOptions.value;
+    const bookRead = bookReadInput.checked;
 
     let bookDuplicate = myLibrary.find(existingBook =>
         existingBook.title === titleCase(bookTitleInput.value) && existingBook.author === titleCase(bookAuthorInput.value) && existingBook.pages === bookPagesInput.value && existingBook.genre === bookGenreOptions.value
@@ -600,7 +661,7 @@ submitButton.addEventListener('click', () => {
         if (!bookDuplicate && myLibrary.length < maxLibraryCapacity && (bookTitle !== '' && bookAuthor !== '' && bookPages !== '' && bookGenre !== '') && (bookTitle !== 'Title' && bookTitle !== 'Book Title') && (bookAuthor !== 'First & Last Name' && bookAuthor !== 'Author' && bookAuthor !== 'Author Name' && bookAuthor !== 'First Last' &&  bookAuthor !== 'First Name' &&  bookAuthor !== 'Last Name') && (bookPages >= 5)) {
             
             // Creates a book object from correct user input
-            const libraryBook = new Book(bookTitle, bookAuthor, bookPages, bookGenre);
+            const libraryBook = new Book(bookTitle, bookAuthor, bookPages, bookGenre, bookRead);
             myLibrary.push(libraryBook);
             console.log(myLibrary);
             console.log(`Current number of library books: ${myLibrary.length}`);
@@ -618,7 +679,8 @@ submitButton.addEventListener('click', () => {
             const idTitle = bookTitle;
             const idAuthor = bookAuthor;
             const idGenre = bookGenre;
-            const idPages = bookPages;    
+            const idPages = bookPages;
+            const idRead = bookRead;
             const newBook = document.createElement('div');
             const newTitle = document.createElement('p');
             const openBook = document.createElement('div');
@@ -847,32 +909,49 @@ submitButton.addEventListener('click', () => {
             newBook.addEventListener('click', () => {
                 openBook.style.display = "flex";
                 console.log(`You opened ${printTitle.textContent}`);
+                console.log("you clicked no");
+                console.log(libraryBook);
+                yesReadButton.classList.add('invisible');
+                noReadButton.classList.add('invisible');
+                updateButton.classList.remove('invisible');
+                if (libraryBook.read === true) {
+                    readMessage.classList.add('been-read');
+                } else {
+                    readMessage.classList.add('unread');
+                }
+                readMessage.textContent = libraryBook.readInfo();
 
-                yesReadButton.addEventListener('click', () => {
-                    console.log("you clicked yes");
-                    libraryBook.read = "read";
-                    console.log(libraryBook);
-                    yesReadButton.classList.add('invisible');
-                    noReadButton.classList.add('invisible');
-                    updateButton.classList.remove('invisible');
-                    readMessage.textContent = "Status: read";
-
-                })
-                noReadButton.addEventListener('click', () => {
-                    console.log("you clicked no");
-                    libraryBook.read = "not read";
-                    console.log(libraryBook);
-                    yesReadButton.classList.add('invisible');
-                    noReadButton.classList.add('invisible');
-                    updateButton.classList.remove('invisible');
-                    readMessage.textContent = "Status: unread";
-                })
                 updateButton.addEventListener('click', () => {
                     readMessage.textContent = "Have you read this book?"
                     updateButton.classList.add('invisible');
                     yesReadButton.classList.remove('invisible');
                     noReadButton.classList.remove('invisible');
-                })            
+                    readMessage.classList.remove('been-read', 'unread');
+                })
+
+                yesReadButton.addEventListener('click', () => {
+                    console.log("you clicked yes");
+                    libraryBook.read = true;
+                    console.log(libraryBook);
+                    yesReadButton.classList.add('invisible');
+                    noReadButton.classList.add('invisible');
+                    updateButton.classList.remove('invisible');
+                    readMessage.classList.add('been-read');
+                    readMessage.textContent = libraryBook.readInfo();
+
+                })
+                noReadButton.addEventListener('click', () => {
+                    console.log("you clicked no");
+                    libraryBook.read = false;
+                    console.log(libraryBook);
+                    yesReadButton.classList.add('invisible');
+                    noReadButton.classList.add('invisible');
+                    updateButton.classList.remove('invisible');
+                    readMessage.classList.add('unread');
+                    readMessage.textContent = libraryBook.readInfo();
+                })
+                
+                
                 removeButton.addEventListener('click', () => {
                     console.log(`${idTitle}, ${idAuthor}, ${idGenre}, ${idPages}`);                
                     removeButton.classList.add("invisible");

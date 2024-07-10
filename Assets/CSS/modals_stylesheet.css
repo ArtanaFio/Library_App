@@ -14,6 +14,7 @@
     width: 75%;
     padding: 3vmin;
     border-radius: 5px;
+    border: 5px solid goldenrod;
 }
 
 .close-box {
@@ -64,7 +65,7 @@ fieldset {
 
 .new-input {
     display: grid;
-    grid-template-columns: 250px 300px;
+    grid-template-columns: 300px 350px;
     gap: 2vmin;
 }
 
@@ -72,9 +73,67 @@ fieldset {
     margin-bottom: 2vmin;
 }
 
-label {
+.text-label {
     font-size: 0.75rem;
     justify-self: end;
+    align-self: center;
+}
+
+.question {
+    font-style: italic;
+}
+
+.right-input {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+#read-toggle {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.toggle {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: goldenrod;
+    border-radius: 34px;
+    cursor: pointer;
+    -webkit-transition: 0.5s;
+    transition: 0.5s;
+}
+
+.toggle:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: wheat;
+    border-radius: 50%;
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
+}
+
+#read-toggle:checked + .toggle {
+    background-color: chartreuse;
+}
+
+#read-toggle:focus + .toggle {
+    box-shadow: 0 0 1px chartreuse;
+}
+
+#read-toggle:checked + .toggle:before {
+    -webkit-transform: translateX((26px));
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
 }
 
 input, select {
@@ -303,11 +362,19 @@ button {
 }
 
 .read-message {
-    color: forestgreen;
+    color: darkgoldenrod;
     font-style: italic;
     font-weight: bold;
     font-size: 3vmin;
     text-align: center;
+}
+
+.been-read {
+    color: forestgreen;
+}
+
+.unread {
+    color: red;
 }
 
 .align-box {
@@ -426,7 +493,7 @@ button {
     .new-input {
         grid-template-columns: 29vmin 35vmin;
     }
-    label, input, select, option, .messages {
+    .text-label, input, select, option, .messages {
         font-size: 2.5vmin;
     }
     .book-modal-content {
@@ -465,8 +532,17 @@ button {
     .new-input {
         margin-bottom: 2vmin;
     }
-    label, input, select, option {
+    .text-label, input, select, option {
         font-size: 4vmin;
+    }
+    .text-label {
+        align-self: self-start;
+    }
+    .question {
+        align-self: center;
+    }
+    .right-input {
+        align-self: center;
     }
     .submit-form {
         align-items: center;
@@ -505,7 +581,7 @@ button {
     .field-content > h1 {
         font-size: 6vmin;
     }
-    label, input, select, option {
+    .text-label, input, select, option {
         font-size: 5vmin;
     }
     .submit-button,
