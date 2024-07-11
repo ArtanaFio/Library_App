@@ -17,6 +17,10 @@
     border: 5px solid goldenrod;
 }
 
+#book-modal .modal-content {
+    padding: 0;
+}
+
 .close-box {
     display: flex;
     justify-content: end;
@@ -40,7 +44,7 @@
 fieldset {
     padding: 0;
     border-radius: 5px;
-    border-color: var(--modal-color);
+    border: none;
     color: var(--modal-color);
 }
 
@@ -83,7 +87,22 @@ fieldset {
     font-style: italic;
 }
 
-.right-input {
+.toggle-container {
+    display: flex;
+    align-items: center;
+    height: 34px;
+}
+
+#no-read, #yes-read {
+    font-size: 25px;
+    padding: 0 10px;
+}
+
+#yes-read {
+    color: transparent;
+}
+
+.right-input { /* acts as the boundaries of the toggle */
     position: relative;
     display: inline-block;
     width: 60px;
@@ -109,31 +128,28 @@ fieldset {
     transition: 0.5s;
 }
 
-.toggle:before {
+.toggle:before { /* the toggle button */
     position: absolute;
     content: "";
     height: 26px;
     width: 26px;
     left: 4px;
     bottom: 4px;
-    background-color: wheat;
+    background-color: gold;
     border-radius: 50%;
     -webkit-transition: 0.4s;
     transition: 0.4s;
 }
 
 #read-toggle:checked + .toggle {
-    background-color: chartreuse;
-}
-
-#read-toggle:focus + .toggle {
-    box-shadow: 0 0 1px chartreuse;
+    background-color: forestgreen;
 }
 
 #read-toggle:checked + .toggle:before {
     -webkit-transform: translateX((26px));
     -ms-transform: translateX(26px);
     transform: translateX(26px);
+    background-color: chartreuse;
 }
 
 input, select {
@@ -493,7 +509,7 @@ button {
     .new-input {
         grid-template-columns: 29vmin 35vmin;
     }
-    .text-label, input, select, option, .messages {
+    .text-label, input, select, option, .messages, #no-read, #yes-read {
         font-size: 2.5vmin;
     }
     .book-modal-content {
@@ -532,7 +548,7 @@ button {
     .new-input {
         margin-bottom: 2vmin;
     }
-    .text-label, input, select, option {
+    .text-label, input, select, option, #no-read, #yes-read {
         font-size: 4vmin;
     }
     .text-label {
@@ -541,7 +557,7 @@ button {
     .question {
         align-self: center;
     }
-    .right-input {
+    .toggle-container {
         align-self: center;
     }
     .submit-form {
@@ -581,7 +597,7 @@ button {
     .field-content > h1 {
         font-size: 6vmin;
     }
-    .text-label, input, select, option {
+    .text-label, input, select, option, #no-read, #yes-read {
         font-size: 5vmin;
     }
     .submit-button,

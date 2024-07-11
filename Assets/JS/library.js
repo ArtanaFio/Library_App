@@ -584,6 +584,23 @@ function titleCase(string) {
     return newString;
 }
 
+const yesText = document.getElementById('yes-read');
+const noText = document.getElementById('no-read');
+const toggleSwitch = document.querySelector('.toggle:before');
+
+function toggleDisplay() {
+    bookReadInput.addEventListener('click', () => {
+        if (bookReadInput.checked === true) {
+            noText.style.color = "transparent";
+            yesText.style.color = "forestgreen";
+        } else if (bookReadInput.checked === false) {
+            noText.style.color = "darkgoldenrod";
+            yesText.style.color = "transparent";
+        }
+    })
+};
+toggleDisplay();
+
 //Functon to clear input fields
 function clearInput() {
     bookTitleInput.value = '';
@@ -591,6 +608,8 @@ function clearInput() {
     bookPagesInput.value = '';
     bookGenreOptions.selectedIndex = 0;
     bookReadInput.checked = false;
+    noText.style.color = "darkgoldenrod";
+    yesText.style.color = "transparent";
 };
 
 // Function to remove old notifications
