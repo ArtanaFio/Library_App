@@ -77,9 +77,25 @@ Book.prototype.toggleRead = function () {
   this.read = !this.read;
 };
 
+const library_key = "books";
+
+function getBooks() {
+  return JSON.parse(localStorage.getItem(library_key));
+}
+
+function storeBook(library) {
+  localStorage.setItem(library_key, JSON.stringify(library));
+}
+
+function deleteBooks() {
+  localStorage.removeItem(library_key);
+}
+
 function makeBackendBook(title, author, pages, genre, read) {
   const backendBook = new Book(title, author, pages, genre, read);
   myLibrary.push(backendBook);
+
+  storeBook(myLibrary);
 
   return backendBook;
 }
@@ -98,8 +114,21 @@ function makeElement(element, classes, text, parent) {
   return item;
 }
 
-function makeShelfBook(bookGenreColor, backendBookTitle, shelf) {
-  const shelfBook = makeElement("div", `book ${bookGenreColor}`, "", shelf);
+function convertedGenre(string) {
+  const stringArray = string.split(" ").map((word) => word.toLowerCase());
+  const justWordsArray = [];
+  stringArray.forEach((word) => {
+    if (word !== "&") {
+      justWordsArray.push(word);
+    }
+  });
+  const convertedString = justWordsArray.join("-");
+  return convertedString;
+}
+
+function makeShelfBook(backendBookGenre, backendBookTitle, shelf) {
+  const genreCss = convertedGenre(backendBookGenre);
+  const shelfBook = makeElement("div", `book ${genreCss}`, "", shelf);
   const bookTitle = makeElement("p", "title", backendBookTitle, shelfBook);
 
   return {
@@ -108,11 +137,11 @@ function makeShelfBook(bookGenreColor, backendBookTitle, shelf) {
   };
 }
 
-function makeOpenBookInterface(bookGenreColor, backendBook, newBook) {
+function makeOpenBookInterface(backendBook, newBook) {
   const openBook = makeElement("div", "open-book-modal", "", body);
   const bookContent = makeElement(
     "div",
-    `book-modal-content ${bookGenreColor}`,
+    `book-modal-content ${convertedGenre(backendBook.genre)}-border`,
     "",
     openBook
   );
@@ -310,6 +339,7 @@ function pickYesRead(
   updateButton.classList.remove("invisible");
   readMessage.classList.add("been-read");
   readMessage.textContent = backendBook.readInfo();
+  storeBook(myLibrary);
 }
 
 function pickNoRead(
@@ -325,6 +355,7 @@ function pickNoRead(
   updateButton.classList.remove("invisible");
   readMessage.classList.add("unread");
   readMessage.textContent = backendBook.readInfo();
+  storeBook(myLibrary);
 }
 
 function showRemovalOption(
@@ -356,6 +387,7 @@ function removeBook(newBook, openBook, backendBook) {
     myLibrary.splice(removeBook, 1);
     console.log(`${backendBook.title} was removed. Check the library`);
     console.log(myLibrary);
+    storeBook(myLibrary);
   }
 }
 
@@ -377,68 +409,80 @@ function closeABook(openBook) {
   openBook.style.display = "none";
 }
 
-const scotQueen = makeBackendBook(
-  "Embroidering Her Truth: Mary, Queen of Scots and the Language of Power",
-  "Clare Hunter",
-  "400",
-  "History",
-  false
-);
+if (localStorage.length === 0) {
+  const scotQueen = makeBackendBook(
+    "Embroidering Her Truth: Mary, Queen of Scots and the Language of Power",
+    "Clare Hunter",
+    "400",
+    "History",
+    false
+  );
+  console.log(scotQueen.readInfo());
 
-const newQueenBook = makeShelfBook(
-  "cornflowerblue",
-  scotQueen.title,
-  firstShelf
-).shelfBook;
+  const newQueenBook = makeShelfBook(
+    scotQueen.genre,
+    scotQueen.title,
+    firstShelf
+  ).shelfBook;
 
-const queenBookInterface = makeOpenBookInterface(
-  "cornflowerblue-border",
-  scotQueen,
-  newQueenBook
-);
+  const queenBookInterface = makeOpenBookInterface(scotQueen, newQueenBook);
 
-const rumiBook = makeBackendBook(
-  "Rumi's Little Book Of Life: The Garden Of The Soul, The Heart, And The Spirit",
-  ["Jalal al-Din Muhammad Rumi", "Maryam Mafi", "Melita Kolin"],
-  "203",
-  "Poetry",
-  false
-);
+  const rumiBook = makeBackendBook(
+    "Rumi's Little Book Of Life: The Garden Of The Soul, The Heart, And The Spirit",
+    ["Jalal al-Din Muhammad Rumi", "Maryam Mafi", "Melita Kolin"],
+    "203",
+    "Poetry",
+    false
+  );
 
-const newRumiBook = makeShelfBook(
-  "forestgreen",
-  rumiBook.title,
-  firstShelf
-).shelfBook;
+  const newRumiBook = makeShelfBook(
+    rumiBook.genre,
+    rumiBook.title,
+    firstShelf
+  ).shelfBook;
 
-const rumiBookInterface = makeOpenBookInterface(
-  "forestgreen-border",
-  rumiBook,
-  newRumiBook
-);
+  const rumiBookInterface = makeOpenBookInterface(rumiBook, newRumiBook);
 
-const butterflyBook = makeBackendBook(
-  "The Butterfly Garden",
-  "Dot Hutchison",
-  "286",
-  "Horror & Thriller",
-  false
-);
+  const butterflyBook = makeBackendBook(
+    "The Butterfly Garden",
+    "Dot Hutchison",
+    "286",
+    "Horror & Thriller",
+    false
+  );
 
-const newButterflyBook = makeShelfBook(
-  "midnightblue",
-  butterflyBook.title,
-  firstShelf
-).shelfBook;
-newButterflyBook.style.color = "chocolate";
+  const newButterflyBook = makeShelfBook(
+    butterflyBook.genre,
+    butterflyBook.title,
+    firstShelf
+  ).shelfBook;
 
-const butterflyBookInterface = makeOpenBookInterface(
-  "midnightblue-border",
-  butterflyBook,
-  newButterflyBook
-);
+  const butterflyBookInterface = makeOpenBookInterface(
+    butterflyBook,
+    newButterflyBook
+  );
+} else {
+  let books = getBooks();
+
+  books.forEach((book) => {
+    const backendBookCopy = makeBackendBook(
+      book.title,
+      book.author,
+      book.pages,
+      book.genre,
+      book.read
+    );
+    const storedBook = makeShelfBook(
+      backendBookCopy.genre,
+      backendBookCopy.title,
+      firstShelf
+    ).shelfBook;
+    makeOpenBookInterface(backendBookCopy, storedBook);
+  });
+}
 
 console.log(myLibrary);
+
 //console.log(`Initial number of books on the first shelf: ${firstShelf.children.length}`);
 
 // Function to transform any string input into a title case version of the string
@@ -482,11 +526,10 @@ function titleCase(string) {
   return title;
 }
 
-const yesText = document.getElementById("yes-read");
-const noText = document.getElementById("no-read");
-const toggleSwitch = document.querySelector(".toggle:before");
-
 function toggleDisplay() {
+  const yesText = document.getElementById("yes-read");
+  const noText = document.getElementById("no-read");
+  const toggleSwitch = document.querySelector(".toggle:before");
   bookReadInput.addEventListener("click", () => {
     if (bookReadInput.checked === true) {
       noText.style.color = "transparent";
@@ -648,102 +691,6 @@ submitButton.addEventListener("click", () => {
       const idPages = bookPages;
       const idRead = bookRead;
 
-      let genreColor;
-      let genreBorderColor;
-      let text;
-      switch (bookGenre) {
-        case "Adventure":
-          genreColor = "red";
-          genreBorderColor = "red-border";
-          break;
-        case "Fantasy":
-          genreColor = "mediumseagreen";
-          genreBorderColor = "mediumseagreen-border";
-          break;
-        case "Mystery":
-          genreColor = "indigo";
-          genreBorderColor = "indigo-border";
-          text = "chocolate";
-          break;
-        case "Horror & Thriller":
-          genreColor = "midnightblue";
-          genreBorderColor = "midnightblue-border";
-          text = "chocolate";
-          break;
-        case "Science Fiction":
-          genreColor = "darkviolet";
-          genreBorderColor = "darkviolet-border";
-          break;
-        case "Historical Fiction":
-          genreColor = "crimson";
-          genreBorderColor = "crimson-border";
-          break;
-        case "Contemporary Fiction":
-          genreColor = "aqua";
-          genreBorderColor = "aqua-border";
-          break;
-        case "Romance":
-          genreColor = "deeppink";
-          genreBorderColor = "deeppink-border";
-          break;
-        case "Poetry":
-          genreColor = "forestgreen";
-          genreBorderColor = "forestgreen-border";
-          break;
-        case "Self-Help & Guides":
-          genreColor = "mediumpurple";
-          genreBorderColor = "mediumpurple-border";
-          break;
-        case "Biography & Memoirs":
-          genreColor = "coral";
-          genreBorderColor = "coral-border";
-          break;
-        case "Religion & Philosophy":
-          genreColor = "sandybrown";
-          genreBorderColor = "sandybrown-border";
-          break;
-        case "History":
-          genreColor = "cornflowerblue";
-          genreBorderColor = "cornflowerblue-border";
-          break;
-        case "Science & Technology":
-          genreColor = "slateblue";
-          genreBorderColor = "slateblue-border";
-          break;
-        case "Dystopian":
-          genreColor = "olive";
-          genreBorderColor = "olive-border";
-          break;
-        case "Literary Fiction":
-          genreColor = "darkmagenta";
-          genreBorderColor = "darkmagenta-border";
-          break;
-        case "Essays":
-          genreColor = "orangered";
-          genreBorderColor = "orangered-border";
-          break;
-        case "Politics":
-          genreColor = "brown";
-          genreBorderColor = "brown-border";
-          break;
-        case "Business & Economics":
-          genreColor = "olivedrab";
-          genreBorderColor = "olivedrab-border";
-          break;
-        case "Health & Wellness":
-          genreColor = "mediumorchid";
-          genreBorderColor = "mediumorchid-border";
-          break;
-        case "Young Adult":
-          genreColor = "deepskyblue";
-          genreBorderColor = "deepskyblue-border";
-          break;
-        case "Graphic Novels & Comics":
-          genreColor = "orange";
-          genreBorderColor = "orange-border";
-          break;
-      }
-
       const libraryBooks = myLibrary.length;
       let secondShelfBooks = libraryBooks - maximumBooks;
       let thirdShelfBooks = libraryBooks - 2 * maximumBooks;
@@ -814,21 +761,13 @@ submitButton.addEventListener("click", () => {
         console.log(`Remaining avaiable shelf space: ${fifthShelfSpace}px`);
       }
 
-      console.log(
-        `the new book's genreColor: '${genreColor}', genreBorderColor: '${genreBorderColor}', shelf: '${shelf}'`
-      );
-
       const newLibraryBook = makeShelfBook(
-        genreColor,
+        libraryBook.genre,
         libraryBook.title,
         shelf
       ).shelfBook;
-      if (text === "chocolate") {
-        newLibraryBook.style.color = text;
-      }
 
       const libraryBookInterface = makeOpenBookInterface(
-        genreBorderColor,
         libraryBook,
         newLibraryBook
       );

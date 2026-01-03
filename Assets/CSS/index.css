@@ -548,179 +548,181 @@ body {
   background-blend-mode: lighten;
 }
 
-.red {
+.adventure {
   background-color: red;
 }
 
-.red-border {
+.adventure-border {
   border-color: red;
 }
 
-.mediumseagreen {
+.fantasy {
   background-color: mediumseagreen;
 }
 
-.mediumseagreen-border {
+.fantasy-border {
   border-color: mediumseagreen;
 }
 
-.indigo {
+.mystery {
   background-color: indigo;
+  color: chocolate;
 }
 
-.indigo-border {
+.mystery-border {
   border-color: indigo;
 }
 
-.midnightblue {
+.horror-thriller {
   background-color: midnightblue;
+  color: chocolate;
 }
 
-.midnightblue-border {
+.horror-thriller-border {
   border-color: midnightblue;
 }
 
-.darkviolet {
+.science-fiction {
   background-color: darkviolet;
 }
 
-.darkviolet-border {
+.science-fiction-border {
   border-color: darkviolet;
 }
 
-.crimson {
+.historical-fiction {
   background-color: crimson;
 }
 
-.crimson-border {
+.historical-fiction-border {
   border-color: crimson;
 }
 
-.aqua {
+.contemporary-fiction {
   background-color: aqua;
 }
 
-.aqua-border {
+.contemporary-fiction-border {
   border-color: aqua;
 }
 
-.deeppink {
+.romance {
   background-color: deeppink;
 }
 
-.deeppink-border {
+.romance-border {
   border-color: deeppink;
 }
 
-.forestgreen {
+.poetry {
   background-color: forestgreen;
 }
 
-.forestgreen-border {
+.poetry-border {
   border-color: forestgreen;
 }
 
-.mediumpurple {
+.self-help-guides {
   background-color: mediumpurple;
 }
 
-.mediumpurple-border {
+.self-help-guides-border {
   border-color: mediumpurple;
 }
 
-.coral {
+.biography-memoirs {
   background-color: coral;
 }
 
-.coral-border {
+.biography-memoirs-border {
   border-color: coral;
 }
 
-.sandybrown {
+.religion-philosophy {
   background-color: sandybrown;
 }
 
-.sandybrown-border {
+.religion-philosophy-border {
   border-color: sandybrown;
 }
 
-.cornflowerblue {
+.history {
   background-color: cornflowerblue;
 }
 
-.cornflowerblue-border {
+.history-border {
   border-color: cornflowerblue;
 }
 
-.slateblue {
+.science-technology {
   background-color: slateblue;
 }
 
-.slateblue-border {
+.science-technology-border {
   border-color: slateblue;
 }
 
-.olive {
+.dystopian {
   background-color: olive;
 }
 
-.olive-border {
+.dystopian-border {
   border-color: olive;
 }
 
-.darkmagenta {
+.literary-fiction {
   background-color: darkmagenta;
 }
 
-.darkmagenta-border {
+.literary-fiction-border {
   border-color: darkmagenta;
 }
 
-.orangered {
+.essays {
   background-color: orangered;
 }
 
-.orangered-border {
+.essays-border {
   border-color: orangered;
 }
 
-.brown {
+.politics {
   background-color: brown;
 }
 
-.brown-border {
+.politics-border {
   border-color: brown;
 }
 
-.olivedrab {
+.business-economics {
   background-color: olivedrab;
 }
 
-.olivedrab-border {
+.business-economics-border {
   border-color: olivedrab;
 }
 
-.mediumorchid {
+.health-wellness {
   background-color: mediumorchid;
 }
 
-.mediumorchid-border {
+.health-wellness-border {
   border-color: mediumorchid;
 }
 
-.deepskyblue {
+.young-adult {
   background-color: deepskyblue;
 }
 
-.deepskyblue-border {
+.young-adult-border {
   border-color: deepskyblue;
 }
 
-.orange {
+.graphic-novels-comics {
   background-color: orange;
 }
 
-.orange-border {
+.graphic-novels-comics-border {
   border-color: orange;
 }
 
