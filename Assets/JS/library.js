@@ -526,9 +526,10 @@ function titleCase(string) {
   return title;
 }
 
+const yesText = document.getElementById("yes-read");
+const noText = document.getElementById("no-read");
+
 function toggleDisplay() {
-  const yesText = document.getElementById("yes-read");
-  const noText = document.getElementById("no-read");
   const toggleSwitch = document.querySelector(".toggle:before");
   bookReadInput.addEventListener("click", () => {
     if (bookReadInput.checked === true) {
@@ -544,13 +545,16 @@ toggleDisplay();
 
 //Functon to clear input fields
 function clearInput() {
-  bookTitleInput.value = "";
-  bookAuthorInput.value = "";
-  bookPagesInput.value = "";
   bookGenreOptions.selectedIndex = 0;
   bookReadInput.checked = false;
   noText.style.color = "darkgoldenrod";
   yesText.style.color = "transparent";
+  const inputs = document.querySelectorAll("input");
+  inputs.forEach((input) => {
+    input.classList.remove("validity");
+    input.value = "";
+  });
+  bookGenreOptions.classList.remove("validity");
 }
 
 // Function to remove old notifications
@@ -562,21 +566,59 @@ function clearNotices() {
   });
 }
 
-submitButton.addEventListener("click", submitClick, false);
-function submitClick(event) {
-  event.preventDefault();
+function showMessage(text) {
+  makeElement("p", "error", text, messageBox);
 }
 
-submitButton.addEventListener("click", () => {
-  clearNotices();
+function validateTitle() {
+  if (bookTitleInput.validity.valueMissing) {
+    bookTitleInput.setCustomValidity("Missing the book's title");
+  } else if (bookTitleInput.validity.tooShort) {
+    bookTitleInput.setCustomValidity(
+      "We only accept books with slightly longer titles"
+    );
+  } else {
+    bookTitleInput.setCustomValidity("");
+  }
+}
 
-  const bookTitle = titleCase(bookTitleInput.value);
-  const bookAuthor = titleCase(bookAuthorInput.value);
-  const bookPages = bookPagesInput.value;
-  const bookGenre = bookGenreOptions.value;
-  const bookRead = bookReadInput.checked;
+function validateAuthor() {
+  if (bookAuthorInput.validity.valueMissing) {
+    bookAuthorInput.setCustomValidity("Missing the book's author");
+  } else if (bookAuthorInput.validity.tooShort) {
+    bookAuthorInput.setCustomValidity("We expect authors to have longer names");
+  } else if (bookAuthorInput.validity.patternMismatch) {
+    console.log("patternMismatch");
+    bookAuthorInput.setCustomValidity(
+      "The author's name should only contain letters and maybe the occassional hyphen"
+    );
+  } else {
+    bookAuthorInput.setCustomValidity("");
+  }
+}
 
-  let bookDuplicate = myLibrary.find(
+function validatePages() {
+  if (bookPagesInput.validity.valueMissing) {
+    bookPagesInput.setCustomValidity("Missing the book's pages");
+  } else if (bookPagesInput.validity.rangeUnderflow) {
+    bookPagesInput.setCustomValidity(
+      "Please make sure your book has at least 5 pages"
+    );
+  } else {
+    bookPagesInput.setCustomValidity("");
+  }
+}
+
+function validateGenre() {
+  if (bookGenreOptions.validity.valueMissing) {
+    bookGenreOptions.setCustomValidity("Missing the genre");
+  } else {
+    bookGenreOptions.setCustomValidity("");
+  }
+}
+
+function validateDuplicateBook() {
+  const bookDuplicate = myLibrary.find(
     (existingBook) =>
       existingBook.title === titleCase(bookTitleInput.value) &&
       existingBook.author === titleCase(bookAuthorInput.value) &&
@@ -584,210 +626,214 @@ submitButton.addEventListener("click", () => {
       existingBook.genre === bookGenreOptions.value
   );
 
+  if (bookDuplicate) {
+    bookTitleInput.setCustomValidity(
+      "Sorry, the library already has this book. Please donate a different book."
+    );
+  }
+}
+
+function showFormErrors() {
+  const requiredFields = [
+    bookTitleInput,
+    bookAuthorInput,
+    bookPagesInput,
+    bookGenreOptions,
+  ];
+
+  const missingValues = requiredFields.filter(
+    (input) => input.validity.valueMissing
+  );
+
+  if (missingValues.length >= 3) {
+    showMessage("You can't donate a book without information");
+    return;
+  } else if (missingValues.length === 2) {
+    showMessage(
+      `You're missing the book's ${missingValues[0].id.split("-")[1]} and ${
+        missingValues[1].id.split("-")[1]
+      }`
+    );
+  } else if (missingValues.length === 1) {
+    showMessage(
+      `You're missing the book's ${missingValues[0].id.split("-")[1]}`
+    );
+  }
+
+  if (bookTitleInput.validity.tooShort) {
+    showMessage(bookTitleInput.validationMessage);
+  }
+
+  if (bookAuthorInput.validity.tooShort) {
+    showMessage(bookAuthorInput.validationMessage);
+  }
+
+  if (bookAuthorInput.validity.patternMismatch) {
+    showMessage(bookAuthorInput.validationMessage);
+  }
+
+  if (bookPagesInput.validity.rangeUnderflow) {
+    showMessage(bookPagesInput.validationMessage);
+  }
+
+  if (
+    bookTitleInput.validity.customError &
+    (bookTitleInput.validationMessage !==
+      "We only accept books with slightly longer titles")
+  ) {
+    console.log(bookTitleInput.validationMessage);
+    showMessage(bookTitleInput.validationMessage);
+  }
+}
+
+const bookInputs = document.querySelectorAll(".book-input");
+
+const donateForm = document.getElementById("new-book-form");
+donateForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+  clearNotices();
+  [bookTitleInput, bookAuthorInput, bookPagesInput, bookGenreOptions].forEach(
+    (input) => input.setCustomValidity("")
+  );
+
+  validateTitle();
+  validateAuthor();
+  validatePages();
+  validateGenre();
+  validateDuplicateBook();
+
+  if (!donateForm.checkValidity()) {
+    donateForm.classList.add("submitted");
+    showFormErrors();
+  } else {
+    console.log("donate the book");
+    addBookToLibrary();
+  }
+
   function addBookToLibrary() {
-    if (bookDuplicate) {
-      const bookDuplicateMessage = makeElement(
-        "p",
-        "error",
-        "Sorry, the library already has this book. Please donate another book.",
-        messageBox
-      );
-    }
+    const bookTitle = titleCase(bookTitleInput.value);
+    const bookAuthor = titleCase(bookAuthorInput.value);
+    const bookPages = bookPagesInput.value;
+    const bookGenre = bookGenreOptions.value;
+    const bookRead = bookReadInput.checked;
 
-    if (
-      bookTitle === "" ||
-      bookAuthor === "" ||
-      bookPages === "" ||
-      bookGenre === ""
-    ) {
-      const missingMessage = makeElement(
-        "p",
-        "error",
-        "Some information is missing.",
-        messageBox
-      );
-    }
+    // Creates a book object from correct user input
+    const libraryBook = makeBackendBook(
+      bookTitle,
+      bookAuthor,
+      bookPages,
+      bookGenre,
+      bookRead
+    );
+    console.log(myLibrary);
+    console.log(`Current number of library books: ${myLibrary.length}`);
 
-    if (
-      bookTitle === "Title" ||
-      bookTitle === "Book Title" ||
-      bookTitle === "A Title" ||
-      bookTitle === "Any Title"
-    ) {
-      const titleMessage = makeElement(
-        "p",
-        "error",
-        "Please enter a proper book title.",
-        messageBox
-      );
-    }
-
-    if (
-      bookAuthor === "First & Last Name" ||
-      bookAuthor === "Author" ||
-      bookAuthor === "Author Name" ||
-      bookAuthor === "First Last" ||
-      bookAuthor === "First Name" ||
-      bookAuthor === "Last Name"
-    ) {
-      const authorMessage = makeElement(
-        "p",
-        "error",
-        "Please enter a valid name.",
-        messageBox
-      );
-    }
-
-    if (bookPages < 5 && bookPages !== "") {
-      const pagesMessage = makeElement(
-        "p",
-        "error",
-        "Please make sure your book has at least 5 pages.",
-        messageBox
-      );
-    }
-
-    if (
-      !bookDuplicate &&
-      myLibrary.length < maxLibraryCapacity &&
-      bookTitle !== "" &&
-      bookAuthor !== "" &&
-      bookPages !== "" &&
-      bookGenre !== "" &&
-      bookTitle !== "Title" &&
-      bookTitle !== "Book Title" &&
-      bookAuthor !== "First & Last Name" &&
-      bookAuthor !== "Author" &&
-      bookAuthor !== "Author Name" &&
-      bookAuthor !== "First Last" &&
-      bookAuthor !== "First Name" &&
-      bookAuthor !== "Last Name" &&
-      bookPages >= 5
-    ) {
-      // Creates a book object from correct user input
-      const libraryBook = makeBackendBook(
-        bookTitle,
-        bookAuthor,
-        bookPages,
-        bookGenre,
-        bookRead
-      );
-      console.log(myLibrary);
-      console.log(`Current number of library books: ${myLibrary.length}`);
-
-      clearInput();
-      allInput.forEach((input) => {
-        input.addEventListener("click", () => {
-          clearNotices();
-        });
-      });
-      bookGenreOptions.addEventListener("click", () => {
+    clearInput();
+    allInput.forEach((input) => {
+      input.addEventListener("click", () => {
         clearNotices();
       });
+    });
+    bookGenreOptions.addEventListener("click", () => {
+      clearNotices();
+    });
 
-      const idTitle = bookTitle;
-      const idAuthor = bookAuthor;
-      const idGenre = bookGenre;
-      const idPages = bookPages;
-      const idRead = bookRead;
+    const libraryBooks = myLibrary.length;
+    let secondShelfBooks = libraryBooks - maximumBooks;
+    let thirdShelfBooks = libraryBooks - 2 * maximumBooks;
+    let fourthShelfBooks = libraryBooks - 3 * maximumBooks;
+    let fifthShelfBooks = libraryBooks - 4 * maximumBooks;
 
-      const libraryBooks = myLibrary.length;
-      let secondShelfBooks = libraryBooks - maximumBooks;
-      let thirdShelfBooks = libraryBooks - 2 * maximumBooks;
-      let fourthShelfBooks = libraryBooks - 3 * maximumBooks;
-      let fifthShelfBooks = libraryBooks - 4 * maximumBooks;
+    let firstShelfSpace =
+      shelfWidth - libraryBooks * bookWidth - (libraryBooks - 1) * shelfGap;
+    let secondShelfSpace =
+      shelfWidth -
+      secondShelfBooks * bookWidth -
+      (secondShelfBooks - 1) * shelfGap;
+    let thirdShelfSpace =
+      shelfWidth -
+      thirdShelfBooks * bookWidth -
+      (thirdShelfBooks - 1) * shelfGap;
+    let fourthShelfSpace =
+      shelfWidth -
+      fourthShelfBooks * bookWidth -
+      (fourthShelfBooks - 1) * shelfGap;
+    let fifthShelfSpace =
+      shelfWidth -
+      fifthShelfBooks * bookWidth -
+      (fifthShelfBooks - 1) * shelfGap;
 
-      let firstShelfSpace =
-        shelfWidth - libraryBooks * bookWidth - (libraryBooks - 1) * shelfGap;
-      let secondShelfSpace =
-        shelfWidth -
-        secondShelfBooks * bookWidth -
-        (secondShelfBooks - 1) * shelfGap;
-      let thirdShelfSpace =
-        shelfWidth -
-        thirdShelfBooks * bookWidth -
-        (thirdShelfBooks - 1) * shelfGap;
-      let fourthShelfSpace =
-        shelfWidth -
-        fourthShelfBooks * bookWidth -
-        (fourthShelfBooks - 1) * shelfGap;
-      let fifthShelfSpace =
-        shelfWidth -
-        fifthShelfBooks * bookWidth -
-        (fifthShelfBooks - 1) * shelfGap;
-
-      let shelf;
-      if (
-        libraryBooks <= maximumBooks ||
-        firstShelf.children.length < maximumBooks
-      ) {
-        shelf = firstShelf;
-        console.log(
-          `Number of books on the first shelf: ${firstShelf.children.length}`
-        );
-        console.log(`Remaining avaiable shelf space: ${firstShelfSpace}px`);
-        if (libraryBooks < maximumBooks) {
-          console.log("The first shelf still has space");
-        } else {
-          console.log("The first shelf is full");
-        }
-      } else if (
-        (libraryBooks > maximumBooks && libraryBooks <= 2 * maximumBooks) ||
-        secondShelf.children.length < maximumBooks
-      ) {
-        shelf = secondShelf;
-        console.log(`Number of books on the second shelf: ${secondShelfBooks}`);
-        console.log(`Remaining avaiable shelf space: ${secondShelfSpace}px`);
-      } else if (
-        (libraryBooks > maximumBooks && libraryBooks <= 3 * maximumBooks) ||
-        thirdShelf.children.length < maximumBooks
-      ) {
-        shelf = thirdShelf;
-        console.log(`Number of books on the third shelf: ${thirdShelfBooks}`);
-        console.log(`Remaining avaiable shelf space: ${thirdShelfSpace}px`);
-      } else if (
-        (libraryBooks > maximumBooks && libraryBooks <= 4 * maximumBooks) ||
-        fourthShelf.children.length < maximumBooks
-      ) {
-        shelf = fourthShelf;
-        console.log(`Number of books on the fourth shelf: ${fourthShelfBooks}`);
-        console.log(`Remaining avaiable shelf space: ${fourthShelfSpace}px`);
-      } else if (
-        (libraryBooks > maximumBooks && libraryBooks <= 5 * maximumBooks) ||
-        fifthShelf.children.length < maximumBooks
-      ) {
-        shelf = fifthShelf;
-        console.log(`Number of books on the fifth shelf: ${fifthShelfBooks}`);
-        console.log(`Remaining avaiable shelf space: ${fifthShelfSpace}px`);
-      }
-
-      const newLibraryBook = makeShelfBook(
-        libraryBook.genre,
-        libraryBook.title,
-        shelf
-      ).shelfBook;
-
-      const libraryBookInterface = makeOpenBookInterface(
-        libraryBook,
-        newLibraryBook
+    let shelf;
+    if (
+      libraryBooks <= maximumBooks ||
+      firstShelf.children.length < maximumBooks
+    ) {
+      shelf = firstShelf;
+      console.log(
+        `Number of books on the first shelf: ${firstShelf.children.length}`
       );
-
-      header.textContent = `You have added "${bookTitle}" to the library!`;
-      header.classList.add("submitted-header");
-      submitDiv.style.gridTemplateRows = "1fr 1fr";
-
-      messageBox.classList.add("action");
-      messageBox.textContent = "Or close the catalog and check the bookcase";
-
-      newBookInputs.forEach((input) => {
-        input.classList.remove("new-input");
-        input.classList.add("invisible");
-      });
-
-      submitButton.style.display = "none";
-      donateButton.style.display = "block";
-      searchButton.style.display = "block";
+      console.log(`Remaining avaiable shelf space: ${firstShelfSpace}px`);
+      if (libraryBooks < maximumBooks) {
+        console.log("The first shelf still has space");
+      } else {
+        console.log("The first shelf is full");
+      }
+    } else if (
+      (libraryBooks > maximumBooks && libraryBooks <= 2 * maximumBooks) ||
+      secondShelf.children.length < maximumBooks
+    ) {
+      shelf = secondShelf;
+      console.log(`Number of books on the second shelf: ${secondShelfBooks}`);
+      console.log(`Remaining avaiable shelf space: ${secondShelfSpace}px`);
+    } else if (
+      (libraryBooks > maximumBooks && libraryBooks <= 3 * maximumBooks) ||
+      thirdShelf.children.length < maximumBooks
+    ) {
+      shelf = thirdShelf;
+      console.log(`Number of books on the third shelf: ${thirdShelfBooks}`);
+      console.log(`Remaining avaiable shelf space: ${thirdShelfSpace}px`);
+    } else if (
+      (libraryBooks > maximumBooks && libraryBooks <= 4 * maximumBooks) ||
+      fourthShelf.children.length < maximumBooks
+    ) {
+      shelf = fourthShelf;
+      console.log(`Number of books on the fourth shelf: ${fourthShelfBooks}`);
+      console.log(`Remaining avaiable shelf space: ${fourthShelfSpace}px`);
+    } else if (
+      (libraryBooks > maximumBooks && libraryBooks <= 5 * maximumBooks) ||
+      fifthShelf.children.length < maximumBooks
+    ) {
+      shelf = fifthShelf;
+      console.log(`Number of books on the fifth shelf: ${fifthShelfBooks}`);
+      console.log(`Remaining avaiable shelf space: ${fifthShelfSpace}px`);
     }
+
+    const newLibraryBook = makeShelfBook(
+      libraryBook.genre,
+      libraryBook.title,
+      shelf
+    ).shelfBook;
+
+    const libraryBookInterface = makeOpenBookInterface(
+      libraryBook,
+      newLibraryBook
+    );
+
+    header.textContent = `You have added "${bookTitle}" to the library!`;
+    header.classList.add("submitted-header");
+    submitDiv.style.gridTemplateRows = "1fr 1fr";
+
+    messageBox.classList.add("action");
+    messageBox.textContent = "Or close the catalog and check the bookcase";
+
+    newBookInputs.forEach((input) => {
+      input.classList.remove("new-input");
+      input.classList.add("invisible");
+    });
+
+    submitButton.style.display = "none";
+    donateButton.style.display = "block";
+    searchButton.style.display = "block";
 
     if (myLibrary.length >= maxLibraryCapacity) {
       bookTitleInput.disabled = true;
@@ -816,10 +862,10 @@ submitButton.addEventListener("click", () => {
       searchButton.style.gridColumn = "1 / 3";
     }
   }
-  addBookToLibrary();
 });
 
 donateButton.addEventListener("click", () => {
+  donateForm.classList.remove("submitted");
   header.textContent = "Enter your book into the Catalog:";
   header.classList.add("normal-header");
   header.classList.remove("submitted-header");
@@ -835,6 +881,7 @@ donateButton.addEventListener("click", () => {
 });
 
 searchButton.addEventListener("click", () => {
+  donateForm.classList.remove("submitted");
   messageBox.textContent = "The search feature is coming soon!";
   header.classList.add("normal-header");
   searchButton.disabled = "true";
@@ -844,8 +891,8 @@ searchButton.addEventListener("click", () => {
 // Open the book catalog submit form
 bookCatalog.addEventListener("click", () => {
   bookModal.style.display = "flex";
-  console.log("myLibrary.length: " + myLibrary.length);
-  console.log("maxLibraryCapacity: " + maxLibraryCapacity);
+  //console.log("myLibrary.length: " + myLibrary.length);
+  //console.log("maxLibraryCapacity: " + maxLibraryCapacity);
   if (myLibrary.length < maxLibraryCapacity) {
     bookTitleInput.disabled = false;
     bookAuthorInput.disabled = false;
@@ -872,9 +919,10 @@ bookCatalog.addEventListener("click", () => {
 
 // Close the book modal
 closeButton.addEventListener("click", () => {
+  donateForm.classList.remove("submitted");
   bookModal.style.display = "none";
   clearInput();
   clearNotices();
-  console.log("Books in the library:");
-  console.log(myLibrary);
+  //console.log("Books in the library:");
+  //console.log(myLibrary);
 });

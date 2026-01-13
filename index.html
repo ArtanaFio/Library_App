@@ -33,25 +33,25 @@
         <div id="book-modal">
             <div class="modal-content">
                 <div class="close-box"><img class="close" src="Assets/Images/x-square.svg" alt="close button"></div>
-                <form id="New-book-form">
+                <form id="new-book-form" novalidate>
                     <fieldset>
                         <div class="field-content">
                             <h1>Enter your book into the Catalog:</h1>
                             <div class="new-input">
                                 <label class="text-label" for="book-title">*BOOK TITLE:</label>
-                                <input type="text" id="book-title" name="book_title" placeholder="'Title'" minlength="2" maxlength="100" required />
+                                <input class="book-inputs" type="text" id="book-title" name="book_title" placeholder="'Title'" minlength="2" maxlength="100" required />
                             </div>
                             <div class="new-input">
                                 <label class="text-label" for="book-author">*AUTHOR:</label>
-                                <input type="text" id="book-author" name="author" placeholder="'First & Last Name'" minlength="5" maxlength="100" required />
+                                <input class="book-inputs" type="text" id="book-author" name="author" placeholder="'First & Last Name'" minlength="2" maxlength="100" pattern="[A-Za-z\-]+" required />
                             </div>
                             <div class="new-input">
                                 <label class="text-label" for="book-pages">*NUMBER OF PAGES:</label>
-                                <input type="number" id="book-pages" name="page_numbers" placeholder="100" min="1" max="3000" onkeydown="if (['e', '+', '-'].includes(event.key)) event.preventDefault();" required />
+                                <input class="book-inputs" type="number" id="book-pages" name="page_numbers" placeholder="100" min="5" max="3000" onkeydown="if (['e', '+', '-'].includes(event.key)) event.preventDefault();" required />
                             </div>
                             <div class="new-input">
                                 <label  class="text-label" for="book-genre">*GENRE:</label>
-                                <select title="Select book genre" id="book-genre">
+                                <select class="book-inputs" title="Select book genre" id="book-genre" required>
                                     <option value="" disabled selected>Select book genre</option>
                                     <optgroup label="Fiction">
                                         <optgroup label="Novels" class="sub-cat">
